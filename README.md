@@ -1,0 +1,2 @@
+# dimond
+Dimond project
