@@ -14,7 +14,8 @@ use App\Http\Controllers\admin\chocolatecontroller;
 use App\Http\Controllers\admin\machinecontroller;
 use App\Http\Controllers\admin\usercontroller;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\admin\AssignreceiveController;
+use App\Http\Controllers\admin\LaserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,10 +58,8 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('createlot/{id?}', [batchcontroller::class, 'createlot'])->name('createlot');
     route::get('createuserchocolate', [usercontroller::class, 'createuserchocolate']);
     route::get('boil', [homecontroller::class, 'boil']);
-    route::get('assign', [homecontroller::class, 'assign']);
-    route::get('assignreceive', [homecontroller::class, 'assignreceive']);
-
-    route::get('boiling1', [homecontroller::class, 'boiling1']);
+  
+     route::get('boiling1', [homecontroller::class, 'boiling1']);
     route::get('boiling1list', [homecontroller::class, 'boiling1list']);
     route::get('boiling1lots', [homecontroller::class, 'boiling1lots']);
     route::get('boiling1lotslist', [homecontroller::class, 'boiling1lotslist']);
@@ -102,22 +101,17 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('generalsetting', [homecontroller::class, 'generalsetting']);
     route::get('Jangadlist', [homecontroller::class, 'Jangadlist']);
     route::get('laserlist', [homecontroller::class, 'laserlist']);
-    route::get('laser1', [homecontroller::class, 'laser1']);
     route::get('laser', [homecontroller::class, 'laser']);
     route::get('jobwork1list', [homecontroller::class, 'jobwork1list']);
     route::get('lotsdashboardlist', [homecontroller::class, 'lotsdashboardlist']);
-    route::get('lotsdashboard', [homecontroller::class, 'lotsdashboard']);
     route::get('locationlist', [homecontroller::class, 'locationlist']);
-    route::get('machinelaser', [homecontroller::class, 'machinelaser']);
     route::get('machineequipmentslist', [homecontroller::class, 'machineequipmentslist']);
     route::get('machineequipments', [homecontroller::class, 'machineequipments']);
-
     route::get('lotslist', [homecontroller::class, 'lotslist']);
     route::get('manufacturing', [homecontroller::class, 'manufacturing']);
     route::get('machinelist', [homecontroller::class, 'machinelist']);
     route::get('machinelaserlist', [homecontroller::class, 'machinelaserlist']);
     route::get('packetlaserlistdashboard', [homecontroller::class, 'packetlaserlistdashboard']);
-    route::get('packetlaserdashboard', [homecontroller::class, 'packetlaserdashboard']);
     route::get('packetkarben', [homecontroller::class, 'packetkarben']);
     route::get('packetdashboard', [homecontroller::class, 'packetdashboard']);
     route::get('partylist', [homecontroller::class, 'partylist']);
@@ -147,8 +141,6 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('settingcompanieslist', [homecontroller::class, 'settingcompanieslist']);
     route::get('settingmanufacturing', [homecontroller::class, 'settingmanufacturing']);
     route::get('settingpurchase', [homecontroller::class, 'settingpurchase']);
-    route::get('settings1', [homecontroller::class, 'settings1']);
-    route::get('receive', [homecontroller::class, 'receive']);
     route::get('seed', [homecontroller::class, 'seed']);
     route::get('purchase1table', [homecontroller::class, 'purchase1table']);
     route::get('purchase1tableexpand', [homecontroller::class, 'purchase1tableexpand']);
@@ -313,6 +305,20 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::post('chocolaterecive',[chocolatecontroller::class,'chocolaterecive'])->name('chocolaterecive');
     route::post('insertimages', [chocolatecontroller::class, 'insertimages']);
     route::get('growingassign', [chocolatecontroller::class, 'growingassign']);
+
+   // ***************************************assignandrecieve*********************************************************
+    route::get('receive', [AssignreceiveController::class, 'receive']);
+    route::get('assign', [AssignreceiveController::class, 'assign']);
+    route::get('assignreceive', [AssignreceiveController::class, 'assignreceive']);
+    route::post('receivechocolate',[AssignreceiveController::class,'receivechocolate']);
+    route::post('assigngrowing',[AssignreceiveController::class,'assigngrowing']);
+    
+    // **********************************Laser****************************************************************
+    route::get('laser1', [LaserController::class, 'laser1']);
+    route::get('machinelaser', [LaserController::class, 'machinelaser']);
+    route::get('packetlaserdashboard', [LaserController::class, 'packetlaserdashboard']);
+    route::get('lotsdashboard', [LaserController::class, 'lotsdashboard']);
+
     // ****************************************RoleandPermission**********************************************************
     Route::get('index', 'Backend\DashboardController@index')->name('admin.dashboard');
     Route::resource('roles', 'Backend\RolesController', ['names' => 'admin.roles']);

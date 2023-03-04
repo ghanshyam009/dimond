@@ -15,6 +15,7 @@ use Exception;
 use DateTime;
 use App\Models\image;
 use App\Models\LotMove;
+use Format;
 use Illuminate\Support\Facades\Storage;
 class chocolatecontroller extends Controller
 {
@@ -27,7 +28,10 @@ class chocolatecontroller extends Controller
        public function createchocolatedashboard(){
         $now=Carbon::now();
         $date=Carbon::now()->format('H:i:m');
-        return view('admin.createchocolatedashboard')->with(['now'=>$now,'date'=>$date]);
+        $lot = DB::table('lot_masters')
+        ->join('chocolates', 'chocolates.lotno', '=', 'lot_masters.id')
+        ->get();
+        return view('admin.createchocolatedashboard')->with(['now'=>$now,'date'=>$date,'lot'=>$lot]);
        }
        public function insertchocolatedashboard(Request $request)
        {

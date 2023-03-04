@@ -555,61 +555,71 @@
                                                         {!! session('error') !!}
                                                     </div>
                                                     @endif
-                                                    <form action="{{ url('insertchocolatedashboard') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                                        {{ csrf_field() }}
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-3"><label class=" form-control-label">Lot No : </label></div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="no" id="email-input" name="mno" placeholder="lot No.." required class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-3"><label for="select" class=" form-control-label">Machine No :</label></div>
-                                                            <div class="col-12 col-md-9">
-                                                                <?php $machine=App\Models\machine::get();?>
-                                                                <select class="custom-select d-block w-100" name="machinename" required>
-                                                                    <option value="0">Please select Machine</option>
-                                                                    @foreach($machine as $ans)
-                                                                    <option value="{{ $ans->name }}">{{ $ans->name }}</option>
-                                                                    @endforeach
-                                                                </select>
+                                       <form action="{{ url('insertchocolatedashboard') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                                {{ csrf_field() }}
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><label class=" form-control-label">Lot No : </label></div>
+                                                    <div class="col-12 col-md-9">
+                                                        
+                                                        <input type="no" id="email-input" name="mno" placeholder="lot No.." required class="form-control">
+                                                         {{-- <?php $lot=App\Models\LotMaster::get();?>
+                                                        <select class="custom-select d-block w-100" name="mno" required>
+                                                            <option value="0">Please select Lotno</option>
+                                                            @foreach($lot as $lotans)
+                                                            <option value="{{ $lotans->name }}">{{ $lotans->name }}</option>
+                                                            @endforeach
+                                                        </select> --}}
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-3"><label class=" form-control-label">Start Date : </label></div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="date" id="date" name="sdate" value={{$now }}   required class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-3"><label class=" form-control-label">Start time : </label></div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="time"  value={{$date }}  name="stime"  required class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-3"><label class=" form-control-label">Chocolate Image1 : </label></div>
-                                                            <div class="col-12 col-md-9" style="display:flex;">
-                                                                <input type="file"  name="img" required  accept="image/*" webcam>
-                                                                <label class=" form-control-label pe-2">Chocolate Image2 :  </label>
-                                                                <input type="file"  required name="image" accept="image/*" webcam>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-3"><label class=" form-control-label">Chocolate Image3 : </label></div>
-                                                            <div class="col-12 col-md-9" style="display:flex;">
-                                                                <input type="file"  name="img3" required  accept="image/*" webcam>
 
-                                                            </div>
-                                                        </div>
-                                                            <button type="submit" class="btn btn-secondary btn-sm float-left"> Save </button>
-                                                            <template>
-                                                                <input type="date" v-model="dateString" />
-                                                                <input type="time" v-model="timeString" />
-                                                            </template>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><label for="select" class=" form-control-label">Machine No :</label></div>
+                                                    <div class="col-12 col-md-9">
+                                                        <?php $machine=App\Models\machine::get();?>
+                                                        <select class="custom-select d-block w-100" name="machinename" required>
+                                                            <option value="0">Please select Machine</option>
+                                                            @foreach($machine as $ans)
+                                                            <option value="{{ $ans->mname }}">{{ $ans->mname }}</option>
+                                                            @endforeach
+                                                        </select>
 
-                                                    </form>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><label class=" form-control-label">Start Date : </label></div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="date" id="date" name="sdate" value={{$now }}   required class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><label class=" form-control-label">Start time : </label></div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="time"  value={{$date }}  name="stime"  required class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><label class=" form-control-label">Chocolate Image1 : </label></div>
+                                                    <div class="col-12 col-md-9" style="display:flex;">
+                                                        <input type="file"  name="img" required  accept="image/*" webcam>
+                                                        <label class=" form-control-label pe-2">Chocolate Image2 :  </label>
+                                                        <input type="file"  required name="image" accept="image/*" webcam>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><label class=" form-control-label">Chocolate Image3 : </label></div>
+                                                    <div class="col-12 col-md-9" style="display:flex;">
+                                                        <input type="file"  name="img3" required  accept="image/*" webcam>
+                                                        
+                                                    </div>
+                                                </div>
+                                                     <button type="submit" class="btn btn-secondary btn-sm float-left"> Save </button>
+                                                     <template>
+                                                        <input type="date" v-model="dateString" />
+                                                        <input type="time" v-model="timeString" />
+                                                      </template>
+
+                                            </form>
                                                 </div>
 
                                             </div>
@@ -642,13 +652,13 @@
 
                                                             </tr>
                                                         </thead>
-                                                        <?php $data=App\Models\chocolate::get(); ?>
-                                                        <tbody>
-                                                            @foreach($data as $ans)
+                                                        {{-- <?php $data=App\Models\chocolate::get(); ?> --}}
+                                                         <tbody>
+                                                            @foreach($lot as $ans)
 
                                                             <tr>
                                                                 <th scope="row">{{ $loop->iteration }}</th>
-                                                                <td>{{ $ans->lotno }}</td>
+                                                                <td>{{ $ans->name }}</td>
                                                                 <td>{{ $ans->machineno }}</td>
                                                                 <td>{{ $ans->startdate }}</td>
                                                                 <td>{{ $ans->starttime }}</td>

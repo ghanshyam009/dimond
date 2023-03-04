@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 
 class homecontroller extends Controller
 {
-   public function assign(){
-    return view('admin.assign');
-   }
-   public function assignreceive(){
-    return view('admin.assignreceive');
-   }
-
    public function boil(){
     return view('admin.boil');
    }
@@ -156,9 +149,7 @@ class homecontroller extends Controller
      public function laserlist(){
       return view('admin.laserlist');
      }
-     public function laser1(){
-      return view('admin.laser1');
-     }
+
      public function laser(){
       return view('admin.laser');
      }
@@ -168,16 +159,10 @@ class homecontroller extends Controller
      public function lotsdashboardlist(){
       return view('admin.lotsdashboardlist');
      }
-     public function lotsdashboard(){
-      return view('admin.lotsdashboard');
-     }
-
      public function locationlist(){
       return view('admin.locationlist');
      }
-     public function machinelaser(){
-      return view('admin.machinelaser');
-     }
+
      public function machineequipmentslist(){
       return view('admin.machineequipmentslist');
      }
@@ -191,8 +176,6 @@ class homecontroller extends Controller
      public function manufacturing(){
       return view('admin.manufacturing');
      }
-
-
      public function machinelist(){
       return view('admin.machinelist');
      }
@@ -202,9 +185,6 @@ class homecontroller extends Controller
 
      public function packetlaserlistdashboard(){
       return view('admin.packetlaserlistdashboard');
-     }
-     public function packetlaserdashboard(){
-      return view('admin.packetlaserdashboard');
      }
      public function packetkarben(){
       return view('admin.packetkarben');
@@ -299,9 +279,7 @@ class homecontroller extends Controller
      public function settings1(){
       return view('admin.settings1');
      }
-     public function receive(){
-      return view('admin.receive');
-     }
+
      public function seed(){
       return view('admin.seed');
      }
