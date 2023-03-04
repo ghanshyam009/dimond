@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMachineTable extends Migration
+class AddLotnoToMachineTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateMachineTable extends Migration
      */
     public function up()
     {
-        Schema::create('machine', function (Blueprint $table) {
-            $table->id();
-            $table->string('mname')->nullable();
-            $table->string('growthrate')->nullable();
-            $table->boolean('status')->default(0);
-            $table->timestamps();
+        Schema::table('machine', function (Blueprint $table) {
+            $table->string('lotno')->nullable()->after('id');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateMachineTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('machine');
+        Schema::table('machine', function (Blueprint $table) {
+           $table->dropColumn('lotno');
+        });
     }
 }

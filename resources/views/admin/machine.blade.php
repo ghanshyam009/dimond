@@ -144,7 +144,10 @@
                                         </div>
                                         <div class="col-lg-9 pt-0 pt-lg-2 ps-lg-4 ps-3">
                                             <div class="row">
-                                                <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">Model : {{ $ans->name }}</label></div>
+                                                <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">Model : {{ $ans->mname }}</label></div>
+                                            </div>
+                                             <div class="row">
+                                                <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">lotno : {{ $ans->name }}</label></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">Growth Rate :{{ $ans->growthrate }}</label></div>

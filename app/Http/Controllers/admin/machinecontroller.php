@@ -8,6 +8,7 @@ use App\Models\machine;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Exception;
+use App\Models\chocolate;
 use Illuminate\Support\Facades\Storage;
 class machinecontroller extends Controller
 {
@@ -16,8 +17,9 @@ class machinecontroller extends Controller
        }
        public function insertmachine(Request $request)
        {
-           $machine = new machine;
-           $machine->name = $request->get('name');
+          $machine = new machine;
+           $machine->lotno=$request->get('lotno');
+           $machine->mname = $request->get('name');
            $machine->growthrate = $request->get('rate');
            $machine->save();
         return redirect('createmachine')->with(['message'=>'Insert Machine Sucessfull!']);
@@ -31,7 +33,9 @@ class machinecontroller extends Controller
     }
 
     public function machine(){
-        $data=DB::table('machine')->get();
+        $data=DB::table('lot_masters')
+        ->join('machine','lot_masters.id' ,'=','machine.lotno')  
+        ->get();
         return view('admin.machine')->with(['data'=>$data]);
        }
        public function updateStatus(Request $request)
@@ -79,7 +83,23 @@ class machinecontroller extends Controller
     public function machinemanagement1(){
         $a=DB::table('machine')->where('status' ,'=', '1')->get();
         $b=DB::table('machine')->where('status','=','0')->get();
-        return view('admin.machinemanagement1')->with(['a'=>$a,'b'=>$b]);
+          // $lot=DB::table('lot_masters')
+        // ->join('machine','lot_masters.id' ,'=','machine.lotno')   
+        // ->join('lot_details','machine.lotno','=','lot_details.lot_id')
+        // //  ->join('chocolates','machine.mname','=','chocolates.machineno')
+        // ->select('lot_details.lotid')->distinct() 
+        // ->select('lot_masters.name as name','lot_details.lot_id as lot_id','machine.lotno as lotno','machine.growthrate as growthrate','machine.*')
+        // ->get();
+
+        $lot=DB::table('lot_masters')
+        ->join('machine','lot_masters.id' ,'=','machine.lotno')   
+        ->join('lot_details','machine.lotno','=','lot_details.lot_id')
+        ->join('chocolates','machine.mname','=','chocolates.machineno')
+        ->select('lot_details.lotid')->distinct() 
+        ->select('lot_masters.name as name','lot_details.lot_id as lot_id','machine.lotno as lotno','machine.growthrate as growthrate','machine.*','chocolates.starttime as starttime')
+        ->get();
+// dd($lot);
+        return view('admin.machinemanagement1')->with(['a'=>$a,'b'=>$b,'lot'=>$lot]);
        }
 
        public function startTimermachine(Request $request){

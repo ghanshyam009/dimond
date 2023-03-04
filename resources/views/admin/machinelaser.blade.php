@@ -81,29 +81,316 @@
                 <li class="stockli"><a href="{{ url('machinelaser') }}">Machine</a></li>
 
             </ul>
-            <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel" aria-hidden="true">
+                     <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel"
+                 aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Scan For Receive</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form action="{{ url('chocolaterecive') }}" method="post" name="recive"
+                                enctype="multipart/form-data" id="recivechocolateall">
+                                @csrf
+
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-11">
+                                            <input type="tel" class="form-control cc-number identified visa"
+                                                value="" data-val="true"
+                                                data-val-required="Please enter the card number"
+                                                data-val-cc-number="Please enter a valid card number">
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#largeModal">Recive</button>
+                                        </div>
+                                        <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="largeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            Are you sure you want to Return a lot?
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-info"
+                                                            data-dismiss="modal">Ok</button>
+                                                        <button type="button" class="btn btn-light">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body card-block">
+
+                                                <div class="row">
+                                                    <div class="col-lg-3 float-left">
+                                                        <div class="card-body card-block">
+
+                                                            <div class="row form-group">
+                                                                <div class="col col-md-9"><label
+                                                                        class=" form-control-label"><img
+                                                                            src="{{ URL::asset('admin/assets/img/barcode.webp') }}"
+                                                                            alt=""></label></div>
+                                                            </div>
+
+                                                            <div class="row form-group">
+                                                                <div class="col-12 col-md-9">
+                                                                    <p class="form-control-static"><input type="email"
+                                                                            id="email-input" class="form-control rec">
+                                                                        <input type="hidden" class="reciveall"
+                                                                            name="reciveall">
+                                                                    </p>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3"></div>
+                                                    <div class="col-lg-6">
+                                                        <div class="card-body card-block">
+                                                            <div class="row form-group">
+                                                            <div class="col col-md-3"><label class=" form-control-label">Process</label></div>
+                                                            <div class="col col-md-6">
+                                                                <div class="form-check-inline form-check">
+                                                                    <label for="inline-radio1" class="form-check-label ">
+                                                                        <input type="radio" id="inline-radio1" name="inline-radios" value="option1" class="form-check-input" checked="">Shape
+                                                                    </label>
+                                                                    <label for="inline-radio2" class="form-check-label ">
+                                                                        <input type="radio" id="inline-radio2" name="inline-radios" value="option2" class="form-check-input">DLC
+                                                                    </label>
+                                                                    <label for="inline-radio3" class="form-check-label ">
+                                                                        <input type="radio" id="inline-radio3" name="inline-radios" value="option3" class="form-check-input">Final
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         <div  id="receiveemployee"
+                                                                    class="row form-group">
+                                                                    <div class="col col-md-3">
+                                                                        <label class=" form-control-label">Employee : </label>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6">
+                                                                        <select class="custom-select d-block w-100"
+                                                                            name="user_id">
+                                                                            <option value="">Please select Employee
+                                                                            </option>
+                                                                            <?php $users = App\Models\userlogin::get(); ?>
+                                                                            @foreach ($users as $user)
+                                                                                <option value="{{ $user->id }}">
+                                                                                    {{ $user->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                         </div>
+                                                            <div class="row form-group">
+                                                                <div class="col col-md-3"><label for="select"
+                                                                        class=" form-control-label">Machine : </label>
+                                                                </div>
+                                                                <div class="col-12 col-md-6">
+                                                                    <select required id="recevie"
+                                                                        class="custom-select d-block w-100"
+                                                                        name="location_id">
+                                                                        <option value="0">Please select Machine
+                                                                        </option>
+                                                                        <?php $machine = App\Models\machine::get(); ?>
+                                                                        @foreach ($machine as $rec)
+                                                                            <option value="{{ $rec->id }}"
+                                                                                >
+                                                                                {{ $rec->mname }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+                                                 
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab" data-toggle="tab"
+                                                                href="#home" role="tab" aria-controls="home"
+                                                                aria-selected="true">Records</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display:none"; id="chocolate" class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab" data-toggle="tab"
+                                                                href="#home" role="tab" aria-controls="home"
+                                                                aria-selected="true">Chocolate</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="area">
+                                                        <input type="text-area"
+                                                            style="width: 100%; height:100px; !important">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="loste" class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab" data-toggle="tab"
+                                                                href="#home" role="tab" aria-controls="home"
+                                                                aria-selected="true">Lot</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="area">
+                                                        <input type="text-area"
+                                                            style="width: 100%; height:100px; !important">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                        <div class="tab-pane fade show active" id="home"
+                                                            role="tabpanel" aria-labelledby="home-tab">
+                                                            <div class="row">
+                                                                <ul class="nav nav-tabs mt-4" id="myTab"
+                                                                    role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active" id="home-tab"
+                                                                            data-toggle="tab" href="#home"
+                                                                            role="tab" aria-controls="home"
+                                                                            aria-selected="true">Packets</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                                    <div class="tab-pane fade show active" id="home"
+                                                                        role="tabpanel" aria-labelledby="home-tab">
+                                                                        <table class="table" style="line-height: 5px;">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Name</th>
+                                                                                    <th>Height(Micron)</th>
+                                                                                    <th>Length(MM)</th>
+                                                                                    <th>Width(MM)</th>
+                                                                                    <th>Pcs</th>
+                                                                                    <th>Weight(Ct)</th>
+                                                                                    <th id="notes"
+                                                                                        style="display:none;">Notes</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="smartSection">
+                                                                                <tr>
+
+                                                                                    <td
+                                                                                        style="vertical-align: middle;text-align:left">
+                                                                                        <input type="hidden"
+                                                                                            class="name" name="name1">
+                                                                                        Name
+                                                                                    </td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td id="notese"
+                                                                                        style="display:none;">0</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer float-left1">
+                                    <button type="button" id="closerecive"
+
+                                        class="btn btn-secondary ">Create</button>
+
+                                    <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+               <div class="modal fade" id="assignModal" aria-labelledby="assignModalLabel" aria-hidden="true"
+                role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Scan For Receive</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="modal-title">Scan For Assign</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <form>
+
+
+                        <form action="{{ url('assignchocolate') }}" id="assignchocolateall" name="assign"
+                            method="post" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-lg-11">
-                                        <input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa" value="" data-val="true" data-val-required="Please enter the card number" data-val-cc-number="Please enter a valid card number">
+                                        <input id="cc-number" name="cc-number" type="tel"
+                                            class="form-control cc-number identified visa" value=""
+                                            data-val="true" data-val-required="Please enter the card number"
+                                            data-val-cc-number="Please enter a valid card number">
                                     </div>
                                     <div class="col-lg-1">
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#largeModal">Receive</button>
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target="#largeModal">Assign</button>
                                     </div>
-                                    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="largeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
@@ -112,302 +399,226 @@
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-info" data-dismiss="modal">Ok</button>
+                                                    <button type="button" class="btn btn-info"
+                                                        data-dismiss="modal">Ok</button>
                                                     <button type="button" class="btn btn-light">Cancel</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-lg-3 float-left">
                                         <div class="card-body card-block">
-                                            <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                                <div class="row form-group">
-                                                    <div class="col col-md-9"><label class=" form-control-label"><img src="{{URL:: asset('admin/assets/img/barcode.webp')}}" alt=""></label></div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-9"><label class=" form-control-label"><img
+                                                            src="{{ URL::asset('admin/assets/img/barcode.webp') }}"alt=""></label>
                                                 </div>
-                                                <div class="row form-group">
-                                                    <div class="col-12 col-md-9">
-                                                        <p class="form-control-static"><input type="email" id="email-input" name="email-input" class="form-control"></p>
-                                                    </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12 col-md-9">
+
+                                                    <p class="form-control-static"><input type="email"
+                                                            id="email-input" class="form-control auto"></p>
+                                                    <input type="hidden" class="detailall" name="detailall">
                                                 </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Records</a>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Lot</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                    <div class="col-lg-3">
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Packets</a>
-                                                    </li>
-
-                                                </ul>
-                                                <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="card-body">
-                                                                    <table class="table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#. Name</th>
-                                                                                <th scope="col">Height(Micro)</th>
-                                                                                <th scope="col">Length(MM)..</th>
-                                                                                <th scope="col">Width(MM)</th>
-                                                                                <th scope="col">Pcs</th>
-                                                                                <th scope="col">Weight(Ct)</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th scope="row"></th>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                            </tr>
-
-                                                                        </tbody>
-                                                                    </table>
+                                   <div class="col-lg-6">
+                                                        <div class="card-body card-block">
+                                                            <div class="row form-group">
+                                                            <div class="col col-md-3"><label class=" form-control-label">Process</label></div>
+                                                            <div class="col col-md-6">
+                                                                <div class="form-check-inline form-check">
+                                                                    <label for="inline-radio1" class="form-check-label ">
+                                                                        <input type="radio" id="inline-radio1" name="inline-radios" value="option1" class="form-check-input" checked="">Shape
+                                                                    </label>
+                                                                    <label for="inline-radio2" class="form-check-label ">
+                                                                        <input type="radio" id="inline-radio2" name="inline-radios" value="option2" class="form-check-input">DLC
+                                                                    </label>
+                                                                    <label for="inline-radio3" class="form-check-label ">
+                                                                        <input type="radio" id="inline-radio3" name="inline-radios" value="option3" class="form-check-input">Final
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                         <div  id="receiveemployee"
+                                                                    class="row form-group">
+                                                                    <div class="col col-md-3">
+                                                                        <label class=" form-control-label">Employee : </label>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6">
+                                                                        <select class="custom-select d-block w-100"
+                                                                            name="user_id">
+                                                                            <option value="">Please select Employee
+                                                                            </option>
+                                                                            <?php $users = App\Models\userlogin::get(); ?>
+                                                                            @foreach ($users as $user)
+                                                                                <option value="{{ $user->id }}">
+                                                                                    {{ $user->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                         </div>
+                                                            <div class="row form-group">
+                                                                <div class="col col-md-3"><label for="select"
+                                                                        class=" form-control-label">Machine : </label>
+                                                                </div>
+                                                                <div class="col-12 col-md-6">
+                                                                    <select required id="recevie"
+                                                                        class="custom-select d-block w-100"
+                                                                        name="location_id">
+                                                                        <option value="0">Please select Machine
+                                                                        </option>
+                                                                        <?php $machine = App\Models\machine::get(); ?>
+                                                                        @foreach ($machine as $rec)
+                                                                            <option value="{{ $rec->id }}"
+                                                                                >
+                                                                                {{ $rec->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
 
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer float-left">
-                            <button type="button" class="btn btn-secondary">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Scan For Assign</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="row">
-                                    <div class="modal fade" id="largeModal1" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel1" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="largeModalLabel1">Confirmation</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        Are you sure you want to assign?
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-info" data-dismiss="modal">Ok</button>
-                                                    <button type="button" class="btn btn-light">Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 float-left">
-                                        <div class="card-body card-block">
-                                            <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                                <div class="row form-group">
-                                                    <div class="col col-md-9"><label class=" form-control-label"><img src="{{URL:: asset('admin/assets/img/barcode.webp')}}" alt=""></label></div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col-12 col-md-9">
-                                                        <p class="form-control-static"><input type="email" id="email-input" name="email-input" class="form-control"></p>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3"></div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body card-block">
-                                            <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Process</label></div>
-                                                    <div class="col col-md-6">
-                                                        <div class="form-check-inline form-check">
-                                                            <label for="inline-radio1" class="form-check-label ">
-                                                                <input type="radio" id="inline-radio1" name="inline-radios" value="option1" class="form-check-input" checked="">Shape
-                                                            </label>
-                                                            <label for="inline-radio2" class="form-check-label ">
-                                                                <input type="radio" id="inline-radio2" name="inline-radios" value="option2" class="form-check-input">DLC
-                                                            </label>
-                                                            <label for="inline-radio3" class="form-check-label ">
-                                                                <input type="radio" id="inline-radio3" name="inline-radios" value="option3" class="form-check-input">Final
-                                                            </label>
+                                                                </div>
+                                                            </div>
+                                                 
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label for="select" class=" form-control-label">Employee : </label></div>
-                                                    <div class="col-12 col-md-6">
-                                                        <select class="custom-select d-block w-100">
-                                                    <option value="0">Please select</option>
-                                                    <option value="1">SQ</option>
-                                                    <option value="2">Option #2</option>
-                                                    <option value="3">Option #3</option>
-                                                </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label for="select" class=" form-control-label">Machine Number : </label></div>
-                                                    <div class="col-12 col-md-6">
-                                                        <select class="custom-select d-block w-100">
-                                                    <option value="0">Please select</option>
-                                                    <option value="1">SQ</option>
-                                                    <option value="2">Option #2</option>
-                                                    <option value="3">Option #3</option>
-                                                </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Records</a>
-                                                    </li>
-                                                </ul>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab"
+                                                                data-toggle="tab" href="#home" role="tab"
+                                                                aria-controls="home" aria-selected="true">Records</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Lot</a>
-                                                    </li>
-                                                </ul>
+                                    <div id="choco" style="display: none"; class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab"
+                                                                data-toggle="tab" href="#home" role="tab"
+                                                                aria-controls="home"
+                                                                aria-selected="true">Chocolate</a>
+                                                        </li>
+
+                                                    </ul>
+                                                    <div class="area">
+                                                        <input type="text-area"
+                                                            style="width: 100%; height:100px; !important">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab"
+                                                                data-toggle="tab" href="#home" role="tab"
+                                                                aria-controls="home" aria-selected="true">Lots</a>
+                                                        </li>
 
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Packets</a>
-                                                    </li>
+                                                    </ul>
+                                                    <div class="area">
+                                                        <input type="text-area"
+                                                            style="width: 100%; height:100px; !important">
+                                                    </div>
 
-                                                </ul>
-                                                <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="card-body">
-                                                                    <table class="table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#.</th>
-                                                                                <th scope="col">Seq Final</th>
-                                                                                <th scope="col">Name</th>
-                                                                                <th scope="col">Height(Micro)</th>
-                                                                                <th scope="col">Length(MM)..</th>
-                                                                                <th scope="col">Width(MM)</th>
-                                                                                <th scope="col">Shape</th>
-                                                                                <th scope="col">Color</th>
-                                                                                <th scope="col">Purity</th>
-                                                                                <th scope="col">Weight(Ct)</th>
-                                                                                <th scope="col">Approx polls</th>
-                                                                                <th scope="col">Weight%</th>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
 
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th scope="row"></th>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                            </tr>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                        <div class="tab-pane fade show active" id="home"
+                                                            role="tabpanel" aria-labelledby="home-tab">
+                                                            <div class="row">
+                                                                <ul class="nav nav-tabs mt-4" id="myTab"
+                                                                    role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active" id="home-tab"
+                                                                            data-toggle="tab" href="#home"
+                                                                            role="tab" aria-controls="home"
+                                                                            aria-selected="true">Packets</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                                    <div class="tab-pane fade show active"
+                                                                        id="home" role="tabpanel"
+                                                                        aria-labelledby="home-tab">
 
-                                                                        </tbody>
-                                                                    </table>
+                                                                        <table class="table"
+                                                                            style="line-height: 5px;">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Name</th>
+                                                                                    <th>Height(Micron)</th>
+                                                                                    <th>Length(MM)</th>
+                                                                                    <th>Width(MM)</th>
+                                                                                    <th>Pcs</th>
+                                                                                    <th>Weight(Ct)</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="experienceSection">
+                                                                                <tr>
+                                                                                    <td
+                                                                                        style="vertical-align: middle;text-align:left">
+                                                                                        <input type="hidden"
+                                                                                            class="name"
+                                                                                            name="name1">
+                                                                                        Name
+                                                                                    </td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer float-left">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#largeModal1">Assign</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
-                        </div>
+
+                                <div class="modal-footer float-left1">
+                                    <button type="button" id="close" class="btn btn-secondary">Create</button>
+                                    <button type="reset" class="btn btn-light"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                        </form>
                     </div>
                 </div>
             </div>
