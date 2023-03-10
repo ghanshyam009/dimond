@@ -10,6 +10,6 @@ class jobwork extends Model
     use HasFactory;
     public $table = 'jobworks';
     protected $fillable = [
-        'party','date','expectedreturndate','note'
+        'party','date','return_date','note','pcs','weight','height','length','width'
     ];
 }

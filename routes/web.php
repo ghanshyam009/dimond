@@ -58,7 +58,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('createlot/{id?}', [batchcontroller::class, 'createlot'])->name('createlot');
     route::get('createuserchocolate', [usercontroller::class, 'createuserchocolate']);
     route::get('boil', [homecontroller::class, 'boil']);
-  
+
      route::get('boiling1', [homecontroller::class, 'boiling1']);
     route::get('boiling1list', [homecontroller::class, 'boiling1list']);
     route::get('boiling1lots', [homecontroller::class, 'boiling1lots']);
@@ -312,7 +312,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('assignreceive', [AssignreceiveController::class, 'assignreceive']);
     route::post('receivechocolate',[AssignreceiveController::class,'receivechocolate']);
     route::post('assigngrowing',[AssignreceiveController::class,'assigngrowing']);
-    
+
     // **********************************Laser****************************************************************
     route::get('laser1', [LaserController::class, 'laser1']);
     route::get('machinelaser', [LaserController::class, 'machinelaser']);
