@@ -10,6 +10,6 @@ class language extends Model
     use HasFactory;
     public $table = 'languages';
     protected $fillable = [
-        'name'
+       'id','name'
     ];
 }

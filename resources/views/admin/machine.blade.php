@@ -146,15 +146,15 @@
                                             <div class="row">
                                                 <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">Model : {{ $ans->mname }}</label></div>
                                             </div>
-                                             <div class="row">
+                                             {{-- <div class="row">
                                                 <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">lotno : {{ $ans->name }}</label></div>
-                                            </div>
+                                            </div> --}}
                                             <div class="row">
                                                 <div class="col col-md-12"><label for="hf-email" class=" form-control-label font_size">Growth Rate :{{ $ans->growthrate }}</label></div>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </form>                                                    
                             </div>
                         </div>
                     </div>

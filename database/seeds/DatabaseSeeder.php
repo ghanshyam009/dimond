@@ -1,4 +1,5 @@
 <?php
+
 use Database\Seeders\LocationSeeder;
 
 use Illuminate\Database\Seeder;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminSeeder::class);
         $this->call(RolePermissionSeeder::class);
         $this->call(LocationSeeder::class);
+         $this->call(LanguageSeeder::class);
         // $this->call(AdminUserSeeder::class);
     }
 }
