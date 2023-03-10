@@ -196,43 +196,43 @@
                                                         class=" form-control-label">Lot:{{ $data->name }}</label>
                                                 </div>
                                             </div>
-                                             {{-- <div class="row form-group mt-2 mt-md-2 mt-lg-0">
+                                            {{-- <div class="row form-group mt-2 mt-md-2 mt-lg-0">
                                                 <?php $finalgh = 0; ?>
                                                 <?php $mtime = 0; ?>
                                                 <?php $time = 0; ?>
                                                 <?php $gh = 0; ?>
                                                 <?php $totalgh = 0; ?>
                                                 <?php $sumgh = 0; ?>
-                                                 <?php $times= 0; ?>
+                                                 <?php $times = 0; ?>
                                                 @foreach ($cho as $tans)
                                                     @if ($data->lot_id == $tans->lotno)
                                                         <?php $time = $tans->starttime; ?>
-                                                       <?php $times=number_format($time, 2) ?>
+                                                       <?php $times = number_format($time, 2); ?>
                                                     @endif
                                                 @endforeach
                                                 @foreach ($ghrate as $mgh)
-                                                @if ($data->machineno )
+                                                @if ($data->machineno)
                                                         <?php $gh = $data->growthrate; ?>
                                                         {{-- <?php $ght = $_GET[$gh]; ?> --}}
-                                                @endif 
-                                                    {{-- @if ($data->lotno == $mgh->lotno)
+
+                                            {{-- @if ($data->lotno == $mgh->lotno)
                                                         <?php $mtime = $mgh->created_at->format('h:i:s'); ?>
                                                     @endif
-                                                    
+
                                                     @if ($data->lotno == $mgh->lotno)
                                                         {{-- <?php $sumgh = \Carbon\Carbon::parse($time)->diffInMinutes($mtime); ?> --}}
-                                                        {{-- <?php $sumgh = \Carbon\Carbon::parse($time)->diffInSeconds($mtime); ?>
+                                            {{-- <?php $sumgh = \Carbon\Carbon::parse($time)->diffInSeconds($mtime); ?>
                                                     @endif  --}}
-                                                    {{-- @if ($data->machineno)
+                                            {{-- @if ($data->machineno)
                                                         <?php $totalgh = ($times * $gh) / 100000; ?>
                                                         <?php $finalgh = round($totalgh, 3); ?>
                                                     @endif
-                                                @endforeach 
+                                                @endforeach
 
                                                 <div class="col-12 col-md-4"><label for="hf-password"
                                                     class=" form-control-label">GH:{{ $totalgh }}</label>
                                                 </div>
-                                            </div>--}}
+                                            </div> --}}
 
                                             <div class="row form-group mt-2 mt-md-2 mt-lg-0">
                                                 <?php $total = 0; ?>
@@ -241,7 +241,7 @@
                                                 <?php $totalth = 0; ?>
                                                 <?php $finaltotalth = 0; ?>
                                                 @foreach ($cho as $mth)
-                                                    @if ($data->lot_id )
+                                                    @if ($data->lot_id)
                                                         <?php $total += $data->height; ?>
                                                     @endif
                                                     @if ($data->lot_id == $mth->lotno)
@@ -252,7 +252,7 @@
                                                     @endif
                                                     @if ($data->lot_id == $mth->lotno)
                                                         <?php $totalth = $total + $sumth; ?>
-                                                         <?php $finaltotalth = round($totalth, 3); ?>
+                                                        <?php $finaltotalth = round($totalth, 3); ?>
                                                     @endif
                                                 @endforeach
                                                 <div class="col-12 col-md-4"><label for="hf-password"
