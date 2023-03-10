@@ -103,12 +103,12 @@
                                                 @endif
                                                 <form action="{{ url('insertmachine') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                                     {{ csrf_field() }}
-                                                    <div class="row form-group">
+                                                    {{-- <div class="row form-group">
                                                          <div class="col col-md-3"><label class=" form-control-label">Lot No : </label></div>
                                                         <div class="col-12 col-md-9">
                                                             <input type="text"  name="lotno" placeholder="No" required class="form-control">
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="row form-group">
                                                         <div class="col col-md-3"><label class=" form-control-label">Machine Name : </label></div>
                                                         <div class="col-12 col-md-9">

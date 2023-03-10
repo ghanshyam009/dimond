@@ -215,7 +215,7 @@
                                                                         @foreach ($machine as $rec)
                                                                             <option value="{{ $rec->id }}"
                                                                                 >
-                                                                                {{ $rec->name }}
+                                                                                {{ $rec->mname }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
