@@ -18,22 +18,23 @@
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="{{URL:: asset('admin/assets/i.imgur.com/QRAUqs9.png')}}">
-    <link rel="shortcut icon" href="{{URL:: asset('admin/assets/i.imgur.com/QRAUqs9.png')}}">
+    <link rel="apple-touch-icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
+    <link rel="shortcut icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
 
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/normalize.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/themify-icons.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/pe-icon-7-stroke.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/flag-icon.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/cs-skin-elastic.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/lib/chosen/chosen.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/lib/datatable/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/normalize.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/pe-icon-7-stroke.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/lib/chosen/chosen.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
 </head>
 
@@ -56,9 +57,10 @@
                     </div>
 
                     <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
                             <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-                            <span>{{Session::get('studname')}}
+                            <span>{{ Session::get('studname') }}
                             </span>
                         </a>
 
@@ -70,7 +72,9 @@
             </div>
         </header>
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('jobwork1') }}">Job Work / Jangad</a></strong>
+            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
+                        class="fa-solid fa-table-columns"></i></a> <a href="{{ url('jobwork1') }}">Job Work /
+                    Jangad</a></strong>
             <ul class="stockul">
                 <li class="stockli mt-2"><a href="{{ url('jobwork1') }}">Job Work</a></li>
                 <li class="stockli mt-2"><a href="{{ url('jangad') }}">Jangad</a></li>
@@ -100,7 +104,8 @@
                     <div class="col-md-7">
                     </div>
                     <div class="col-md-1 float-right">
-                        <a href="{{ url('party') }}"><button type="button" class="btn btn-outline-secondary mt-1"><i class="fa-solid fa-list"></i></button></a>
+                        <a href="{{ url('party') }}"><button type="button"
+                                class="btn btn-outline-secondary mt-1"><i class="fa-solid fa-list"></i></button></a>
                     </div>
                 </div>
             </div>
@@ -119,36 +124,38 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> Name</th>
+                                            <th><input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault"> Name</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <th>Salesperson</th>
-                                            <th>Next Activity</th>
+                                            <th>Position</th>
+                                            <th>Tag</th>
                                             <th>City</th>
                                             <th>Country</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $data=App\Models\party::get(); ?>
-                                        @foreach($data as $ans)
-                                        <tr>
-                                            
-                                            <td>{{ $ans->id }}</td>
-                                            <td> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                   {{$ans->name}}
-                                                </label>
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><i class="fa-solid fa-clock"></i></td>
-                                            <td></td>
-                                            <td>{{ $ans->stat }}</td>
-                                          
-                                        </tr>
+                                        <?php $data = App\Models\party::get(); ?>
+                                        @foreach ($data as $ans)
+                                            <tr>
+
+                                                <td>{{ $ans->id }}</td>
+                                                <td> <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        {{ $ans->name }}
+                                                    </label>
+                                                </td>
+                                                <td>{{ $ans->phone }}</td>
+                                                <td>{{ $ans->email }}</td>
+                                                <td>{{ $ans->position }}</td>
+                                                <td>{{ $ans->tag }}</td>
+                                                <td>{{ $ans->city }}</td>
+                                                <td>{{ $ans->country }}</td>
+
+                                            </tr>
                                         @endforeach
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -159,23 +166,25 @@
                 </div>
             </div>
         </div>
-        <script src="{{URL:: asset('admin/assets/cdn/js/jquery.min.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/popper.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/bootstrap.min.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/matchHeight.min.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/datatables.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/jszip.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/vfs_fonts.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.html5.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/init/datatables-init.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/main.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/chosen.jquery.min.js')}} "></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/jquery.min.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/popper.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/bootstrap.min.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/matchHeight.min.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/datatables.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/jszip.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/init/datatables-init.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/main.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/chosen.jquery.min.js') }} "></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+        </script>
         <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 
@@ -195,4 +204,5 @@
         </script>
 
 </body>
+
 </html>

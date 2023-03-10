@@ -129,8 +129,15 @@
                                                     <div class="col col-md-4"><label class=" form-control-label">Party
                                                             : </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" name="party" required
-                                                            class="form-control">
+                                                        <?php $data = App\Models\party::get(); ?>
+                                                        <select class="custom-select d-block w-100" name="party"
+                                                            required>
+                                                            <option value="">Party name...</option>
+                                                            @foreach ($data as $ans)
+                                                                <option value="{{ $ans->name }}">
+                                                                    {{ $ans->name }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
@@ -165,39 +172,51 @@
                                         <div class="col-lg-6">
                                             <div class="card-body card-block">
                                                 <div class="row form-group">
-                                                    <div class="col col-md-4"><label class=" form-control-label">Pcs : </label></div>
+                                                    <div class="col col-md-4"><label class=" form-control-label">Pcs :
+                                                        </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" class="pcsval hello" name="pcs" placeholder="0" value="">
+                                                        <input type="text" class="pcsval hello" name="pcs"
+                                                            placeholder="0" value="">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-4"><label class=" form-control-label">Total Weight : </label></div>
+                                                    <div class="col col-md-4"><label class=" form-control-label">Total
+                                                            Weight : </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" class="weightval hello" name="weight" placeholder="0.00" value="">
+                                                        <input type="text" class="weightval hello" name="weight"
+                                                            placeholder="0.00" value="">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-4"><label class=" form-control-label">Avg.Height : </label></div>
+                                                    <div class="col col-md-4"><label
+                                                            class=" form-control-label">Avg.Height : </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" class="heightval hello" name="height" placeholder="0.00" value="">
+                                                        <input type="text" class="heightval hello" name="height"
+                                                            placeholder="0.00" value="">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-4"><label class=" form-control-label">Avg.length : </label></div>
+                                                    <div class="col col-md-4"><label
+                                                            class=" form-control-label">Avg.length : </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" class="lengthval hello" name="length" placeholder="0.00" value="">
+                                                        <input type="text" class="lengthval hello" name="length"
+                                                            placeholder="0.00" value="">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-4"><label class=" form-control-label">Avg.Width : </label></div>
+                                                    <div class="col col-md-4"><label
+                                                            class=" form-control-label">Avg.Width : </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" class="widthval hello" name="width" placeholder="0.00" value="">
+                                                        <input type="text" class="widthval hello" name="width"
+                                                            placeholder="0.00" value="">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-4"><label class=" form-control-label">Avg.Weight : </label></div>
+                                                    <div class="col col-md-4"><label
+                                                            class=" form-control-label">Avg.Weight : </label></div>
                                                     <div class="col-12 col-md-8">
-                                                        <input type="text" class="average hello" placeholder="0.00" value="">
+                                                        <input type="text" class="average hello"
+                                                            placeholder="0.00" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,8 +271,9 @@
                                                                         class="length" /></td>
                                                                 <td><input type="text" id="width_0"
                                                                         class="width" /></td>
-                                                                <td><button type='button' class='btnDelete btn-close mt-1'></button></td>
-                                                                </tr>
+                                                                <td><button type='button'
+                                                                        class='btnDelete btn-close mt-1'></button></td>
+                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -435,7 +455,9 @@
             $('.pcsval').val(pcs);
         });
 
-        var weight = 0; var average = 1; var aver = 0
+        var weight = 0;
+        var average = 1;
+        var aver = 0
         $('table').on('change', '.weight', function(e) {
             e.preventDefault();
             var aver = average++;
@@ -444,7 +466,9 @@
             $('.average').val(weight / aver);
         });
 
-        var height = 0; var heightavg = 1; var havg = 0;
+        var height = 0;
+        var heightavg = 1;
+        var havg = 0;
         $('table').on('change', '.height', function(e) {
             e.preventDefault();
             var havg = heightavg++;
@@ -452,7 +476,9 @@
             $('.heightval').val(height / havg);
         });
 
-        var length = 0; var lengthavg = 1; var lavg = 0;
+        var length = 0;
+        var lengthavg = 1;
+        var lavg = 0;
         $('table').on('change', '.length', function(e) {
             e.preventDefault();
             var lavg = lengthavg++;
@@ -460,7 +486,9 @@
             $('.lengthval').val(length / lavg);
         });
 
-        var width = 0; var widthavg = 1; var wavg = 0;
+        var width = 0;
+        var widthavg = 1;
+        var wavg = 0;
         $('table').on('change', '.width', function(e) {
             e.preventDefault();
             var wavg = widthavg++;
@@ -468,17 +496,14 @@
             $('.widthval').val(width / wavg);
         });
 
-    //     function deleteRow()
-    //    {
-    //      $('.default_row').remove();
-    //    }
-
-        $(document).ready(function(){
-            $("#dataTable").on('click','.btnDelete',function(){
+        $(document).ready(function() {
+            $("#dataTable").on('click', '.btnDelete', function() {
+                // let test = $(selector).val(".pcs");
+                // console.log(test);
                 $(this).closest('tr').remove();
             });
         });
-
     </script>
 </body>
+
 </html>

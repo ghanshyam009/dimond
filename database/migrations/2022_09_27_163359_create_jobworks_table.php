@@ -15,10 +15,15 @@ class CreateJobworksTable extends Migration
     {
         Schema::create('jobworks', function (Blueprint $table) {
             $table->id();
-            $table->string('party')->nullable();
-            $table->string('date')->nullable();
-            $table->string('expectedreturndate')->nullable();
-            $table->string('note')->nullable();
+            $table->string('party');
+            $table->dateTime('date');
+            $table->dateTime('return_date');
+            $table->longText('note');
+            $table->string('pcs')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('height')->nullable();
+            $table->string('length')->nullable();
+            $table->string('width')->nullable();
             $table->timestamps();
         });
     }
