@@ -206,7 +206,7 @@ class batchcontroller extends Controller
         return view('admin.createlot')->with(['data'=>$data,'id'=>$id]);
     }
     public function savelot(Request $request){
-        dd('hello');
+        // dd('hello');
         $lot=new LotMaster();
         $lot->name=implode(",",array_filter(array_unique($request->name)));
         $lot->save();
