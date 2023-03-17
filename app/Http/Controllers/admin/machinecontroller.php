@@ -86,24 +86,13 @@ class machinecontroller extends Controller
     {
         $a = DB::table('machine')->where('status', '=', '1')->get();
         $b = DB::table('machine')->where('status', '=', '0')->get();
-        //       $lot=DB::table('lot_masters')
-        //     ->join('machine','lot_masters.id' ,'=','machine.lotno')
-        //     ->join('lot_details','machine.lotno','=','lot_details.lot_id')
-        //     //  ->join('chocolates','machine.mname','=','chocolates.machineno')
-        //     ->select('lot_details.lot_id')->distinct()
-        //     ->select('lot_masters.name as name','lot_details.lot_id as lot_id','machine.*')
-        // //    ->select('lot_masters.name as name','lot_details.lot_id as lot_id','machine.*','chocolates.starttime as starttime')
-        //     ->get();
 
-        $lot = DB::table('machine')
-            ->join('chocolates', 'machine.mname', '=', 'chocolates.machineno')
-            ->join('lot_details', 'chocolates.lotno', '=', 'lot_details.lot_id')
-            ->select('lot_details.lot_id')->distinct()
-            ->join('lot_masters', 'chocolates.lotno', '=', 'lot_masters.id')
-            ->select('machine.mname as mname', 'machine.growthrate as growthrate', 'chocolates.starttime as starttime', 'chocolates.machineno as machineno', 'lot_masters.name as name', 'lot_details.lot_id as lot_id', 'lot_details.height as height', 'lot_details.pcs as pcs')
+        $lot = DB::table('chocolates')
+            ->join('lot_moves', 'chocolates.lotno', '=', 'lot_moves.lot_id')
+            ->select('lot_moves.lot_id')->distinct()
+            ->select('lot_moves.status', 'lot_moves.pcs', 'lot_moves.lot_id', 'chocolates.id', 'chocolates.created_at as start', 'lot_moves.name', 'chocolates.machineno')
+            ->where('lot_moves.status', '1')
             ->get();
-        // dd($lot);
-
         return view('admin.machinemanagement1')->with(['a' => $a, 'b' => $b, 'lot' => $lot]);
     }
     public function startTimermachine(Request $request)
