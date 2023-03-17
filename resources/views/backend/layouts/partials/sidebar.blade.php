@@ -21,7 +21,7 @@
                         </ul>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-tasks"></i><span>
                             Roles & Permissions
                         </span></a>
@@ -31,9 +31,9 @@
                                 <li class="{{ Route::is('admin.roles.create')  ? 'active' : '' }}"><a href="{{ route('admin.roles.create') }}">Create Role</a></li>
 
                         </ul>
-                    </li>
+                    </li> --}}
 
-                    <li>
+                    {{-- <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-user"></i><span>
                             Admins
                         </span></a>
@@ -44,7 +44,7 @@
                                 <li class="{{ Route::is('admin.admins.create')  ? 'active' : '' }}"><a href="{{ route('admin.admins.create') }}">Create Admin</a></li>
 
                         </ul>
-                    </li>
+                    </li> --}}
 
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-user"></i><span>

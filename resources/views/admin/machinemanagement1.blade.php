@@ -169,137 +169,87 @@
 
                 <div class="row">
                     <div class="col-lg-1"></div>
-                    <div class="col-lg-10 col-md-12 col-12">
 
+                    <div class="col-lg-10 col-md-12 col-12">
                         <div class="row">
-                            <?php $machine = App\Models\LotDetail::get(); ?>
-                            <?php $ghrate = App\Models\machine::get(); ?>
-                            <?php $cho = App\Models\chocolate::get(); ?>
-                            @foreach ($lot as $k => $data)
+                            <?php $machine = App\Models\machine::get(); ?>
+                            @foreach ($machine as $data)
                                 <div class="col-lg-4 col-md-6 col-xl-3">
                                     <div class="card card2">
                                         <div class="card-header cardheader1">
-                                            <strong><i class="fa-solid fa-keyboard"></i>{{ $data->mname }}</strong>
-                                            <p class="float-right" style="margin: 0px;">H:0.62</p>
+                                            <strong><i class="fa-solid fa-keyboard"></i> {{ $data->mname }}</strong>
+                                            <p class="float-right" style="margin: 0px;">
+                                                <?php $details = App\Models\LotDetail::get(); ?>
+                                                @foreach ($lot as $ldata)
+                                                    @if ($data->mname == $ldata->machineno)
+                                                        <?php $total = 0;
+                                                        $i = 0;
+                                                        $id = 0; ?>
+                                                        @foreach ($details as $detail)
+                                                            @if ($ldata->lot_id == $detail->lot_id)
+                                                                <?php $id = ++$i; ?>
+                                                                <?php $total += $detail->height; ?>
+                                                            @endif
+                                                        @endforeach
+                                                        H: {{ number_format($total / $id, 2) }}
+                                                    @endif
+                                                @endforeach
+                                            </p>
                                         </div>
                                         <div class="card-body card-block">
-                                            {{-- <input type="hidden" value="{{ $data->id }}"
-                                                id="machine_id_{{ $data->id }}" />
-                                            <input type="hidden" value="{{ $data->timer }}" class="current_timer"
-                                                id="old_timer_{{ $data->id }}" />
-                                            <input type="hidden" value="{{ $data->stop_timer }}"
-                                                class="current_stop_timer" id="stop_timer_{{ $data->id }}" />
-                                            <div style="color: green;font-weight: bold;text-align: right;"
-                                                id="timer_{{ $data->id }}">00:00:00</div> --}}
                                             <div class="row form-group1">
-                                                <div class="col-12 col-md-4"><label for="hf-email"
-                                                        class=" form-control-label">Lot:{{ $data->name }}</label>
+                                                <div class="col-12">
+                                                    <label for="hf-email" class="form-control-label">
+                                                        @foreach ($lot as $ldata)
+                                                            @if ($data->mname == $ldata->machineno)
+                                                                Lot: {{ $ldata->name }}
+                                                            @endif
+                                                        @endforeach
+                                                    </label>
                                                 </div>
                                             </div>
-                                            {{-- <div class="row form-group mt-2 mt-md-2 mt-lg-0">
-                                                <?php $finalgh = 0; ?>
-                                                <?php $mtime = 0; ?>
-                                                <?php $time = 0; ?>
-                                                <?php $gh = 0; ?>
-                                                <?php $totalgh = 0; ?>
-                                                <?php $sumgh = 0; ?>
-                                                 <?php $times = 0; ?>
-                                                @foreach ($cho as $tans)
-                                                    @if ($data->lot_id == $tans->lotno)
-                                                        <?php $time = $tans->starttime; ?>
-                                                       <?php $times = number_format($time, 2); ?>
-                                                    @endif
-                                                @endforeach
-                                                @foreach ($ghrate as $mgh)
-                                                @if ($data->machineno)
-                                                        <?php $gh = $data->growthrate; ?>
-                                                        {{-- <?php $ght = $_GET[$gh]; ?> --}}
-
-                                            {{-- @if ($data->lotno == $mgh->lotno)
-                                                        <?php $mtime = $mgh->created_at->format('h:i:s'); ?>
-                                                    @endif
-
-                                                    @if ($data->lotno == $mgh->lotno)
-                                                        {{-- <?php $sumgh = \Carbon\Carbon::parse($time)->diffInMinutes($mtime); ?> --}}
-                                            {{-- <?php $sumgh = \Carbon\Carbon::parse($time)->diffInSeconds($mtime); ?>
-                                                    @endif  --}}
-                                            {{-- @if ($data->machineno)
-                                                        <?php $totalgh = ($times * $gh) / 100000; ?>
-                                                        <?php $finalgh = round($totalgh, 3); ?>
-                                                    @endif
-                                                @endforeach
-
-                                                <div class="col-12 col-md-4"><label for="hf-password"
-                                                    class=" form-control-label">GH:{{ $totalgh }}</label>
-                                                </div>
-                                            </div> --}}
-
                                             <div class="row form-group mt-2 mt-md-2 mt-lg-0">
-                                                <?php $total = 0; ?>
-                                                <?php $mpcs = 0; ?>
-                                                <?php $sumth = 0; ?>
-                                                <?php $totalth = 0; ?>
-                                                <?php $finaltotalth = 0; ?>
-                                                @foreach ($cho as $mth)
-                                                    @if ($data->lot_id)
-                                                        <?php $total += $data->height; ?>
-                                                    @endif
-                                                    @if ($data->lot_id == $mth->lotno)
-                                                        <?php $mpcs = $data->pcs; ?>
-                                                    @endif
-                                                    @if ($data->lot_id == $mth->lotno)
-                                                        <?php $sumth = $total / $mpcs; ?>
-                                                    @endif
-                                                    @if ($data->lot_id == $mth->lotno)
-                                                        <?php $totalth = $total + $sumth; ?>
-                                                        <?php $finaltotalth = round($totalth, 3); ?>
-                                                    @endif
-                                                @endforeach
-                                                <div class="col-12 col-md-4"><label for="hf-password"
-                                                        class="form-control-label">TH:{{ $finaltotalth }}</label>
+                                                <div class="col-12">
+                                                    <label for="hf-password" class="form-control-label">
+                                                        <?php $details = App\Models\LotDetail::get(); ?>
+                                                        @foreach ($lot as $ldata)
+                                                            @if ($data->mname == $ldata->machineno)
+                                                                <?php $total = 0;
+                                                                $i = 0;
+                                                                $id = 0; ?>
+                                                                @foreach ($details as $detail)
+                                                                    @if ($ldata->lot_id == $detail->lot_id)
+                                                                        <?php $id = ++$i; ?>
+                                                                        <?php $total += $detail->height; ?>
+                                                                    @endif
+                                                                @endforeach
+                                                                TH: {{ number_format($total / $id, 2) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </label>
                                                 </div>
                                             </div>
+                                            <div class="row form-group mt-2 mt-md-2 mt-lg-0">
+                                                <div class="col-12">
 
-                                            {{-- <div class="row form-group1 mt-2">
-                                                <div class="col-10">
-                                                    <div class="row">
-                                                        @if ($data->timer == null && $data->stop_timer == null)
-                                                            <div class="col-6">
-                                                                <button id="start_{{ $data->id }}"
-                                                                    class="start_button btn btn-secondary btn-sm float-left mt-2"
-                                                                    onclick="start({{ $k + 1 }})"
-                                                                    style="font-size: 12px; padding: 3px;">Start</button>
-                                                            </div>
-                                                        @elseif($data->timer != null && $data->stop_timer != null)
-                                                            <button disabled id="stop_{{ $data->id }}"
-                                                                class="stop_button btn btn-secondary btn-sm float-left w-auto ms-2 mt-2"
-                                                                onclick="stop({{ $data->id }})"
-                                                                style="font-size: 12px; padding: 3px;">Growing
-                                                                Done</button>
-                                                        @else
-                                                            <div class="col-6">
-                                                                <button id="stop_{{ $data->id }}"
-                                                                    class="stop_button btn btn-secondary btn-sm float-left mt-2"
-                                                                    onclick="stop({{ $data->id }})"
-                                                                    style="font-size: 12px; padding: 3px;">Growing
-                                                                    Done</button>
-                                                            </div>
-                                                            <div class="col-6 ps-3">
-                                                                <button type="button"
-                                                                    class="btn btn-success btn-sm mt-2"
-                                                                    style="font-size: 12px; padding: 3px;">In
-                                                                    Progress</button>
-                                                            </div>
-                                                        @endif
-                                                    </div>
+                                                    <label for="hf-password" class="form-control-label">
+                                                        {{-- Time: sdf --}}
+                                                        @foreach ($lot as $ldata)
+                                                            @if ($data->mname == $ldata->machineno)
+                                                                <input type="hidden" class="id"
+                                                                    value="{{ $data->id }}">
+                                                                <input type="text" value="{{ $ldata->start }}">
+                                                                <div class="d-flex timer"
+                                                                    data-date="{{ $ldata->start }}">
+                                                                    <span class="hours"></span>h
+                                                                    <span class="minutes ms-2"></span>m
+                                                                    <span class="seconds ms-2"></span>s
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </label>
                                                 </div>
-
-                                                <div class="col-2">
-                                                    <button type="button"
-                                                        class="btn btn-danger btn-sm float-right mt-2"
-                                                        style="font-size: 12px; padding: 3px 6px;">B</button>
-                                                </div>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -331,182 +281,54 @@
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="{{ URL::asset('admin/assets/cdn/js/jquery.min.js ') }}"></script>
     <script src="{{ URL::asset('admin/assets/cdn/js/popper.min.js') }} "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
-        var timeArray = [];
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+                var clockdiv = document.getElementsByClassName("timer");
+                console.log(clockdiv);
+                var countDownDate = new Array();
+                for (var i = 0; i < clockdiv.length; i++) {
+                    countDownDate[i] = new Array();
+                    countDownDate[i]['el'] = clockdiv[i];
+                    countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
 
-        function timer(id) {
-
-            timeArray[id]['sec'] = timeArray[id]['sec'] + 1;
-            if (timeArray[id]['sec'] / 60 == 1) {
-                timeArray[id]['min'] = timeArray[id]['min'] + 1;
-                timeArray[id]['sec'] = 0;
-                if (timeArray[id]['min'] / 60 == 1) {
-                    timeArray[id]['hour'] = timeArray[id]['hour'] + 1;
-                    timeArray[id]['min'] = 0;
+                    countDownDate[i]['hours'] = 0;
+                    countDownDate[i]['seconds'] = 0;
+                    countDownDate[i]['minutes'] = 0;
                 }
-            }
-            if (timeArray[id]['sec'] < 10) {
-                timeArray[id]['dispSec'] = "0" + timeArray[id]['sec'].toString();
-            } else {
-                timeArray[id]['dispSec'] = timeArray[id]['sec'].toString();
-            }
-            if (timeArray[id]['min'] < 10) {
-                timeArray[id]['dispMin'] = "0" + timeArray[id]['min'].toString();
-            } else {
-                timeArray[id]['dispMin'] = timeArray[id]['min'].toString();
-            }
-            if (timeArray[id]['hour'] < 10) {
-                timeArray[id]['dispHour'] = "0" + timeArray[id]['hour'].toString();
-            } else {
-                timeArray[id]['dispHour'] = timeArray[id]['hour'].toString();
-            }
-            $("#timer_" + id).html(timeArray[id]['dispHour'] + ":" + timeArray[id]['dispMin'] + ":" + timeArray[id][
-                'dispSec'
-            ]);
-        }
 
-        function stop(id) {
-            window.clearInterval(timeArray[id]['timeoutId']);
-            timeArray[id]['check'] = "stop";
+                var countdownfunction = setInterval(function() {
+                    for (var i = 0; i < countDownDate.length; i++) {
+                        var now = new Date().getTime();
+                        var distance = now - countDownDate[i]['time'];
+                        countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+                        countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
+                            60));
+                        countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
 
-            var packet_id = $('#machine_id_' + id).val();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var formData = new FormData();
-            formData.append("id", packet_id);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                },
-                type: "POST",
-                url: "{{ route('stopTimermachine') }}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function() {
-                    $("#stop_" + id).attr("disabled", true);
-                }
-            });
-        }
-
-        function start(id, notreset = 0) {
-
-            if (notreset == 0) {
-                timeArray[id] = [];
-                timeArray[id]['hour'] = 0;
-                timeArray[id]['min'] = 0;
-                timeArray[id]['sec'] = 0;
-                timeArray[id]['dispHour'] = 0;
-                timeArray[id]['dispMin'] = 0;
-                timeArray[id]['dispSec'] = 0;
-                timeArray[id]['timeoutId'] = null;
-                timeArray[id]['check'] = "stop";
-            }
-
-            if (timeArray[id]['check'] === "stop") {
-                timeArray[id]['timeoutId'] = window.setInterval(function() {
-                    timer(id);
+                        if (distance < 0) {
+                            countDownDate[i]['el'].querySelector('.days').innerHTML = 0;
+                            countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
+                            countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
+                            countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
+                        } else {
+                            countDownDate[i]['el'].querySelector('.hours').innerHTML = countDownDate[i][
+                                'hours'
+                            ];
+                            countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[i][
+                                'minutes'
+                            ];
+                            countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[i][
+                                'seconds'
+                            ];
+                        }
+                    }
                 }, 1000);
-
-                $("#start_" + id).hide();
-                $("#stop_" + id).show();
-                timeArray[id]['check'] = "start";
-
             }
-        }
-
-        function clearAll() {
-            for (var a = 1; a <= 999; a++) {
-                window.clearInterval(a);
-            }
-        }
-        clearAll();
-        $(".current_timer").each(function() {
-            if ($(this).val()) {
-                if (isNaN((new Date($('#stop_timer_' + this.id.replace('old_timer_', '')).val())).getTime())) {
-                    var date1 = new Date($(this).val());
-                    var date2 = new Date();
-
-                    var diff = date2.getTime() - date1.getTime();
-
-                    var msec = diff;
-                    var hh = Math.floor(msec / 1000 / 60 / 60);
-                    msec -= hh * 1000 * 60 * 60;
-                    var mm = Math.floor(msec / 1000 / 60);
-                    msec -= mm * 1000 * 60;
-                    var ss = Math.floor(msec / 1000);
-                    msec -= ss * 1000;
-
-                    var id = $('#machine_id_' + this.id.replace('old_timer_', '')).val();
-                    timeArray[id] = [];
-                    timeArray[id]['hour'] = hh;
-                    timeArray[id]['min'] = mm;
-                    timeArray[id]['sec'] = ss;
-                    timeArray[id]['check'] = "stop";
-                    timeArray[id]['timeoutId'] = null;
-                    start(id, 1);
-                } else {
-                    var date1 = new Date($(this).val());
-                    var date2 = new Date($('#stop_timer_' + this.id.replace('old_timer_', '')).val());
-
-                    var diff = date2.getTime() - date1.getTime();
-
-                    var msec = diff;
-                    var hh = Math.floor(msec / 1000 / 60 / 60);
-                    msec -= hh * 1000 * 60 * 60;
-                    var mm = Math.floor(msec / 1000 / 60);
-                    msec -= mm * 1000 * 60;
-                    var ss = Math.floor(msec / 1000);
-                    msec -= ss * 1000;
-
-                    var id = $('#machine_id_' + this.id.replace('old_timer_', '')).val();
-                    if (ss < 10) {
-                        ss = "0" + ss.toString();
-                    } else {
-                        ss = ss.toString();
-                    }
-                    if (mm < 10) {
-                        mm = "0" + mm.toString();
-                    } else {
-                        mm = mm.toString();
-                    }
-                    if (hh < 10) {
-                        hh = "0" + hh.toString();
-                    } else {
-                        hh = hh.toString();
-                    }
-                    $('#timer_' + id).html(hh + ":" + mm + ":" + ss);
-                }
-            }
-        });
-        $(document).on('click', '.start_button', function() {
-            var id = this.id.replace('start_', '');
-
-            var packet_id = $('#machine_id_' + id).val();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var formData = new FormData();
-            formData.append("id", packet_id);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                },
-                type: "POST",
-                url: "{{ route('startTimermachine') }}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function() {
-                    window.location.reload();
-                }
-            });
         });
     </script>
 </body>
