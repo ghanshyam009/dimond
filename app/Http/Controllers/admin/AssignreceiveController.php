@@ -24,7 +24,6 @@ class AssignreceiveController extends Controller
             'reciveallchocolate'=>'required|exists:lot_masters,id',
             'location_id'=>'required'
         ]);
-
         $data = DB::table('lot_masters')
         ->join('lot_details', 'lot_details.batch_id', '=', 'lot_masters.id')
         ->where('lot_details.batch_id' ,$request->reciveallchocolate)->get();
@@ -56,13 +55,11 @@ class AssignreceiveController extends Controller
         $request->validate([
             'assigngrowingall' => 'required|exists:lot_masters,id',
             'location_id' => 'required',
-
         ]);
-
         $data = DB::table('lot_masters')
         ->join('lot_details', 'lot_details.batch_id', '=', 'lot_masters.id')
         ->where('lot_details.batch_id' ,$request->assigngrowingall)->get();
-
+// dd($data);
             foreach($data as $assign1){
                 $assign = new LotMove;
                 $assign->location_id = $request->location_id;
@@ -79,8 +76,6 @@ class AssignreceiveController extends Controller
                 $assign->name = $assign1->name;
                 $assign->save();
             }
-
             return redirect('assign');
    }
-
 }

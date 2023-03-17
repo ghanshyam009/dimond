@@ -842,7 +842,6 @@
                             $.each(response.responseJSON.errors,function(){
                                 swal('Record does not exist or is not accessible.');
                             })
-
                         }
                 });
             });
