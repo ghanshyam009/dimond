@@ -19,7 +19,7 @@
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="apple-touch-icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
+    <link rel="apple-touch-icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
     <link rel="shortcut icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
 
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/normalize.min.css') }}">
@@ -67,7 +67,7 @@
                             </span>
                         </a>
 
-                        <div class="user-menu dropdown-menu">
+                   <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="{{ url('logout') }}"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
@@ -86,260 +86,314 @@
                 <div class="row mt-5">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8">
-                       <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Scan For Assign</h5>
-                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Scan For Assign</h5>
+                                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button> --}}
-                        </div>
-                        <form action="{{ url('assigngrowing') }}" id="assignall" name="assign"
-                            method="post" enctype="multipart/form-data">
-                            @csrf
+                            </div>
+                            <form action="{{ url('assigngrowing') }}" id="assignall" name="assign" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
 
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-lg-11">
-                                        <input id="cc-number" name="cc-number" type="tel"
-                                            class="form-control cc-number identified visa" value=""
-                                            data-val="true" data-val-required="Please enter the card number"
-                                            data-val-cc-number="Please enter a valid card number">
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#largeModal">Assign</button>
-                                    </div>
-                                    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="largeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        Are you sure you want to Return a lot?
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-info"
-                                                        data-dismiss="modal">Ok</button>
-                                                    <button type="button" class="btn btn-light">Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 float-left">
-                                        <div class="card-body card-block">
-                                            <div class="row form-group">
-                                                <div class="col col-md-9"><label class=" form-control-label"><img
-                                                            src="{{ URL::asset('admin/assets/img/barcode.webp') }}"alt=""></label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col-12 col-md-9">
-
-                                                    <p class="form-control-static"><input type="email"
-                                                            id="email-input" class="form-control auto"></p>
-                                                    <input type="hidden" class="assigngrowingall" name="assigngrowingall">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body card-block">
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="select" class=" form-control-label">Location :
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <select id="locations" class="custom-select d-block w-100"
-                                                        name="location_id" required>
-                                                        <option value="">Please select Location</option>
-                                                        <?php $location = App\Models\location::get(); ?>
-                                                        @foreach ($location as $loc)
-                                                            <option value="{{ $loc->id }}">{{ $loc->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div style="display:none"; id="employee" class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label class=" form-control-label">Employee : </label>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <select class="custom-select d-block w-100" name="user_id">
-                                                        <option value="">Please select Employee</option>
-                                                        <?php $users = App\Models\userlogin::get(); ?>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}">{{ $user->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            <div style="display:none"; id="process" class="row form-group">
-                                                <div class="col col-md-3"><label for="select"
-                                                        class=" form-control-label">Processes : </label></div>
-                                                <div class="col-12 col-md-6">
-                                                    <select class="custom-select d-block w-100" value=""
-                                                        name="process">
-                                                        <option value="0">Please select Porcess</option>
-                                                        <?php $processes = App\Models\Processes::get(); ?>
-                                                        @foreach ($processes as $process)
-                                                            <option value="{{ $process->id }}">{{ $process->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active" id="home-tab"
-                                                                data-toggle="tab" href="#home" role="tab"
-                                                                aria-controls="home" aria-selected="true">Records</a>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                        <div class="col-lg-11">
+                                            <input id="cc-number" name="cc-number" type="tel"
+                                                class="form-control cc-number identified visa" value=""
+                                                data-val="true" data-val-required="Please enter the card number"
+                                                data-val-cc-number="Please enter a valid card number">
                                         </div>
-                                    </div>
-                                    <div id="choco" style="display: none"; class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active" id="home-tab"
-                                                                data-toggle="tab" href="#home" role="tab"
-                                                                aria-controls="home"
-                                                                aria-selected="true">Chocolate</a>
-                                                        </li>
-
-                                                    </ul>
-                                                    <div class="area">
-                                                        <input type="text-area"
-                                                            style="width: 100%; height:100px; !important">
+                                        <div class="col-lg-1">
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#largeModal">Assign</button>
+                                        </div>
+                                        <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="largeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            Are you sure you want to Return a lot?
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-info"
+                                                            data-dismiss="modal">Ok</button>
+                                                        <button type="button" class="btn btn-light">Cancel</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active" id="home-tab"
-                                                                data-toggle="tab" href="#home" role="tab"
-                                                                aria-controls="home" aria-selected="true">Lots</a>
-                                                        </li>
-
-                                                    </ul>
-                                                    <div class="area">
-                                                        <input type="text-area"
-                                                            style="width: 100%; height:100px; !important">
+                                        <div class="col-lg-3 float-left">
+                                            <div class="card-body card-block">
+                                                <div class="row form-group">
+                                                    <div class="col col-md-9"><label class=" form-control-label"><img
+                                                                src="{{ URL::asset('admin/assets/img/barcode.webp') }}"alt=""></label>
                                                     </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col-12 col-md-9">
 
+                                                        <p class="form-control-static"><input type="email"
+                                                                id="email-input" class="form-control auto"></p>
+                                                        <input type="hidden" class="assigngrowingall"
+                                                            name="assigngrowingall">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-3">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card-body card-block">
 
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                        <div class="tab-pane fade show active" id="home"
-                                                            role="tabpanel" aria-labelledby="home-tab">
-                                                            <div class="row">
-                                                                <ul class="nav nav-tabs mt-4" id="myTab"
-                                                                    role="tablist">
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link active" id="home-tab"
-                                                                            data-toggle="tab" href="#home"
-                                                                            role="tab" aria-controls="home"
-                                                                            aria-selected="true">Packets</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                                    <div class="tab-pane fade show active"
-                                                                        id="home" role="tabpanel"
-                                                                        aria-labelledby="home-tab">
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="select" class=" form-control-label">Location :
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                        <select id="locations" class="custom-select d-block w-100"
+                                                            name="location_id" required>
+                                                            <option value="">Please select Location</option>
+                                                            <?php $location = App\Models\location::get(); ?>
+                                                            @foreach ($location as $loc)
+                                                                <option value="{{ $loc->id }}">
+                                                                    {{ $loc->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-                                                                        <table class="table"
-                                                                            style="line-height: 5px;">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Name</th>
-                                                                                    <th>Height(Micron)</th>
-                                                                                    <th>Length(MM)</th>
-                                                                                    <th>Width(MM)</th>
-                                                                                    <th>Pcs</th>
-                                                                                    <th>Weight(Ct)</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody id="experienceSection">
-                                                                                <tr>
-                                                                                    <td
-                                                                                        style="vertical-align: middle;text-align:left">
-                                                                                        <input type="hidden"
-                                                                                            class="name"
-                                                                                            name="name1">
-                                                                                        Name
-                                                                                    </td>
-                                                                                    <td>0</td>
-                                                                                    <td>0</td>
-                                                                                    <td>0</td>
-                                                                                    <td>0</td>
-                                                                                    <td>0</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
+                                                {{-- <div style="display:none"; id="employee" class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label class=" form-control-label">Employee : </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                      
+                                                                <select class="custom-select d-block w-100"
+                                                                    name="user_id">
+                                                                    <option value="">Please select Employee
+                                                                    </option>
+                                                                    <?php $users = App\Models\userlogin::get(); ?>
+                                                                    @foreach ($users as $user)
+                                                                        <option value="{{ $user->id }}">
+                                                                            {{ $user->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                    </div>
+                                                </div> --}}
+                                               
+                                                
+                                                {{-- <div style="display:none"; id="employee" class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label class=" form-control-label">Employee : </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                                <select class="custom-select d-block w-100"
+                                                                    name="user_id">
+                                                                    <?php $users = App\Models\userlogin::get(); ?>
+                                                                    @foreach ($users as $user)
+                                                                    <option value="{{ $user->id }}">
+                                                                       
+                                                                       @if($user->name !== Auth::user()->name)
+                                                                            {{ $user->name }} 
+                                                                           
+                                                                            @endif
+                                                                           
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                    </div>
+                                                </div> --}}
 
-                                                                    </div>
+                                                <div style="display:none"; id="employee" class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label class=" form-control-label">Employee : </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                                <select class="custom-select d-block w-100"
+                                                                    name="user_id">
+                                                                    <?php $users = App\Models\userlogin::get(); ?>
+                                                                    {{-- <?php $emdata=Auth::user()->role == 'admin'->get('name')?> --}}
+                                                                    @foreach ($users as $user)
+                                                                 {{-- @if(Auth::user()->role = 'admin' !== $user->name())
+                                                                  {{ $user->name }} 
+                                                                 @endif --}}
+                                                                    @if($user->name !== Auth::user()->name)
+                                                                    <option value="{{ $user->id }}">
+                                                                            {{ $user->name }} 
+                                                                        </option>
+                                                                    @endif 
+                                                                    @endforeach
+                                                                </select>
+                                                    </div>
+                                                </div>
+                                                <div style="display:none"; id="process" class="row form-group">
+                                                    <div class="col col-md-3"><label for="select"
+                                                            class=" form-control-label">Processes : </label></div>
+                                                    <div class="col-12 col-md-6">
+                                                        <select class="custom-select d-block w-100" value=""
+                                                            name="process">
+                                                            <option value="0">Please select Porcess</option>
+                                                            <?php $processes = App\Models\Processes::get(); ?>
+                                                            @foreach ($processes as $process)
+                                                                <option value="{{ $process->id }}">
+                                                                    {{ $process->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                                                </div>
-                                                            </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" id="home-tab"
+                                                                    data-toggle="tab" href="#home" role="tab"
+                                                                    aria-controls="home"
+                                                                    aria-selected="true">Records</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="choco" style="display: none"; class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" id="home-tab"
+                                                                    data-toggle="tab" href="#home" role="tab"
+                                                                    aria-controls="home"
+                                                                    aria-selected="true">Chocolate</a>
+                                                            </li>
+
+                                                        </ul>
+                                                        <div class="area">
+                                                            <input type="text-area"
+                                                                style="width: 100%; height:100px; !important">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" id="home-tab"
+                                                                    data-toggle="tab" href="#home" role="tab"
+                                                                    aria-controls="home" aria-selected="true">Lots</a>
+                                                            </li>
+
+                                                        </ul>
+                                                        <div class="area">
+                                                            <input type="text-area"
+                                                                style="width: 100%; height:100px; !important">
                                                         </div>
 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
 
-                                <div class="modal-footer float-left1">
-                                    <button type="button" id="close" class="btn btn-secondary">Create</button>
-                                    {{-- <button type="reset" class="btn btn-light"
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                            <div class="tab-pane fade show active" id="home"
+                                                                role="tabpanel" aria-labelledby="home-tab">
+                                                                <div class="row">
+                                                                    <ul class="nav nav-tabs mt-4" id="myTab"
+                                                                        role="tablist">
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link active" id="home-tab"
+                                                                                data-toggle="tab" href="#home"
+                                                                                role="tab" aria-controls="home"
+                                                                                aria-selected="true">Packets</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="tab-content pl-3 p-1"
+                                                                        id="myTabContent">
+                                                                        <div class="tab-pane fade show active"
+                                                                            id="home" role="tabpanel"
+                                                                            aria-labelledby="home-tab">
+
+                                                                            <table class="table"
+                                                                                style="line-height: 5px;">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Name</th>
+                                                                                        <th>Height(Micron)</th>
+                                                                                        <th>Length(MM)</th>
+                                                                                        <th>Width(MM)</th>
+                                                                                        <th>Pcs</th>
+                                                                                        <th>Weight(Ct)</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="experienceSection">
+                                                                                    <tr>
+                                                                                        <td
+                                                                                            style="vertical-align: middle;text-align:left">
+                                                                                            <input type="hidden"
+                                                                                                class="name"
+                                                                                                name="name1">
+                                                                                            Name
+                                                                                        </td>
+                                                                                        <td>0</td>
+                                                                                        <td>0</td>
+                                                                                        <td>0</td>
+                                                                                        <td>0</td>
+                                                                                        <td>0</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer float-left1">
+                                        <button type="button" id="close"
+                                            class="btn btn-secondary">Create</button>
+                                        {{-- <button type="reset" class="btn btn-light"
                                         >Cancel</button> --}}
-                                </div>
-                        </form>
-                    </div>
+                                    </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="col-lg-4"></div>
                 </div>
@@ -365,220 +419,45 @@
     <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
-
     <script src="{{ URL::asset('admin/assets/js/lib/data-table/jszip.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 </body>
 
-         
-               <script>
-            var timeArray = [];
 
-            function timer(id) {
+<script>
+    $('body').on('change', '.auto', function(e) {
+        e.preventDefault();
+        ApplyFilter(this.value);
+        var text = $('.assigngrowingall').val(this.value)
+        $(this).val('');
+        // console.log(text);
+    });
 
-                timeArray[id]['sec'] = timeArray[id]['sec'] + 1;
-                if (timeArray[id]['sec'] / 60 == 1) {
-                    timeArray[id]['min'] = timeArray[id]['min'] + 1;
-                    timeArray[id]['sec'] = 0;
-                    if (timeArray[id]['min'] / 60 == 1) {
-                        timeArray[id]['hour'] = timeArray[id]['hour'] + 1;
-                        timeArray[id]['min'] = 0;
-                    }
-                }
-                if (timeArray[id]['sec'] < 10) {
-                    timeArray[id]['dispSec'] = "0" + timeArray[id]['sec'].toString();
-                } else {
-                    timeArray[id]['dispSec'] = timeArray[id]['sec'].toString();
-                }
-                if (timeArray[id]['min'] < 10) {
-                    timeArray[id]['dispMin'] = "0" + timeArray[id]['min'].toString();
-                } else {
-                    timeArray[id]['dispMin'] = timeArray[id]['min'].toString();
-                }
-                if (timeArray[id]['hour'] < 10) {
-                    timeArray[id]['dispHour'] = "0" + timeArray[id]['hour'].toString();
-                } else {
-                    timeArray[id]['dispHour'] = timeArray[id]['hour'].toString();
-                }
-                $("#timer_" + id).html(timeArray[id]['dispHour'] + ":" + timeArray[id]['dispMin'] + ":" + timeArray[id][
-                    'dispSec'
-                ]);
-            }
-
-            function stop(id) {
-                window.clearInterval(timeArray[id]['timeoutId']);
-                timeArray[id]['check'] = "stop";
-
-                var packet_id = $('#packet_id_' + id).val();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                var formData = new FormData();
-                formData.append("id", packet_id);
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    },
-                    type: "POST",
-                    url: "{{ route('stopTimer') }}",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function() {
-                        $("#stop_" + id).attr("disabled", true);
-                    }
-                });
-            }
-
-            function start(id, notreset = 0) {
-
-                if (notreset == 0) {
-                    timeArray[id] = [];
-                    timeArray[id]['hour'] = 0;
-                    timeArray[id]['min'] = 0;
-                    timeArray[id]['sec'] = 0;
-                    timeArray[id]['dispHour'] = 0;
-                    timeArray[id]['dispMin'] = 0;
-                    timeArray[id]['dispSec'] = 0;
-                    timeArray[id]['timeoutId'] = null;
-                    timeArray[id]['check'] = "stop";
-                }
-
-                if (timeArray[id]['check'] === "stop") {
-                    timeArray[id]['timeoutId'] = window.setInterval(function() {
-                        timer(id);
-                    }, 1000);
-
-                    $("#start_" + id).hide();
-                    $("#stop_" + id).show();
-                    timeArray[id]['check'] = "start";
-
-                }
-            }
-
-            function clearAll() {
-                for (var a = 1; a <= 999; a++) {
-                    window.clearInterval(a);
-                }
-            }
-            clearAll();
-            $(".current_timer").each(function() {
-                if ($(this).val()) {
-                    if (isNaN((new Date($('#stop_timer_' + this.id.replace('old_timer_', '')).val())).getTime())) {
-                        var date1 = new Date($(this).val());
-                        var date2 = new Date();
-
-                        var diff = date2.getTime() - date1.getTime();
-
-                        var msec = diff;
-                        var hh = Math.floor(msec / 1000 / 60 / 60);
-                        msec -= hh * 1000 * 60 * 60;
-                        var mm = Math.floor(msec / 1000 / 60);
-                        msec -= mm * 1000 * 60;
-                        var ss = Math.floor(msec / 1000);
-                        msec -= ss * 1000;
-
-                        var id = $('#packet_id_' + this.id.replace('old_timer_', '')).val();
-                        timeArray[id] = [];
-                        timeArray[id]['hour'] = hh;
-                        timeArray[id]['min'] = mm;
-                        timeArray[id]['sec'] = ss;
-                        timeArray[id]['check'] = "stop";
-                        timeArray[id]['timeoutId'] = null;
-                        start(id, 1);
-                    } else {
-                        var date1 = new Date($(this).val());
-                        var date2 = new Date($('#stop_timer_' + this.id.replace('old_timer_', '')).val());
-
-                        var diff = date2.getTime() - date1.getTime();
-
-                        var msec = diff;
-                        var hh = Math.floor(msec / 1000 / 60 / 60);
-                        msec -= hh * 1000 * 60 * 60;
-                        var mm = Math.floor(msec / 1000 / 60);
-                        msec -= mm * 1000 * 60;
-                        var ss = Math.floor(msec / 1000);
-                        msec -= ss * 1000;
-
-                        var id = $('#packet_id_' + this.id.replace('old_timer_', '')).val();
-                        if (ss < 10) {
-                            ss = "0" + ss.toString();
-                        } else {
-                            ss = ss.toString();
-                        }
-                        if (mm < 10) {
-                            mm = "0" + mm.toString();
-                        } else {
-                            mm = mm.toString();
-                        }
-                        if (hh < 10) {
-                            hh = "0" + hh.toString();
-                        } else {
-                            hh = hh.toString();
-                        }
-                        $('#timer_' + id).html(hh + ":" + mm + ":" + ss);
-                    }
+    function ApplyFilter(search) {
+        if (search != null && search != "") {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $(document).on('click', '.start_button', function() {
-                var id = this.id.replace('start_', '');
+            var formData = new FormData();
+            formData.append("search", search);
 
-                var packet_id = $('#packet_id_' + id).val();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                var formData = new FormData();
-                formData.append("id", packet_id);
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    },
-                    type: "POST",
-                    url: "{{ route('startTimer') }}",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function() {
-                        window.location.reload();
-                    }
-                });
-            });
-
-            $('body').on('change', '.auto', function(e) {
-                e.preventDefault();
-                ApplyFilter(this.value);
-                $('.assigngrowingall').val(this.value)
-                $(this).val('');
-            });
-
-            function ApplyFilter(search) {
-                if (search != null && search != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    var formData = new FormData();
-                    formData.append("search", search);
-
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ route('searchLot') }}",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $('#experienceSection').html('');
-                            $.each(res.lot_detail, function(i, val) {
-                                var section = $(`<tr>
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "POST",
+                url: "{{ route('searchLot') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    // console.log(res);
+                    $('#experienceSection').html('');
+                    $.each(res.lot_detail, function(i, val) {
+                        var section = $(`<tr>
                                     <td style="vertical-align: middle;text-align:left">${res.name}</td>
                                     <td>${val.height}</td>
                                     <td>${val.length}</td>
@@ -586,78 +465,61 @@
                                     <td>${val.pcs}</td>
                                     <td>${val.weight}</td>
                                 </tr>`);
-                                $('#experienceSection').append(section);
-                            });
-                        }
+                        $('#experienceSection').append(section);
                     });
                 }
-            }
-            $('#returnModal').on('hidden.bs.modal', function(e) {
-                $('#experienceSection').html('');
-                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">Name</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>`);
-                $('#experienceSection').append(section);
             });
+        }
+    }
+    $(document).ready(function() {
+        $("#locations").change(function() {
 
-
-                $(document).ready(function(){
-                $("#locations").change(function () {
-
-                var dropdownval = $("#locations").val();
-                switch (dropdownval) {
-                    case '1':
+            var dropdownval = $("#locations").val();
+            switch (dropdownval) {
+                case '1':
                     $("#employee").show();
                     $("#process").show();
                     $("#choco").hide();
                     break;
-                    case '2':
+                case '2':
                     $("#employee").show();
                     $("#choco").show();
                     $("#process").hide();
                     break;
-                    case '3':
+                case '3':
                     $("#employee").hide();
                     $("#choco").hide();
                     $("#process").hide();
                     break;
-                    case '4':
+                case '4':
                     $("#employee").show();
                     $("#choco").hide();
                     $("#process").hide();
                     break;
-                    case '5':
+                case '5':
                     $("#employee").show();
                     $("#choco").hide();
                     $("#process").hide();
                     break;
-                    case '6':
+                case '6':
                     $("#employee").hide();
                     $("#choco").hide();
                     $("#process").hide();
                     break;
-                    default:
+                default:
                     $("#location").show();
                     $("#choco").hide();
                     $("#process").hide();
                     $("#employee").hide();
                     break;
-                    }
-                }
-                );
-            });
-
-
-            $(document).ready(function(){
-                $("#recevie").change(function () {
-                var test = $("#recevie").val();
-                switch (test) {
-                    case '1':
+            }
+        });
+    });
+    $(document).ready(function() {
+        $("#recevie").change(function() {
+            var test = $("#recevie").val();
+            switch (test) {
+                case '1':
                     $("#chocolate").show();
                     $("#loste").show();
                     $("#notes").hide();
@@ -669,7 +531,7 @@
                     $("#receiveemployee").show();
 
                     break;
-                    case '2':
+                case '2':
                     $("#notes").show();
                     $("#notese").show();
                     $("#recevie").show();
@@ -681,7 +543,7 @@
                     $("#receiveemployee").show();
                     $("#loste").hide();
                     break;
-                    case '3':
+                case '3':
                     $("#recevie").show();
                     $("#return").show();
                     $("#print").hide();
@@ -694,7 +556,7 @@
                     $("#notese").hide();
 
                     break;
-                    case '4':
+                case '4':
                     $("#recevie").show();
                     $("#return").show();
                     $("#print").hide();
@@ -707,7 +569,7 @@
                     $("#notese").hide();
 
                     break;
-                    case '5':
+                case '5':
                     $("#recevie").show();
                     $("#return").show();
                     $("#print").hide();
@@ -720,7 +582,7 @@
                     $("#notese").hide();
 
                     break;
-                    case '6':
+                case '6':
                     $("#recevie").show();
                     $("#return").show();
                     $("#print").hide();
@@ -731,7 +593,7 @@
                     $("#chocolate").hide();
 
                     break;
-                    default:
+                default:
                     $("#recevie").show();
                     $("#return").show();
                     $("#print").show();
@@ -741,113 +603,50 @@
                     $("#receiveemployee").hide();
                     $("#chocolate").hide();
                     break;
-                    }
-                }
-                );
-            });
-
-
-            $('body').on('change', '.rec', function(e) {
-                e.preventDefault();
-                ApplyFilterRecevie(this.value);
-                $('.reciveall').val(this.value);
-                $(this).val('');
-            });
-
-            function ApplyFilterRecevie(search) {
-                if (search != null && search != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    var formData = new FormData();
-                    formData.append("search", search);
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ route('recevieLot') }}",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $('#smartSection').html('');
-                            $.each(res.lot_detail, function(i, val) {
-                                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">${res.name}</td>
-                                    <td>${val.height}</td>
-                                    <td>${val.length}</td>
-                                    <td>${val.width}</td>
-                                    <td>${val.pcs}</td>
-                                    <td>${val.weight}</td>
-                                </tr>`);
-                                $('#smartSection').append(section);
-                            });
-                        }
-                    });
-                }
             }
-            $('#receiveModal').on('hidden.bs.modal', function(e) {
-                $('#smartSection').html('');
-                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">Name</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>`);
-                $('#smartSection').append(section);
-            });
+        });
+    });
+    $('#AssignLot').click(function(e) {
+        e.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr('id');
+        $.ajax({
+            type: "POST",
+            url: "{{ route('recevieLot') }}",
+            data: {
+                id: id
+            },
+            cache: false,
+            success: function(data) {}
+        });
+        return false;
+    });
+    $('#close').click(function(e) {
+        e.preventDefault();
+        var formData = new FormData(document.getElementById("assignall"));
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            },
+            type: "POST",
+            url: "{{ url('assigngrowing') }}",
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(response) {
 
-            $('#AssignLot').click(function(e){
-                e.preventDefault();
-                var url = $(this).attr('data-url');
-                var id = $(this).attr('id');
-                $.ajax({
-                        type: "POST",
-                        url: "{{ route('recevieLot') }}",
-                        data: {id:id},
-                        cache: false,
-                        success: function(data){
-                        }
-                        });
-                return false;
-            });
+                $('#returnModal').modal('hide');
+                location.reload();
+            },
+            error: function(response) {
+                $.each(response.responseJSON.errors, function() {
+                    swal('Record does not exist or is not accessible.');
+                })
 
+            }
+        });
+    });
+</script>
 
-
-
-            $('#close').click(function(e){
-                e.preventDefault();
-                var formData = new FormData(document.getElementById("assignall"));
-                $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ url('assigngrowing') }}",
-                        data: formData,
-                        cache: false,
-                        processData: false,
-                        contentType: false,
-                        success: function(response){
-
-                            $('#returnModal').modal('hide');
-                            location.reload();
-                        },
-                        error:function (response){
-                            $.each(response.responseJSON.errors,function(){
-                                swal('Record does not exist or is not accessible.');
-                            })
-
-                        }
-                    });
-
-            });
-
-          
-        </script>
 </html>

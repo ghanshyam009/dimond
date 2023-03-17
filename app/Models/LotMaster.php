@@ -15,7 +15,7 @@ class LotMaster extends Model
     }
     public function laserDetail()
     {
-        return $this->hasMany(Laser::class,'lot_id','id');
+        return $this->hasMany(returnlaser::class,'lot_id','id');
     }
 
     public function lotMove()

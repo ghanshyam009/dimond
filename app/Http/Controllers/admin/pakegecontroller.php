@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use  Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\returnlaser;
 class pakegecontroller extends Controller
 {
        public function demo(){
@@ -32,11 +33,16 @@ class pakegecontroller extends Controller
                 ]);
 
                 $data1 = User::where('email', $request->email)->select('name')->first();
+                $data2 = User::where('email', $request->email)->select('id')->first();
                 $data = $data1->name;
-
+                 $edata = $data2->id;
+// dd($edata);
                 // Attempt to login
                 if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
-                    Session::put('studname', $data);
+                Session::put('studname', $data);
+                    // dd($b);
+                   Session::put('user_id', $edata);
+                //    dd($a);
                     // Redirect to dashboard
                     session()->flash('success', 'Successully Logged in !');
                     return redirect('index1');
@@ -72,4 +78,34 @@ class pakegecontroller extends Controller
                  Session()->forget('studname');
                  return redirect('/');
              }
+               public function laserreturn(Request $request){
+// dd($request);
+        $request->validate([
+            'returnalllaser' => 'required|exists:lot_masters,id',
+        ]);
+      
+          $returndata = DB::table('lot_masters')
+        ->join('lot_details', 'lot_details.batch_id', '=', 'lot_masters.id')
+        ->where('lot_details.batch_id' ,$request->returnalllaser)->get();
+            // dd($returndata);
+            foreach($returndata as $rlaser){
+                $laser = new returnlaser;
+                $laser->user_id = $request->user_id;
+                $laser->process = $request->process;
+                $laser->netprocess = $request->netprocess;
+                $laser->dlcweight = $request->dlcweight;
+                $laser->name = $rlaser->name;
+                $laser->pcs = $rlaser->pcs;
+                $laser->shape = $rlaser->shape;
+                $laser->height = $rlaser->height;
+                $laser->length = $rlaser->length;
+                $laser->width = $rlaser->width;
+                $laser->weight = $rlaser->weight;
+                $laser->lot_id = $rlaser->lot_id;
+                $laser->batch_id = $rlaser->batch_id;
+                $laser->save();
+            }
+            // dd($laser);
+          return redirect('laser1');
+}
 }

@@ -104,133 +104,129 @@
                 </li>
             </ul>
 
-            <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
-               aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addpacketsModalLabel">Create Lot</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('savelot') }}" method="post" id="myForm">
-                            @csrf
-                            <div class="row">
+              <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addpacketsModalLabel">Create Lot</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('savelot') }}" method="post" id="myForm">
+                                @csrf
+                                <div class="row">
 
-                                <div class="col-lg-9">
-                                    <div class="card-body card-block">
-                                        <div class="row form-group">
-                                            <div class="col col-md-3"><label for="select"
-                                                    class=" form-control-label">Batch</label></div>
-                                            <div class="col-12 col-md-6">
-                                                <select class="custom-select d-block w-100" required=""
-                                                    id="batch_id">
-                                                    <option value="0">Please select</option>
-                                                    <option value="mix">Mix</option>
-                                                    @foreach ($data as $ans)
-                                                        <option value="{{ $ans->id }}">
-                                                            {{ $ans->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                    <div class="col-lg-9">
+                                        <div class="card-body card-block">
+
+                                            <div class="row form-group">
+                                                <div class="col col-md-3"><label for="select"
+                                                        class=" form-control-label">Batch</label></div>
+                                                <div class="col-12 col-md-6">
+                                                    <select class="custom-select d-block w-100" required=""
+                                                        name="batch_id" id="batch_id">
+                                                        <?php $batch=App\Models\Bactch::get();?>
+                                                        <option value="0">Please select</option>
+                                                        <option value="mix">Mix</option>
+                                                        @foreach ($batch as $ans)
+                                                            <option value="{{ $ans->id }}">
+                                                                {{ $ans->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12 col-md-3"><label
-                                                    class=" form-control-label">Print</label></div>
-                                            <div class="col-12 col-md-6 ps-0">
-                                                <div class="form-check-inline form-check">
-                                                    <label for="inline-radio1" class="form-check-label d-flex">
-                                                        <input type="radio" id="inline-radio1"
-                                                            name="inline-radios" value="option1"
-                                                            class="form-check-input" checked>Lot
-                                                    </label>
+                                            <div class="row form-group">
+                                                <div class="col-12 col-md-3"><label
+                                                        class=" form-control-label">Print</label></div>
+                                                <div class="col-12 col-md-6 ps-0">
+                                                    <div class="form-check-inline form-check">
+                                                        <label for="inline-radio1" class="form-check-label d-flex">
+                                                            <input type="radio" id="inline-radio1"
+                                                                name="inline-radios" value="option1"
+                                                                class="form-check-input" checked>Lot
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-12">
 
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" id="home-tab" data-toggle="tab"
-                                                        href="#home" role="tab" aria-controls="home"
-                                                        aria-selected="true">Add Packets</a>
-                                                </li>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="home-tab" data-toggle="tab"
+                                                            href="#home" role="tab" aria-controls="home"
+                                                            aria-selected="true">Add Packets</a>
+                                                    </li>
 
-                                            </ul>
-                                            <div class="table-responsive">
-                                                <table id="dataTable" class="cover table table-responsive">
-                                                    <thead>
-                                                        <tr>
-                                                            <th> Name</th>
-                                                            <th>Height(Micro)</th>
-                                                            <th>Length(MM)..</th>
-                                                            <th>Width(MM)</th>
-                                                            <th>Shape</th>
-                                                            <th>Weight(Ct)</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr id="default_row">
-                                                        <td>
-                                                            <input type="text" id="name_0"
-                                                                class="auto1" name="name[]" />
-                                                                <input type="hidden" id="id_0" name="id[]" />
-                                                        </td>
-                                                        <td><input type="text" id="height_0" name="height[]" /></td>
-                                                        <td><input type="text" id="length_0" name="length[]" /></td>
-                                                        <td><input type="text" id="width_0" name="width[]" /></td>
-                                                        <td><input type="text" id="shape_0" name="shape[]" /></td>
-                                                        <td><input type="text" id="weight_0" name="weight[]" /></td>
-                                                        <td><input type="text" id="height_1" /></td>
-                                                        <td><input type="text" id="length_1" /></td>
-                                                        <td><input type="text" id="width_1" /></td>
-                                                        <td><input type="text" id="shape_1" /></td>
-                                                        <td><input type="text" id="pcs_1" /></td>
-                                                        <td><input type="text" id="weight_1" /></td>
-                                                    </tr>
-                                                </tbody>
+                                                </ul>
+                                                <div class="table-responsive">
+                                                    <table id="dataTable" class="cover table table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> Name</th>
+                                                                <th>Height(Micro)</th>
+                                                                <th>Length(MM)..</th>
+                                                                <th>Width(MM)</th>
+                                                                <th>Shape</th>
+                                                                <th>Weight(Ct)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr id="default_row">
+                                                                <td>
+                                                                    <input type="text" id="name_0"
+                                                                        class="auto" name="name[]" />
+                                                                    <input type="hidden" id="id_0">
+                                                                </td>
+                                                                <td><input type="text" id="height_0"
+                                                                        name="height[]" /></td>
+                                                                <td><input type="text" id="length_0"
+                                                                        name="length[]" /></td>
+                                                                <td><input type="text" id="width_0"
+                                                                        name="width[]" /></td>
+                                                                <td><input type="text" id="shape_0"
+                                                                        name="shape[]" /></td>
+                                                                {{-- <td><input type="text" id="pcs_0" name="pcs[]" /></td> --}}
+                                                                <td><input type="text" id="weight_0"
+                                                                        name="weight[]" /></td>
+                                                                <td><input type="text" id="height_1" /></td>
+                                                                <td><input type="text" id="length_1" /></td>
+                                                                <td><input type="text" id="width_1" /></td>
+                                                                <td><input type="text" id="shape_1" /></td>
+                                                                <td><input type="text" id="pcs_1" /></td>
+                                                                <td><input type="text" id="weight_1" /></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
 
-                                                            <td><input type="text" id="weight_0"
-                                                                    name="weight[]" /></td>
-                                                            <td><input type="text" id="height_1" /></td>
-                                                            <td><input type="text" id="length_1" /></td>
-                                                            <td><input type="text" id="width_1" /></td>
-                                                            <td><input type="text" id="shape_1" /></td>
-                                                            <td><input type="text" id="pcs_1" /></td>
-                                                            <td><input type="text" id="weight_1" /></td>
-                                                        </tr>
-                                                    </tbody>
-                                                    </tbody> 
-
-                                                </table>
+                                                </div>
+                                                <div class="modal-footer float-left">
+                                                    <button type="button" id="submitBtn"
+                                                        class="btn btn-secondary">Create</button>
+                                                    <button type="reset" class="btn btn-light"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                </div>
 
                                             </div>
-                                            <div class="modal-footer float-left">
-                                                <button type="button" id="submitBtn"
-                                                    class="btn btn-secondary">Create</button>
-                                                <button type="reset" class="btn btn-light"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div>
+                    <div>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
         <div class="content">
             <div class="animated fadeIn">
                 <div class="row">
@@ -421,7 +417,343 @@
                 });
             });
         </script>
+    <script>
+        function ApplyFilter(search) {
+            var batch_id = $('#batch_id').val();
+            if (batch_id != null && batch_id != "") {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData();
+                formData.append("batch_id", batch_id);
+                formData.append("batch_code", search);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    type: "POST",
+                    url: "{{ route('getlot') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
 
+                        if (res.length > 0) {
+                            $("#default_row").remove();
+                            res.forEach(function(e) {
+                                var arr = [];
+                                var found = 0;
+                                $('.uid').each(function() {
+                                    var myVal = $(this).val();
+                                    if (e.id == myVal)
+                                        found++;
+                                });
+
+                                if (!found) {
+                                    var table = document.getElementById('dataTable');
+                                    var rowCount = table.rows.length - 1;
+                                    if(rowCount == 0){
+                                        var row = table.insertRow(-1);
+                                        row.className = "hide";
+
+                                        var cell1 = row.insertCell(-1);
+                                        var element = document.createElement("input");
+                                        element.type = "text";
+                                        element.value = e.name;
+                                        element.id = "name_" + rowCount;
+                                        element.className = "name auto";
+                                        element.name = "name[]";
+
+                                        var elementuid = document.createElement("input");
+                                        elementuid.type = "hidden";
+                                        elementuid.value = e.id;
+                                        elementuid.id = "uid_" + rowCount;
+                                        elementuid.className = "uid";
+                                        elementuid.name = "uid[]";
+                                        cell1.appendChild(elementuid);
+
+
+                                        var elementid = document.createElement("input");
+                                        elementid.type = "hidden";
+                                        elementid.value = e.batch_id;
+                                        elementid.id = "id_" + rowCount;
+                                        elementid.className = "id";
+                                        elementid.name = "id[]";
+                                        cell1.appendChild(element);
+                                        cell1.appendChild(elementid);
+                                        //cellid.appendChild(elementid);
+
+                                        var cell2 = row.insertCell(-1);
+                                        var element2 = document.createElement("input");
+                                        element2.type = "text";
+                                        element2.value = e.height;
+                                        element2.id = "height_" + rowCount;
+                                        element2.className = "height";
+                                        element2.name = "height[]";
+                                        cell2.appendChild(element2);
+
+                                        var cell3 = row.insertCell(-1);
+                                        var element3 = document.createElement("input");
+                                        element3.type = "text";
+                                        element3.value = e.length;
+                                        element3.id = "length_" + rowCount;
+                                        element3.className = "length";
+                                        element3.name = "length[]";
+                                        cell3.appendChild(element3);
+
+                                        var cell4 = row.insertCell(-1);
+                                        var element4 = document.createElement("input");
+                                        element4.type = "text";
+                                        element4.value = e.width;
+                                        element4.id = "width_" + rowCount;
+                                        element4.className = "width";
+                                        element4.name = "width[]";
+                                        cell4.appendChild(element4);
+
+                                        var cell5 = row.insertCell(-1);
+                                        var element5 = document.createElement("input");
+                                        element5.type = "text";
+                                        element5.value = e.shape;
+                                        element5.id = "shape_" + rowCount;
+                                        element5.className = "shape";
+                                        element5.name = "shape[]";
+                                        cell5.appendChild(element5);
+
+                                        var cell7 = row.insertCell(-1);
+                                        var element7 = document.createElement("input");
+                                        element7.type = "text";
+                                        element7.value = e.weight;
+                                        element7.id = "weight_" + rowCount;
+                                        element7.className = "weight";
+                                        element7.name = "weight[]";
+                                        cell7.appendChild(element7);
+                                    }else{
+                                        rowCount=rowCount-1;
+                                        $("#name_"+rowCount).val(e.name);
+                                        $("#uid_"+rowCount).val(e.id);
+                                        $("#id_"+rowCount).val(e.id);
+
+                                        $("#height_"+rowCount).val(e.height);
+                                        $("#length_"+rowCount).val(e.length);
+                                        $("#width_"+rowCount).val(e.width);
+                                        $("#shape_"+rowCount).val(e.shape);
+                                        $("#weight_"+rowCount).val(e.weight);
+                                    }
+                                    //***********************************************
+                                    //add new row blanck
+                                    var table = document.getElementById('dataTable');
+                                    var rowCount = table.rows.length - 1;
+                                    //console.log("second rowCount = ",rowCount);
+                                    var row = table.insertRow(-1);
+                                    row.className = "hide";
+                                    //console.log(e);
+
+                                    var cell1 = row.insertCell(-1);
+                                    var element = document.createElement("input");
+                                    element.type = "text";
+                                    //element.value = e.name;
+                                    element.id = "name_" + rowCount;
+                                    element.className = "name auto";
+                                    element.name = "name[]";
+                                    //cell1.appendChild(element);
+
+                                    //var cellid = row.insertCell(0);
+                                    var elementuid = document.createElement("input");
+                                    elementuid.type = "hidden";
+                                    //elementuid.value = e.id;
+                                    elementuid.id = "uid_" + rowCount;
+                                    elementuid.className = "uid";
+                                    elementuid.name = "uid[]";
+                                    cell1.appendChild(elementuid);
+
+
+                                    var elementid = document.createElement("input");
+                                    elementid.type = "hidden";
+                                    //elementid.value = e.batch_id;
+                                    elementid.id = "id_" + rowCount;
+                                    elementid.className = "id";
+                                    elementid.name = "id[]";
+                                    cell1.appendChild(element);
+                                    cell1.appendChild(elementid);
+                                    //cellid.appendChild(elementid);
+
+                                    var cell2 = row.insertCell(-1);
+                                    var element2 = document.createElement("input");
+                                    element2.type = "text";
+                                    //element2.value = e.height;
+                                    element2.id = "height_" + rowCount;
+                                    element2.className = "height";
+                                    element2.name = "height[]";
+                                    cell2.appendChild(element2);
+
+                                    var cell3 = row.insertCell(-1);
+                                    var element3 = document.createElement("input");
+                                    element3.type = "text";
+                                    //element3.value = e.length;
+                                    element3.id = "length_" + rowCount;
+                                    element3.className = "length";
+                                    element3.name = "length[]";
+                                    cell3.appendChild(element3);
+
+                                    var cell4 = row.insertCell(-1);
+                                    var element4 = document.createElement("input");
+                                    element4.type = "text";
+                                    //element4.value = e.width;
+                                    element4.id = "width_" + rowCount;
+                                    element4.className = "width";
+                                    element4.name = "width[]";
+                                    cell4.appendChild(element4);
+
+                                    var cell5 = row.insertCell(-1);
+                                    var element5 = document.createElement("input");
+                                    element5.type = "text";
+                                    //element5.value = e.shape;
+                                    element5.id = "shape_" + rowCount;
+                                    element5.className = "shape";
+                                    element5.name = "shape[]";
+                                    cell5.appendChild(element5);
+
+                                    var cell7 = row.insertCell(-1);
+                                    var element7 = document.createElement("input");
+                                    element7.type = "text";
+                                    //element7.value = e.weight;
+                                    element7.id = "weight_" + rowCount;
+                                    element7.className = "weight";
+                                    element7.name = "weight[]";
+                                    cell7.appendChild(element7);
+
+                                    $("#name_"+rowCount).focus();
+                                } else {
+                                    alert('not valid');
+                                }
+                            });
+                        }else{
+                            alert('please select valid batch');
+                        }
+                    }
+                });
+            }
+        }
+
+        $('body').on('change', '.auto', function(e) {
+            e.preventDefault();
+            ApplyFilter(this.value);
+            $(this).val('');
+        });
+        $(document).ready(function() {
+            $("#submitBtn").click(function() {
+                $("#myForm").submit(); // Submit the form
+            });
+        });
+        $(window).on('shown.bs.modal', function() {
+            $('#addpacketsModal').modal('show');
+            var table = document.getElementById('dataTable');
+            var rowCount = table.rows.length - 1;
+            if(rowCount > 1){
+                $("#dataTable .hide").remove();
+                addDefaultRow();
+            }
+                $("#name_0").val('');
+                $("#id_0").val('');
+                $("#height_0").val('');
+                $("#length_0").val('');
+                $("#width_0").val('');
+                $("#shape_0").val('');
+                $("#weight_0").val('');
+                $("#batch_id").val(0);
+        });
+        $("#batch_id").change(function() {
+            var table = document.getElementById('dataTable');
+            var rowCount = table.rows.length - 1;
+            if(rowCount > 1){
+                $("#dataTable .hide").remove();
+                addDefaultRow();
+            }
+            if (this.value != null && this.value != 0) {
+                //$("#search").focus();
+                $("#name_0").focus();
+            }
+        });
+        function addDefaultRow(){
+            var table = document.getElementById('dataTable');
+            var rowCount = table.rows.length - 1;
+            var row = table.insertRow(-1);
+            row.className = "hide";
+
+            var cell1 = row.insertCell(-1);
+            var element = document.createElement("input");
+            element.type = "text";
+            element.id = "name_" + rowCount;
+            element.className = "name auto";
+            element.name = "name[]";
+
+            var elementuid = document.createElement("input");
+            elementuid.type = "hidden";
+            elementuid.id = "uid_" + rowCount;
+            elementuid.className = "uid";
+            elementuid.name = "uid[]";
+            cell1.appendChild(elementuid);
+
+
+            var elementid = document.createElement("input");
+            elementid.type = "hidden";
+            elementid.id = "id_" + rowCount;
+            elementid.className = "id";
+            elementid.name = "id[]";
+            cell1.appendChild(element);
+            cell1.appendChild(elementid);
+
+            var cell2 = row.insertCell(-1);
+            var element2 = document.createElement("input");
+            element2.type = "text";
+            element2.id = "height_" + rowCount;
+            element2.className = "height";
+            element2.name = "height[]";
+            cell2.appendChild(element2);
+
+            var cell3 = row.insertCell(-1);
+            var element3 = document.createElement("input");
+            element3.type = "text";
+            element3.id = "length_" + rowCount;
+            element3.className = "length";
+            element3.name = "length[]";
+            cell3.appendChild(element3);
+
+            var cell4 = row.insertCell(-1);
+            var element4 = document.createElement("input");
+            element4.type = "text";
+            element4.id = "width_" + rowCount;
+            element4.className = "width";
+            element4.name = "width[]";
+            cell4.appendChild(element4);
+
+            var cell5 = row.insertCell(-1);
+            var element5 = document.createElement("input");
+            element5.type = "text";
+            element5.id = "shape_" + rowCount;
+            element5.className = "shape";
+            element5.name = "shape[]";
+            cell5.appendChild(element5);
+
+            var cell7 = row.insertCell(-1);
+            var element7 = document.createElement("input");
+            element7.type = "text";
+            element7.id = "weight_" + rowCount;
+            element7.className = "weight";
+            element7.name = "weight[]";
+            cell7.appendChild(element7);
+        }
+        @if(isset($id))
+            var url_p = '{{ route("createlotprint", ":id") }}';
+            var id_p="{{ $id }}";
+            url_p = url_p.replace(':id', id_p);
+            window.open(url_p, "_blank");
+            var url_r = '{{ route("createlot") }}';
+            window.location.href=url_r;
+        @endif
+    </script>
 </body>
 
 </html>

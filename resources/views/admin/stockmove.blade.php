@@ -330,9 +330,9 @@
                     </div>
                     <div class="col-md-7">
                     </div>
-                    <div class="col-md-1 float-right">
+                    {{-- <div class="col-md-1 float-right">
                         <a href="{{ url('stockmove') }}"><button type="button" class="btn btn-outline-secondary mt-1"><i class="fa-solid fa-list"></i></button></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
