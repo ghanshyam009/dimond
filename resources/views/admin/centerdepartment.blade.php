@@ -120,7 +120,7 @@
                                 </div>
                             @endif
 
-                            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                            {{-- @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager') --}}
                                 <div class="col-12 col-md-3 col-lg-2">
                                     <div class="card">
                                         <div class="card-body color_maroon">
@@ -131,7 +131,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
 
                             @if(Auth::user()->role != '')
                                 <div class="col-12 col-md-3 col-lg-2">

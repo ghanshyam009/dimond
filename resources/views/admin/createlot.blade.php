@@ -265,15 +265,7 @@
 
         </div>
     </div>
-    </form>
-    </div>
-
-    </div>
-    </div>
-    </div>
-
     <div id="bootstrap-data-table_filter" class="dataTables_filter float-right">
-    </div>
     </div>
     <div class="content">
         <div class="animated fadeIn">
@@ -343,9 +335,6 @@
             </div>
         </div>
     </div>
-
-
-
     <div class="content">
         <div class="animated fadeIn">
             <div class="row">

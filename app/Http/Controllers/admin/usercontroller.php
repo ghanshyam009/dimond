@@ -17,6 +17,7 @@ class usercontroller extends Controller
      {
          $email = $req->input('useremail');
          $password = $req->input('userpassword');
+         
          $data = DB::table('createsettingusers')->where('login', $email)->first();
          $count = DB::table('createsettingusers')->where(['login' => $email])->count();
          $count1 = DB::table('createsettingusers')->where(['password' => $password])->count();

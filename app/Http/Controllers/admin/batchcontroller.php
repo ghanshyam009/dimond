@@ -70,8 +70,13 @@ class batchcontroller extends Controller
             return response()->json([]);
         }
     }
-    public function assignlot(Request $request){
-
+    public function returnlot(Request $request){
+  $return=LotMaster::with('lotDetail')->find($request->search);
+        if($return != null){
+            return response()->json($return);
+        }else{
+            return response()->json([]);
+        }
     }
 
     public function getbatch($id)
@@ -201,6 +206,7 @@ class batchcontroller extends Controller
         return view('admin.createlot')->with(['data'=>$data,'id'=>$id]);
     }
     public function savelot(Request $request){
+        dd('hello');
         $lot=new LotMaster();
         $lot->name=implode(",",array_filter(array_unique($request->name)));
         $lot->save();
@@ -252,6 +258,7 @@ class batchcontroller extends Controller
         return view('admin.createLotPrint')->with(['data'=>$res]); 
     }
     public function getlot(Request $request){
+        // dd('hello');
         $batch_code=$request->batch_code;
         $batch_id=$request->batch_id;
         if($batch_id == "mix"){
@@ -267,7 +274,6 @@ class batchcontroller extends Controller
             ->where('packets.batch_id', '=', $batch_id)
             ->select('packets.*', 'bactches.name')
             ->get();
-
         }
         if(count($data) > 0){
             return response()->json($data);
@@ -305,14 +311,13 @@ class batchcontroller extends Controller
            $batch = new Bactch;
            $batch->name = $request->get('name');
            $batch->save();
-
            return redirect()->back()->with('message', 'Batch added successfully');
        }
     public function shape(Request $request){
         $requestData = ['id', 'name','status'];
         $pro = $request->input('shapename');
         $data = DB::table('shaps')
-    ->where('name', "like", "%" . $request->shapename. "%")->get();
+        ->where('name', "like", "%" . $request->shapename. "%")->get();
         return view('admin.shape')->with(['pro'=>$pro,'data'=>$data]);
        }
        public function insertshape(Request $request)
@@ -320,7 +325,6 @@ class batchcontroller extends Controller
            $shape = new shap;
            $shape->name = $request->get('name');
            $shape->save();
-
         return redirect('shape')->with('message', json_encode(['success'=>'Seeds sucessfull!']));
        }
 
@@ -329,7 +333,6 @@ class batchcontroller extends Controller
            $data = DB::table('shaps')->where('id', $id)->delete();
            return redirect()->back()->with('message', 'delete succesfully');
        }
-
        public function lotprocess(){
         $data = DB::table('bactches')->get();
         return view('admin.lotprocess')->with(['data'=>$data]);
@@ -338,9 +341,7 @@ class batchcontroller extends Controller
        {
            $stockpackets = new lotprocess;
            $stockpackets->name = $request->get('name');
-           $stockpackets->save();
-
-           
+           $stockpackets->save();          
         return redirect('lotprocess')->with('message', json_encode(['success'=>'Seeds sucessfull!']));
        }
        public function lotprocessremove(Request $request, $id)

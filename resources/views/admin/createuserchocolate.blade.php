@@ -111,7 +111,7 @@
                                                         <select class="custom-select d-block w-100" name="machinename" required>
                                                             <option value="0">Please select Machine</option>
                                                             @foreach($machine as $ans)
-                                                            <option value="{{ $ans->name }}">{{ $ans->name }}</option>
+                                                            <option value="{{ $ans->mname }}">{{ $ans->mname }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

@@ -170,6 +170,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('clickfinalpacketkarbenlist', [homecontroller::class, 'clickfinalpacketkarbenlist']);
     route::get('clickhistory', [homecontroller::class, 'clickhistory']);
     route::get('demo', [pakegecontroller::class, 'demo']);
+    route::post('laserreturn', [pakegecontroller::class, 'laserreturn']);
 
 
     // ***************************batch **************************************
@@ -203,7 +204,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('createlotprint/{id}', [batchcontroller::class, 'createlotPrint'])->name('createlotprint');
     route::post('searchLot', [batchcontroller::class, 'searchLot'])->name('searchLot');
     route::post('recevieLot', [batchcontroller::class, 'recevieLot'])->name('recevieLot');
-    route::post('assignlot', [batchcontroller::class, 'assignlot'])->name('assignlot');
+    route::post('returnlot', [batchcontroller::class, 'returnlot'])->name('returnlot');
     // route::get('clickbatch', [batchcontroller::class, 'clickbatch']);
     // route::get('editbatch/{id}',[batchcontroller::class,'editbatch']);
     route::get('batchlist', [batchcontroller::class, 'batchlist']);
@@ -318,12 +319,15 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('machinelaser', [LaserController::class, 'machinelaser']);
     route::get('packetlaserdashboard', [LaserController::class, 'packetlaserdashboard']);
     route::get('lotsdashboard', [LaserController::class, 'lotsdashboard']);
+    route::post('receivelaser', [LaserController::class, 'receivelaser']);
+    route::post('assignlaser', [LaserController::class, 'assignlaser']);
+    route::post('laserreturn', [LaserController::class, 'laserreturn']);
+    route::post('laserreturntostock', [LaserController::class, 'laserreturntostock']);
 
     // ****************************************RoleandPermission**********************************************************
     Route::get('index', 'Backend\DashboardController@index')->name('admin.dashboard');
     Route::resource('roles', 'Backend\RolesController', ['names' => 'admin.roles']);
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
     Route::resource('admins', 'Backend\AdminsController', ['names' => 'admin.admins']);
-
 
 });
