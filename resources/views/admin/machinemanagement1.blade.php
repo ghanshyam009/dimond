@@ -36,6 +36,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <style>
+        .color {
+            background-color: #ffffff;
+        }
+
+        .color1 {
+            background-color: #5EBA7D;
+        }
+
+        .color2 {
+            background-color: #efaccf;
+        }
+    </style>
 </head>
 
 <body>
@@ -173,8 +186,9 @@
                             <?php $chocos = App\Models\chocolate::get(); ?>
                             @foreach ($machines as $machine)
                                 <div class="col-lg-4 col-md-6 col-xl-3">
-                                    <div class="card card2">
+                                    <div class="card card2 hello">
                                         <div class="card-header cardheader1">
+                                            {{ $machine->status }}
                                             <strong><i class="fa-solid fa-keyboard"></i>
                                                 {{ $machine->mname }}</strong>
                                             <p class="float-right" style="margin: 0px;">
@@ -317,7 +331,7 @@
                         countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
 
                         if (distance < 0) {
-                            countDownDate[i]['el'].querySelector('.growthhour').innerHTML = 0
+                            countDownDate[i]['el'].querySelector('.growthhour').innerHTML = 0;
                             countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
                             countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
                             countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
@@ -332,10 +346,30 @@
                                 i]['minutes'];
                             countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
                                 i]['seconds'];
+
                         }
+                        if (countDownDate[i]['hours'] < 49 && countDownDate[i]['hours'] > 0) {
+                            console.log(countDownDate[i]['hours']);
+                            $(".hello").removeClass("color").addClass("color1");
+                        } else if (countDownDate[i]['hours'] > 50) {
+                            $(".hello").removeClass("color1").addClass("color2");
+                        }
+
+                        // if (countDownDate[i]['hour'] < 50 && countDownDate[i]['hours'] > 0) {
+                        //     $(".hello").removeClass("color").addClass("color1");
+                        // } else if (countDownDate[i]['hours'] > 50) {
+                        //     $(".hello").removeClass("color1").addClass("color2");
+                        // }
+
+                        // elems.forEach(function(countDownDate[i]['hours']) {
+                        //     let switchery = new Switchery(countDownDate[i]['hours'], {
+                        //         size: 'small'
+                        //     });
+                        // });
                     }
                 }, 1000);
             }
+
         });
     </script>
 </body>
