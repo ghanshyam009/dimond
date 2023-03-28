@@ -18,10 +18,8 @@
     <title>Jusco Lab Grown Diamond</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="apple-touch-icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
     <link rel="shortcut icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
-
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/normalize.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/font-awesome.min.css') }}">
@@ -272,6 +270,19 @@
                                                                 <span class="seconds ms-2"></span>s
                                                             </div>
                                                         @endif
+                                                        <?php $lotdata=App\Models\lots::get();?>
+                                                        @foreach($lotdata as $lotd)
+                                                        @if($machine->mname == $lotd->machineno)
+                                                        
+                                                      <div class="d-flex stime"
+                                                               stop-date="{{ $lotd->created_at }}">
+                                                               <input type="text"  
+                                                                            value="{{ $lotd->created_at }}">
+                                                                            
+                                                            </div>
+                                                           
+                                                        @endif
+                                                        @endforeach
                                                     </label>
                                                 </div>
                                             </div>
@@ -307,6 +318,19 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var clockdiv = document.getElementsByClassName("timer");
+                var stopdiv = document.getElementsByClassName("stime");
+                // var stopdiv= new Date('#demo').getTime();
+                // console.log(stopdiv);
+                
+                var countDownDate = new Array();
+                    for (var j= 0; j < stopdiv.length; j++) {
+                        var now = new Date().getTime();
+                   countDownDate[j] = new Array();
+                   countDownDate[j]['el'] = stopdiv[j];
+                   countDownDate[j]['stime'] = new Date(stopdiv[j].getAttribute('stop-date')).getTime();
+                //     var distance1= countDownDate[j]['stime'] - now;
+                //  console.log(distance1);
+               } 
                 var countDownDate = new Array();
                 for (var i = 0; i < clockdiv.length; i++) {
                     countDownDate[i] = new Array();
@@ -318,12 +342,21 @@
                     countDownDate[i]['minutes'] = 0;
                 }
 
-                var countdownfunction = setInterval(function() {
-                    for (var i = 0; i < countDownDate.length; i++) {
-                        var now = new Date().getTime();
-                        var distance = now - countDownDate[i]['time'];
 
-                        countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+                for (var j = 0; j < stopdiv.length; j++) {
+               countDownDate[j]['stime']= new Date(stopdiv[j].getAttribute('stop-date')).getTime();
+               var distance1= now - countDownDate[j]['stime'];
+            //       console.log(countDownDate[j]['stime']);
+            }
+            
+            // console.log(stopdiv);
+            var countdownfunction = setInterval(function() {
+                for (var i = 0; i < countDownDate.length; i++) {
+                    var now = new Date().getTime();
+                    var distance = now - countDownDate[i]['time'];
+                    
+                    countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+                    //    console.log(countDownDate[i]['hours']);
                         countDownDate[i]['growthhour'] = Math.floor((distance / (1000 * 60 * 60 * 24)) *
                             24);
                         countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
@@ -335,7 +368,8 @@
                             countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
                             countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
                             countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
-                        } else {
+                        } 
+                        else  {
                             var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
                                 countDownDate[i]['hours'];
 
@@ -346,6 +380,20 @@
                                 i]['minutes'];
                             countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
                                 i]['seconds'];
+                            }
+                            // if(var i = 0; i < clockdiv.length; i++ ≠ var j = 0; j < stopdiv.length; j++){
+                            //     //   var distance1=countDownDate[j]['stime'] - countDownDate[i]['time'];
+                            //     //     console.log(distance1);
+                            //     aaa
+                            // }
+                            console.log(distance);
+                        if(distance < stopdiv) {
+                        clearInterval(countdownfunction);
+                        document.getElementsByClassName('stime').innerHTML = "EXPIRED";
+                     }
+                    }
+                }, 1000);
+            }   
 
                         }
                         if (countDownDate[i]['hours'] < 49 && countDownDate[i]['hours'] > 0) {

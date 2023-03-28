@@ -108,6 +108,7 @@ class chocolatecontroller extends Controller
     {
         $growing = new lots;
         $create_dt = date("Y-m-d H:i:s A", strtotime($growing['post_date'] . " " . $growing['post_time']));
+        // dd($create_dt);
         $growing->machineno = $request->get('machinename');
         $growing->enddate = $request->get('edate');
         $growing->endtime = $request->get('etime');
@@ -127,11 +128,11 @@ class chocolatecontroller extends Controller
             $file->move('image5', $filename);
             $growing->img5 = $filename;
         }
-        $growing->created_at =  $create_dt;
+        // $growing->created_at =$create_dt;
         $growing->save();
+        // dd($growing);
         DB::table('machine')->where('mname', $request->machinename)
             ->update(['stop_timer' => $growing->created_at]);
-
         return redirect('lots')->with(['message' => 'Insert Growing Sucessfull!']);
     }
     public function recivelot()
