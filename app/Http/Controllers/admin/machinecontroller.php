@@ -84,16 +84,15 @@ class machinecontroller extends Controller
     }
     public function machinemanagement1()
     {
-        $a = DB::table('machine')->where('status', '=', '1')->get();
-        $b = DB::table('machine')->where('status', '=', '0')->get();
+        $machines = machine::get();
 
-        $lot = DB::table('chocolates')
+        $lots = DB::table('chocolates')
             ->join('lot_moves', 'chocolates.lotno', '=', 'lot_moves.lot_id')
             ->select('lot_moves.lot_id')->distinct()
-            ->select('lot_moves.status', 'lot_moves.pcs', 'lot_moves.lot_id', 'chocolates.id', 'chocolates.created_at as start', 'lot_moves.name', 'chocolates.machineno')
-            ->where('lot_moves.status', '1')
+            ->select('lot_moves.status', 'lot_moves.height as heights' ,'lot_moves.lot_id', 'chocolates.id', 'lot_moves.name', 'chocolates.machineno')
             ->get();
-        return view('admin.machinemanagement1')->with(['a' => $a, 'b' => $b, 'lot' => $lot]);
+        // dd($lots);
+        return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots]);
     }
     public function startTimermachine(Request $request)
     {
