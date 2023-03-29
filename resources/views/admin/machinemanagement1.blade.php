@@ -186,7 +186,7 @@
                                 <div class="col-lg-4 col-md-6 col-xl-3">
                                     <div class="card card2 hello">
                                         <div class="card-header cardheader1">
-                                            {{ $machine->status }}
+                                            <input type="text" class="status" value="{{ $machine->status }}">
                                             <strong><i class="fa-solid fa-keyboard"></i>
                                                 {{ $machine->mname }}</strong>
                                             <p class="float-right" style="margin: 0px;">
@@ -277,7 +277,6 @@
                                                                     stop-date="{{ $lotd->created_at }}">
                                                                     <input type="text"
                                                                         value="{{ $lotd->created_at }}">
-
                                                                 </div>
                                                             @endif
                                                         @endforeach
@@ -312,6 +311,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <script>
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+                var clockdiv = document.getElementsByClassName("timer");
+                var countDownDate = new Array();
+                for (var i = 0; i < clockdiv.length; i++) {
+                    countDownDate[i] = new Array();
+                    countDownDate[i]['el'] = clockdiv[i];
+                    countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
+                    countDownDate[i]['hours'] = 0;
+                    countDownDate[i]['growth'] = clockdiv[i].getAttribute('data');
+                    countDownDate[i]['seconds'] = 0;
+                    countDownDate[i]['minutes'] = 0;
+                }
+
+                var countdownfunction = setInterval(function() {
+                        for (var i = 0; i < countDownDate.length; i++) {
+                            var now = new Date().getTime();
+                            var distance = now - countDownDate[i]['time'];
+
+                            countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
     {{-- <script>
     document.addEventListener('readystatechange', event => {
         if (event.target.readyState === "complete") {
@@ -479,10 +499,17 @@
 
                                 countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
                                     countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
+
                                 countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[
                                     i]['minutes'];
                                 countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
                                     i]['seconds'];
+                            }
+                        }
+                    },
+                    1000);
+            }
+        });
                             // if (countDownDate[j]['stime'] == now) {
                             //     clearTimeout(countdownfunction[i]);
                             //     document.getElementsByClassName('stime').innerHTML = "EXPIRED";
@@ -537,3 +564,4 @@
 </body>
 
 </html>
+
