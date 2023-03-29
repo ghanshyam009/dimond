@@ -186,7 +186,7 @@
                                 <div class="col-lg-4 col-md-6 col-xl-3">
                                     <div class="card card2 hello">
                                         <div class="card-header cardheader1">
-                                            {{ $machine->status }}
+                                            <input type="text" class="status" value="{{ $machine->status }}">
                                             <strong><i class="fa-solid fa-keyboard"></i>
                                                 {{ $machine->mname }}</strong>
                                             <p class="float-right" style="margin: 0px;">
@@ -270,18 +270,15 @@
                                                                 <span class="seconds ms-2"></span>s
                                                             </div>
                                                         @endif
-                                                        <?php $lotdata=App\Models\lots::get();?>
-                                                        @foreach($lotdata as $lotd)
-                                                        @if($machine->mname == $lotd->machineno)
-                                                        
-                                                      <div class="d-flex stime"
-                                                               stop-date="{{ $lotd->created_at }}">
-                                                               <input type="text"  
-                                                                            value="{{ $lotd->created_at }}">
-                                                                            
-                                                            </div>
-                                                           
-                                                        @endif
+                                                        <?php $lotdata = App\Models\lots::get(); ?>
+                                                        @foreach ($lotdata as $lotd)
+                                                            @if ($machine->mname == $lotd->machineno)
+                                                                <div class="d-flex stime"
+                                                                    stop-date="{{ $lotd->created_at }}">
+                                                                    <input type="text"
+                                                                        value="{{ $lotd->created_at }}">
+                                                                </div>
+                                                            @endif
                                                         @endforeach
                                                     </label>
                                                 </div>
@@ -318,19 +315,6 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var clockdiv = document.getElementsByClassName("timer");
-                var stopdiv = document.getElementsByClassName("stime");
-                // var stopdiv= new Date('#demo').getTime();
-                // console.log(stopdiv);
-                
-                var countDownDate = new Array();
-                    for (var j= 0; j < stopdiv.length; j++) {
-                        var now = new Date().getTime();
-                   countDownDate[j] = new Array();
-                   countDownDate[j]['el'] = stopdiv[j];
-                   countDownDate[j]['stime'] = new Date(stopdiv[j].getAttribute('stop-date')).getTime();
-                //     var distance1= countDownDate[j]['stime'] - now;
-                //  console.log(distance1);
-               } 
                 var countDownDate = new Array();
                 for (var i = 0; i < clockdiv.length; i++) {
                     countDownDate[i] = new Array();
@@ -342,84 +326,42 @@
                     countDownDate[i]['minutes'] = 0;
                 }
 
+                var countdownfunction = setInterval(function() {
+                        for (var i = 0; i < countDownDate.length; i++) {
+                            var now = new Date().getTime();
+                            var distance = now - countDownDate[i]['time'];
 
-                for (var j = 0; j < stopdiv.length; j++) {
-               countDownDate[j]['stime']= new Date(stopdiv[j].getAttribute('stop-date')).getTime();
-               var distance1= now - countDownDate[j]['stime'];
-            //       console.log(countDownDate[j]['stime']);
-            }
-            
-            // console.log(stopdiv);
-            var countdownfunction = setInterval(function() {
-                for (var i = 0; i < countDownDate.length; i++) {
-                    var now = new Date().getTime();
-                    var distance = now - countDownDate[i]['time'];
-                    
-                    countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
-                    //    console.log(countDownDate[i]['hours']);
-                        countDownDate[i]['growthhour'] = Math.floor((distance / (1000 * 60 * 60 * 24)) *
-                            24);
-                        countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
-                            60));
-                        countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
+                            countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+                            countDownDate[i]['growthhour'] = Math.floor((distance / (1000 * 60 * 60 * 24)) *
+                                24);
+                            countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
+                                60));
+                            countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
 
-                        if (distance < 0) {
-                            countDownDate[i]['el'].querySelector('.growthhour').innerHTML = 0;
-                            countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
-                            countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
-                            countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
-                        } 
-                        else  {
-                            var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
-                                countDownDate[i]['hours'];
+                            if (distance < 0) {
+                                countDownDate[i]['el'].querySelector('.growthhour').innerHTML = 0;
+                                countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
+                                countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
+                                countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
+                            } else {
+                                var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
+                                    countDownDate[i]['hours'];
 
-                            countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
-                                countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
+                                countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
+                                    countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
 
-                            countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[
-                                i]['minutes'];
-                            countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
-                                i]['seconds'];
+                                countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[
+                                    i]['minutes'];
+                                countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
+                                    i]['seconds'];
                             }
-                            // if(var i = 0; i < clockdiv.length; i++ ≠ var j = 0; j < stopdiv.length; j++){
-                            //     //   var distance1=countDownDate[j]['stime'] - countDownDate[i]['time'];
-                            //     //     console.log(distance1);
-                            //     aaa
-                            // }
-                            console.log(distance);
-                        if(distance < stopdiv) {
-                        clearInterval(countdownfunction);
-                        document.getElementsByClassName('stime').innerHTML = "EXPIRED";
-                     }
-                    }
-                }, 1000);
-            }   
-
                         }
-                        if (countDownDate[i]['hours'] < 49 && countDownDate[i]['hours'] > 0) {
-                            console.log(countDownDate[i]['hours']);
-                            $(".hello").removeClass("color").addClass("color1");
-                        } else if (countDownDate[i]['hours'] > 50) {
-                            $(".hello").removeClass("color1").addClass("color2");
-                        }
-
-                        // if (countDownDate[i]['hour'] < 50 && countDownDate[i]['hours'] > 0) {
-                        //     $(".hello").removeClass("color").addClass("color1");
-                        // } else if (countDownDate[i]['hours'] > 50) {
-                        //     $(".hello").removeClass("color1").addClass("color2");
-                        // }
-
-                        // elems.forEach(function(countDownDate[i]['hours']) {
-                        //     let switchery = new Switchery(countDownDate[i]['hours'], {
-                        //         size: 'small'
-                        //     });
-                        // });
-                    }
-                }, 1000);
+                    },
+                    1000);
             }
-
         });
     </script>
 </body>
 
 </html>
+

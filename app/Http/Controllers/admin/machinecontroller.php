@@ -89,7 +89,7 @@ class machinecontroller extends Controller
         $lots = DB::table('chocolates')
             ->join('lot_moves', 'chocolates.lotno', '=', 'lot_moves.lot_id')
             ->select('lot_moves.lot_id')->distinct()
-            ->select('lot_moves.status', 'lot_moves.height as heights' ,'lot_moves.lot_id', 'chocolates.id', 'lot_moves.name', 'chocolates.machineno')
+            ->select('lot_moves.status', 'lot_moves.height as heights', 'lot_moves.lot_id', 'chocolates.id', 'lot_moves.name', 'chocolates.machineno')
             ->get();
         // dd($lots);
         return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots]);
