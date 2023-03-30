@@ -91,7 +91,18 @@ class machinecontroller extends Controller
             ->select('lot_moves.lot_id')->distinct()
             ->select('lot_moves.status', 'lot_moves.height as heights', 'lot_moves.lot_id', 'chocolates.id', 'lot_moves.name', 'chocolates.machineno')
             ->get();
-        // dd($lots);
+
+        foreach ($machines as $machine) {
+            if ($machine->stop_timer != '' || $machine->timer == '') {
+                $machine->update(['status' => '0']);
+            } elseif ($machine->created_at < Carbon::now()->subDays(4)->toDateTimeString()) {
+                $machine->update(['status' => '3']);
+            } elseif ($machine->created_at < Carbon::now()->subMinutes(240)->toDateTimeString()) {
+                $machine->update(['status' => '2']);
+            } else {
+                $machine->update(['status' => '1']);
+            }
+        }
         return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots]);
     }
     public function startTimermachine(Request $request)
