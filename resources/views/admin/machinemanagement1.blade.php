@@ -186,7 +186,7 @@
                                 <div class="col-lg-4 col-md-6 col-xl-3">
                                     <div class="card card2 hello">
                                         <div class="card-header cardheader1">
-                                            {{-- <input type="text" class="status" value="{{ $machine->status }}"> --}}
+                                            <input type="text" class="status" value="{{ $machine->status }}">
                                             <strong><i class="fa-solid fa-keyboard"></i>
                                                 {{ $machine->mname }}</strong>
                                             <p class="float-right" style="margin: 0px;">
@@ -311,22 +311,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-    <script>
+   <script>
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var clockdiv = document.getElementsByClassName("timer");
-                var stopdiv = document.getElementsByClassName("stime");
-
-
-                var countDownDate = new Array();
-                for (var j = 0; j < stopdiv.length; j++) {
-                    var now = new Date().getTime();
-                    countDownDate[j] = new Array();
-                    countDownDate[j]['el'] = stopdiv[j];
-                    countDownDate[j]['stime'] = new Date(stopdiv[j].getAttribute('stop-date')).getTime();
-                }
-
                 var countDownDate = new Array();
                 for (var i = 0; i < clockdiv.length; i++) {
                     countDownDate[i] = new Array();
@@ -367,12 +355,6 @@
                                 countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
                                     i]['seconds'];
                             }
-                            // for (var j = 0; j < countDownDate.length; j++) {
-                            //     if (countDownDate[i] < stopdiv[j]) {
-                            //         clearInterval(countdownfunction);
-                            //         document.getElementsByClassName('stime').innerHTML = "EXPIRED";
-                            //     }
-                            // }
                         }
                     },
                     1000);
@@ -382,3 +364,4 @@
 </body>
 
 </html>
+

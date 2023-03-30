@@ -69,7 +69,7 @@ class chocolatecontroller extends Controller
         $chocolate->save();
 
         DB::table('machine')->where('mname', $request->machinename)
-            ->update(['lotno' => $request->mno, 'timer' => $chocolate->created_at]);
+            ->update(['lotno' => $request->mno, 'timer' => $chocolate->created_at, 'status' => 1]);
 
         return redirect('createchocolatedashboard')->with(['message' => 'Insert chocolate Sucessfull!']);
     }
