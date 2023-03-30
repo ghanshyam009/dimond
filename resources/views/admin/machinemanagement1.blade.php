@@ -245,7 +245,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <label for="hf-password" class="form-control-label">
-                                                        @if ($machine->timer != 0)
+                                                        {{-- @if ($machine->timer != 0)
                                                             <div class="d-flex timer"
                                                                 data-date="{{ $machine->timer }}"
                                                                 data="{{ $machine->growthrate }}">
@@ -254,7 +254,7 @@
                                                                 <input type="hidden" class="minutes ms-2">
                                                                 <input type="hidden" class="seconds ms-2">
                                                             </div>
-                                                        @endif
+                                                        @endif --}}
                                                     </label>
                                                 </div>
                                             </div>
@@ -277,6 +277,7 @@
                                                                     stop-date="{{ $lotd->created_at }}">
                                                                     <input type="text"
                                                                         value="{{ $lotd->created_at }}">
+                                                                    <button id="stopbtn">Stop</button>
                                                                 </div>
                                                             @endif
                                                         @endforeach
@@ -318,15 +319,22 @@
                 var clockdiv = document.getElementsByClassName("timer");
                 var stopdiv = document.getElementsByClassName("stime");
 
-
                 var countDownDate = new Array();
                 for (var j = 0; j < stopdiv.length; j++) {
                     var now = new Date().getTime();
                     countDownDate[j] = new Array();
                     countDownDate[j]['el'] = stopdiv[j];
                     countDownDate[j]['stime'] = new Date(stopdiv[j].getAttribute('stop-date')).getTime();
-                }
 
+                    var distance1 = now - countDownDate[j]['stime'];
+
+                    countDownDate[j]['hours'] = Math.floor((distance1 / (1000 * 60 * 60 * 24)) * 24);
+                    countDownDate[j]['minutes'] = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 *
+                        60));
+                    countDownDate[j]['seconds'] = Math.floor((distance1 % (1000 * 60)) / 1000);
+                    // console.log(countDownDate[j]['hours'], countDownDate[j]['minutes'], countDownDate[j][
+                    // 'seconds']);
+                }
                 var countDownDate = new Array();
                 for (var i = 0; i < clockdiv.length; i++) {
                     countDownDate[i] = new Array();
@@ -343,13 +351,15 @@
                             var now = new Date().getTime();
                             var distance = now - countDownDate[i]['time'];
 
+
                             countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+                            //   console.log(countDownDate[i]['hours']);
                             countDownDate[i]['growthhour'] = Math.floor((distance / (1000 * 60 * 60 * 24)) *
                                 24);
                             countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
                                 60));
                             countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
-
+                            //    console.log(countDownDate[i]['seconds']);
                             if (distance < 0) {
                                 countDownDate[i]['el'].querySelector('.growthhour').innerHTML = 0;
                                 countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
@@ -359,19 +369,59 @@
                                 var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
                                     countDownDate[i]['hours'];
 
-                                countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
-                                    countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
+                                // countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
+                                //     countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
 
                                 countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[
                                     i]['minutes'];
                                 countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
                                     i]['seconds'];
+
                             }
-                            // for (var j = 0; j < countDownDate.length; j++) {
-                            //     if (countDownDate[i] < stopdiv[j]) {
-                            //         clearInterval(countdownfunction);
+                            function stop() {
+                                        window.clearInterval(countDownDate[i]['el']);
+                                        countDownDate[i]['el'] = "stop";
+                                        $.ajax({
+                                            headers: {
+                                                'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                            },
+                                            type: "POST",
+                                            url: "{{ route('stopTimermachine') }}",
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function() {
+                                                document.getElementsByClassName('stime');
+                                            }
+                                        });
+                                    }
+                            // $.ajax({
+                            //     url: "{{ route('stopTimermachine') }}",
+                            //     type: 'post',
+                            //     data: {
+                            //         countDownDate[i]: countDownDate[i];
+                            //     },
+                            //     success: function(response) {
+                            //         clearInterval(countDownDate[i]['hours'], countDownDate[i][
+                            //                 'minutes'
+                            //             ],
+                            //             countDownDate[i]['seconds']);
                             //         document.getElementsByClassName('stime').innerHTML = "EXPIRED";
                             //     }
+                            // });
+
+                            // for (var j = 0; j <= countDownDate[i].length; j++) {
+                            //     // console.log(stopdiv[j]);
+                            //     if (countDownDate[i] < stopdiv[j]) {
+                            //         clearInterval(countDownDate[i]['hours'], countDownDate[i]['minutes'],
+                            //             countDownDate[i]['seconds']);
+                            //         document.getElementsByClassName('stime').innerHTML = "EXPIRED";
+                            //         // $("#stopbtn").click(function() {
+                            //         //     clearTimeout(countdownfunction);
+                            //         //     document.getElementsByClassName('stime').innerHTML = "EXPIRED";
+                            //         // });
+                            //     }
+
                             // }
                         }
                     },

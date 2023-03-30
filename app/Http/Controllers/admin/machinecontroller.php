@@ -108,7 +108,7 @@ class machinecontroller extends Controller
         }
     }
 
-    public function stopTimermachine(Request $request)
+      public function stopTimermachine(Request $request)
     {
         try {
             $check = machine::where("id", $request->id)->whereNotNull('timer')->first();
