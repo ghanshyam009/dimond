@@ -36,15 +36,19 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <style>
         .color {
-            background-color: #ffffff;
+            background-color: #f0e7e7;
         }
 
         .color1 {
-            background-color: #5EBA7D;
+            background-color: #6DD4B1;
         }
 
         .color2 {
-            background-color: #efaccf;
+            background-color: #ffdbed;
+        }
+
+        .color3 {
+            background-color: #e0e2ff;
         }
     </style>
 </head>
@@ -109,7 +113,15 @@
                                             </div>
                                             <div class="stat-content">
                                                 <div class="text-left dib">
-                                                    <div class="stat-text"><span class="count">10000</span></div>
+                                                    <?php $active = 0;
+                                                    $active1 = 0; ?>
+                                                    @foreach ($machines as $machine)
+                                                        @if ($machine->status == 1)
+                                                            <?php $active1 = ++$active; ?>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="stat-text"><span
+                                                            class="count">{{ $active1 }}</span></div>
                                                     <div class="stat-heading">Active</div>
                                                 </div>
                                             </div>
@@ -127,7 +139,15 @@
                                             </div>
                                             <div class="stat-content">
                                                 <div class="text-left dib">
-                                                    <div class="stat-text"><span class="count">0</span></div>
+                                                    <?php $stop = 0;
+                                                    $stop1 = 0; ?>
+                                                    @foreach ($machines as $machine)
+                                                        @if ($machine->status == 0)
+                                                            <?php $stop1 = ++$stop; ?>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="stat-text"><span
+                                                            class="count">{{ $stop1 }}</span></div>
                                                     <div class="stat-heading">Stop</div>
                                                 </div>
                                             </div>
@@ -145,7 +165,15 @@
                                             </div>
                                             <div class="stat-content">
                                                 <div class="text-left dib">
-                                                    <div class="stat-text"><span class="count">0</span></div>
+                                                    <?php $inactive = 0;
+                                                    $inactive1 = 0; ?>
+                                                    @foreach ($machines as $machine)
+                                                        @if ($machine->status == 2)
+                                                            <?php $inactive1 = ++$inactive; ?>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="stat-text"><span
+                                                            class="count">{{ $inactive1 }}</span></div>
                                                     <div class="stat-heading">Inactive</div>
                                                 </div>
                                             </div>
@@ -163,7 +191,15 @@
                                             </div>
                                             <div class="stat-content">
                                                 <div class="text-left dib">
-                                                    <div class="stat-text"><span class="count">0</span></div>
+                                                    <?php $old = 0;
+                                                    $old1 = 0; ?>
+                                                    @foreach ($machines as $machine)
+                                                        @if ($machine->status == 3)
+                                                            <?php $old1 = ++$old; ?>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="stat-text"><span
+                                                            class="count">{{ $old1 }}</span></div>
                                                     <div class="stat-heading">Old Inactive</div>
                                                 </div>
                                             </div>
@@ -184,68 +220,80 @@
                             <?php $chocos = App\Models\chocolate::get(); ?>
                             @foreach ($machines as $machine)
                                 <div class="col-lg-4 col-md-6 col-xl-3">
-                                    <div class="card card2 hello">
-                                        <div class="card-header cardheader1">
-                                            <input type="text" class="status" value="{{ $machine->status }}">
-                                            <strong><i class="fa-solid fa-keyboard"></i>
-                                                {{ $machine->mname }}</strong>
-                                            <p class="float-right" style="margin: 0px;">
+                                    @if ($machine->status == 1)
+                                        <div class="card card2 color">
+                                        @elseif($machine->status == 2)
+                                            <div class="card card2 color1">
+                                            @elseif($machine->status == 3)
+                                                <div class="card card2 color2">
+                                                @else
+                                                    <div class="card card2 color3">
+                                    @endif
 
-                                                <?php $total = 0;
-                                                $i = 0;
-                                                $id = 1; ?>
-                                                @foreach ($lots as $lot)
-                                                    @foreach ($chocos as $choco)
-                                                        @if ($choco->lotno == $machine->lotno)
-                                                            @if ($machine->lotno == $lot->lot_id && $lot->status == 1)
-                                                                <?php $id = ++$i; ?>
-                                                                <?php $total += $lot->height; ?>
-                                                            @endif
+                                    <div class="card-header cardheader1">
+                                        {{-- {{ $machine->created_at }}<br>
+                                        {{ $machine->status }}<br>
+                                        {{ $machine->stop_timer }}<br> --}}
+                                        <div class="status" statusval="{{ $machine->status }}"></div>
+                                        <strong><i class="fa-solid fa-keyboard"></i>
+                                            {{ $machine->mname }}</strong>
+                                        <p class="float-right" style="margin: 0px;">
+
+                                            <?php $total = 0;
+                                            $i = 0;
+                                            $id = 1; ?>
+                                            @foreach ($lots as $lot)
+                                                @foreach ($chocos as $choco)
+                                                    @if ($choco->lotno == $machine->lotno)
+                                                        @if ($machine->lotno == $lot->lot_id && $lot->status == 1)
+                                                            <?php $id = ++$i; ?>
+                                                            <?php $total += $lot->height; ?>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                            H: {{ number_format($total / $id, 2) }}
+                                            {{-- @if ($total > 0)
+                                                @endif --}}
+                                        </p>
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <div class="row form-group1">
+                                            <div class="col-12">
+                                                <label for="hf-email" class="form-control-label">
+                                                    <?php $masters = App\Models\LotMaster::get(); ?>
+                                                    @foreach ($masters as $master)
+                                                        @if ($machine->lotno == $master->id)
+                                                            LOT: {{ $master->name }}
                                                         @endif
                                                     @endforeach
-                                                @endforeach
-                                                H: {{ number_format($total / $id, 2) }}
-                                                {{-- @if ($total > 0)
-                                                @endif --}}
-                                            </p>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="card-body card-block">
-                                            <div class="row form-group1">
-                                                <div class="col-12">
-                                                    <label for="hf-email" class="form-control-label">
-                                                        <?php $masters = App\Models\LotMaster::get(); ?>
-                                                        @foreach ($masters as $master)
-                                                            @if ($machine->lotno == $master->id)
-                                                                LOT: {{ $master->name }}
+                                        <div class="row form-group mt-2 mt-md-2 mt-lg-0">
+                                            <div class="col-6">
+                                                <label for="hf-password" class="form-control-label">
+                                                    <?php $total1 = 0;
+                                                    $i1 = 0;
+                                                    $id1 = 1; ?>
+                                                    @foreach ($lots as $lot)
+                                                        @foreach ($chocos as $choco)
+                                                            @if ($choco->lotno == $machine->lotno)
+                                                                @if ($machine->lotno == $lot->lot_id && $lot->status == 1)
+                                                                    <?php $id1 = ++$i1; ?>
+                                                                    <?php $total1 += $lot->height; ?>
+                                                                @endif
                                                             @endif
                                                         @endforeach
-                                                    </label>
-                                                </div>
+                                                    @endforeach
+                                                    @if ($total1 > 0)
+                                                        TH: {{ number_format($total1 + $total1 / $id1, 2) }}
+                                                    @endif
+                                                </label>
                                             </div>
-                                            <div class="row form-group mt-2 mt-md-2 mt-lg-0">
-                                                <div class="col-6">
-                                                    <label for="hf-password" class="form-control-label">
-                                                        <?php $total1 = 0;
-                                                        $i1 = 0;
-                                                        $id1 = 1; ?>
-                                                        @foreach ($lots as $lot)
-                                                            @foreach ($chocos as $choco)
-                                                                @if ($choco->lotno == $machine->lotno)
-                                                                    @if ($machine->lotno == $lot->lot_id && $lot->status == 1)
-                                                                        <?php $id1 = ++$i1; ?>
-                                                                        <?php $total1 += $lot->height; ?>
-                                                                    @endif
-                                                                @endif
-                                                            @endforeach
-                                                        @endforeach
-                                                        @if ($total1 > 0)
-                                                            TH: {{ number_format($total1 + $total1 / $id1, 2) }}
-                                                        @endif
-                                                    </label>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="hf-password" class="form-control-label">
-                                                        {{-- @if ($machine->timer != 0)
+                                            <div class="col-6">
+                                                <label for="hf-password" class="form-control-label">
+                                                    {{-- @if ($machine->timer != 0)
                                                             <div class="d-flex timer"
                                                                 data-date="{{ $machine->timer }}"
                                                                 data="{{ $machine->growthrate }}">
@@ -255,45 +303,43 @@
                                                                 <input type="hidden" class="seconds ms-2">
                                                             </div>
                                                         @endif --}}
-                                                    </label>
-                                                </div>
+                                                </label>
                                             </div>
-                                            <div class="row form-group mt-2 mt-md-2 mt-lg-0">
-                                                <div class="col-12">
-                                                    <label for="hf-password" class="form-control-label">
-                                                        @if ($machine->timer != 0)
-                                                            <div class="d-flex timer"
-                                                                data-date="{{ $machine->timer }}">
-                                                                <input type="hidden" class="growthhour">
-                                                                <span class="hours"></span>h
-                                                                <span class="minutes ms-2"></span>m
-                                                                <span class="seconds ms-2"></span>s
+                                        </div>
+                                        <div class="row form-group mt-2 mt-md-2 mt-lg-0">
+                                            <div class="col-12">
+                                                <label for="hf-password" class="form-control-label">
+                                                    @if ($machine->timer != 0)
+                                                        <div class="d-flex timer" data-date="{{ $machine->timer }}">
+                                                            <input type="hidden" class="growthhour">
+                                                            <span class="hours"></span>h
+                                                            <span class="minutes ms-2"></span>m
+                                                            <span class="seconds ms-2"></span>s
+                                                        </div>
+                                                    @endif
+                                                    <?php $lotdata = App\Models\lots::get(); ?>
+                                                    @foreach ($lotdata as $lotd)
+                                                        @if ($machine->mname == $lotd->machineno)
+                                                            <div class="d-flex stime"
+                                                                stop-date="{{ $lotd->created_at }}">
+                                                                <input type="hidden"
+                                                                    value="{{ $lotd->created_at }}">
                                                             </div>
                                                         @endif
-                                                        <?php $lotdata = App\Models\lots::get(); ?>
-                                                        @foreach ($lotdata as $lotd)
-                                                            @if ($machine->mname == $lotd->machineno)
-                                                                <div class="d-flex stime"
-                                                                    stop-date="{{ $lotd->created_at }}">
-                                                                    <input type="text"
-                                                                        value="{{ $lotd->created_at }}">
-                                                                    <button id="stopbtn">Stop</button>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-                                                    </label>
-                                                </div>
+                                                    @endforeach
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
                         </div>
+                        @endforeach
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script src="{{ URL::asset('admin/assets/cdn/js/jquery.min.js ') }}"></script>
@@ -312,7 +358,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-   <script>
+    <script>
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var clockdiv = document.getElementsByClassName("timer");
@@ -377,23 +423,24 @@
                                     i]['seconds'];
 
                             }
+
                             function stop() {
-                                        window.clearInterval(countDownDate[i]['el']);
-                                        countDownDate[i]['el'] = "stop";
-                                        $.ajax({
-                                            headers: {
-                                                'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                                            },
-                                            type: "POST",
-                                            url: "{{ route('stopTimermachine') }}",
-                                            data: formData,
-                                            processData: false,
-                                            contentType: false,
-                                            success: function() {
-                                                document.getElementsByClassName('stime');
-                                            }
-                                        });
+                                window.clearInterval(countDownDate[i]['el']);
+                                countDownDate[i]['el'] = "stop";
+                                $.ajax({
+                                    headers: {
+                                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                    },
+                                    type: "POST",
+                                    url: "{{ route('stopTimermachine') }}",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function() {
+                                        document.getElementsByClassName('stime');
                                     }
+                                });
+                            }
                             // $.ajax({
                             //     url: "{{ route('stopTimermachine') }}",
                             //     type: 'post',
@@ -431,4 +478,3 @@
 </body>
 
 </html>
-

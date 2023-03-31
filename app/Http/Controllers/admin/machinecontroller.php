@@ -93,12 +93,12 @@ class machinecontroller extends Controller
             ->get();
 
         foreach ($machines as $machine) {
-            if ($machine->stop_timer != '' || $machine->timer == '') {
-                $machine->update(['status' => '0']);
-            } elseif ($machine->created_at < Carbon::now()->subDays(4)->toDateTimeString()) {
+            if ($machine->created_at < Carbon::now()->subDays(4)->toDateTimeString() && $machine->timer == '') {
                 $machine->update(['status' => '3']);
-            } elseif ($machine->created_at < Carbon::now()->subMinutes(240)->toDateTimeString()) {
+            } elseif ($machine->created_at < Carbon::now()->subMinutes(240)->toDateTimeString() && $machine->timer == '') {
                 $machine->update(['status' => '2']);
+            } elseif ($machine->stop_timer != '' || $machine->timer == '') {
+                $machine->update(['status' => '0']);
             } else {
                 $machine->update(['status' => '1']);
             }
@@ -119,7 +119,7 @@ class machinecontroller extends Controller
         }
     }
 
-      public function stopTimermachine(Request $request)
+    public function stopTimermachine(Request $request)
     {
         try {
             $check = machine::where("id", $request->id)->whereNotNull('timer')->first();
