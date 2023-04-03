@@ -102,6 +102,7 @@ class machinecontroller extends Controller
             } else {
                 $machine->update(['status' => '1']);
             }
+            
         }
         return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots]);
     }
