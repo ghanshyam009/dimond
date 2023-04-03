@@ -316,6 +316,19 @@
                                                         @endforeach
                                                     </label>
                                                 </div>
+                                                <div class="col-12">
+                                                    <label for="hf-password" class="form-control-label">
+                                                        {{-- {{ $machine->stop_timer }}<br>
+                                                        {{ $machine->timer }}<br>
+                                                        {{ $machine->created_at }} --}}
+                                                        @if ($machine->stop_timer != 0)
+                                                            <div class="d-flex stoptimer"
+                                                                timer="{{ $machine->stop_timer }}">
+                                                                <span class="shour text-danger"></span>
+                                                            </div>
+                                                        @endif
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -456,6 +469,42 @@
                             //     }
 
                             // }
+                        }
+                    },
+                    1000);
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+                var stopdiv = document.getElementsByClassName("stoptimer");
+
+                var stopDate = new Array();
+                for (var i = 0; i < stopdiv.length; i++) {
+                    stopDate[i] = new Array();
+                    stopDate[i]['els'] = stopdiv[i];
+                    stopDate[i]['time'] = new Date(stopdiv[i].getAttribute('timer')).getTime();
+                    stopDate[i]['hours'] = 0;
+                    stopDate[i]['seconds'] = 0;
+                    stopDate[i]['minutes'] = 0;
+                }
+                var countdownfunction = setInterval(function() {
+                        for (var i = 0; i < stopDate.length; i++) {
+                            var now = new Date().getTime();
+                            var distance = now - stopDate[i]['time'];
+
+                            stopDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+                            stopDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            stopDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
+                            if (distance < 0) {
+                                stopDate[i]['els'].querySelector('.shour').innerHTML = 0 + 'h  ' + 0 + 'm  ' +
+                                    0 + 's';
+                            } else {
+                                stopDate[i]['els'].querySelector('.shour').innerHTML = stopDate[i]['hours'] +
+                                    'h ' + stopDate[i]['minutes'] + 'm ' + stopDate[i]['seconds'] + 's';
+                            }
                         }
                     },
                     1000);
