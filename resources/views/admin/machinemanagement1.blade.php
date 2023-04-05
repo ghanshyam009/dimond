@@ -88,7 +88,7 @@
                     <div class="col-lg-10 col-md-12 col-12">
                         <div class="row">
                             <div class="col-lg-3 col-md-6 col-xl-3">
-                                <div class="card">
+                                <div class="card" style="background-color: #6DD4B1;">
                                     <div class="card-body">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-1">
@@ -105,7 +105,7 @@
                                                     @endforeach
                                                     <div class="stat-text"><span
                                                             class="count">{{ $active1 }}</span></div>
-                                                    <div class="stat-heading">Active</div>
+                                                    <div>Active</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@
                             </div>
 
                             <div class="col-lg-3 col-md-6 col-xl-3">
-                                <div class="card">
+                                <div class="card" style="background-color: #FFFF00;">
                                     <div class="card-body">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-2">
@@ -131,7 +131,7 @@
                                                     @endforeach
                                                     <div class="stat-text"><span
                                                             class="count">{{ $stop1 }}</span></div>
-                                                    <div class="stat-heading">Stop</div>
+                                                    <div>Stop</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@
                             </div>
 
                             <div class="col-lg-3 col-md-6 col-xl-3">
-                                <div class="card">
+                                <div class="card" style="background-color: #F78800;">
                                     <div class="card-body">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-3">
@@ -157,7 +157,7 @@
                                                     @endforeach
                                                     <div class="stat-text"><span
                                                             class="count">{{ $inactive1 }}</span></div>
-                                                    <div class="stat-heading">Inactive</div>
+                                                    <div>Inactive</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +166,7 @@
                             </div>
 
                             <div class="col-lg-3 col-md-6 col-xl-3">
-                                <div class="card">
+                                <div class="card" style="background-color: #C7813D;">
                                     <div class="card-body">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-4">
@@ -183,7 +183,7 @@
                                                     @endforeach
                                                     <div class="stat-text"><span
                                                             class="count">{{ $old1 }}</span></div>
-                                                    <div class="stat-heading">Old Inactive</div>
+                                                    <div>Old Inactive</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -318,9 +318,6 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <label for="hf-password" class="form-control-label">
-                                                        {{-- {{ $machine->stop_timer }}<br>
-                                                        {{ $machine->timer }}<br>
-                                                        {{ $machine->created_at }} --}}
                                                         @if ($machine->stop_timer != 0)
                                                             <div class="d-flex stoptimer"
                                                                 timer="{{ $machine->stop_timer }}">
@@ -480,7 +477,6 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var stopdiv = document.getElementsByClassName("stoptimer");
-
                 var stopDate = new Array();
                 for (var i = 0; i < stopdiv.length; i++) {
                     stopDate[i] = new Array();
@@ -502,7 +498,7 @@
                                 stopDate[i]['els'].querySelector('.shour').innerHTML = 0 + 'h  ' + 0 + 'm  ' +
                                     0 + 's';
                             } else {
-                                stopDate[i]['els'].querySelector('.shour').innerHTML = stopDate[i]['hours'] +
+                                stopDate[i]['els'].querySelector                                                                                                                                                                                                                                                                                                                    ('.shour').innerHTML = stopDate[i]['hours'] +
                                     'h ' + stopDate[i]['minutes'] + 'm ' + stopDate[i]['seconds'] + 's';
                             }
                         }
