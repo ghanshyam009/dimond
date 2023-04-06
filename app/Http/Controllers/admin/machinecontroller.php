@@ -109,7 +109,6 @@ class machinecontroller extends Controller
                 $machine->update(['status' => '1']);
             }
         }
-
         return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots]);
     }
     public function startTimermachine(Request $request)
