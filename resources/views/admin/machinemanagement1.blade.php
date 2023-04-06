@@ -477,6 +477,7 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var stopdiv = document.getElementsByClassName("stoptimer");
+                // var restart = document.getElementsByClassName("restart");
                 var stopDate = new Array();
                 for (var i = 0; i < stopdiv.length; i++) {
                     stopDate[i] = new Array();
@@ -486,6 +487,12 @@
                     stopDate[i]['seconds'] = 0;
                     stopDate[i]['minutes'] = 0;
                 }
+
+                // for (var j = 0; j < restart.length; j++) {
+                //     stopDate[j] = new Array();
+                //     stopDate[j]['el'] = restart[j];
+                // }
+
                 var countdownfunction = setInterval(function() {
                         for (var i = 0; i < stopDate.length; i++) {
                             var now = new Date().getTime();
@@ -498,10 +505,22 @@
                                 stopDate[i]['els'].querySelector('.shour').innerHTML = 0 + 'h  ' + 0 + 'm  ' +
                                     0 + 's';
                             } else {
-                                stopDate[i]['els'].querySelector                                                                                                                                                                                                                                                                                                                    ('.shour').innerHTML = stopDate[i]['hours'] +
+                                stopDate[i]['els'].querySelector('.shour').innerHTML = stopDate[i]['hours'] +
                                     'h ' + stopDate[i]['minutes'] + 'm ' + stopDate[i]['seconds'] + 's';
+                                console.log(stopDate[i]['seconds']);
                             }
                         }
+
+                        // if (distance > 0) {
+                        //     clearInterval(countdownfunction);
+                        // }
+
+                        // setInterval(function() {
+                        //     if (new Date().getTime() - distance >= 60000) {
+                        //         window.location.reload(true);
+                        //         stop()
+                        //     }
+                        // }, 1000);
                     },
                     1000);
             }
