@@ -279,7 +279,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <label for="hf-password" class="form-control-label">
-                                                        {{-- @if ($machine->timer != 0)
+                                                        @if ($machine->timer != 0)
                                                             <div class="d-flex timer"
                                                                 data-date="{{ $machine->timer }}"
                                                                 data="{{ $machine->growthrate }}">
@@ -288,7 +288,7 @@
                                                                 <input type="hidden" class="minutes ms-2">
                                                                 <input type="hidden" class="seconds ms-2">
                                                             </div>
-                                                        @endif --}}
+                                                        @endif
                                                     </label>
                                                 </div>
                                             </div>
@@ -297,23 +297,15 @@
                                                     <label for="hf-password" class="form-control-label">
                                                         @if ($machine->timer != 0)
                                                             <div class="d-flex timer"
-                                                                data-date="{{ $machine->timer }}">
+                                                                data-date="{{ $machine->timer }}"
+                                                                stop-date="{{ $machine->stop_timer }}">
                                                                 <input type="hidden" class="growthhour">
                                                                 <span class="hours"></span>h
                                                                 <span class="minutes ms-2"></span>m
                                                                 <span class="seconds ms-2"></span>s
+
                                                             </div>
                                                         @endif
-                                                        <?php $lotdata = App\Models\lots::get(); ?>
-                                                        @foreach ($lotdata as $lotd)
-                                                            @if ($machine->mname == $lotd->machineno)
-                                                                <div class="d-flex stime"
-                                                                    stop-date="{{ $lotd->created_at }}">
-                                                                    <input type="hidden"
-                                                                        value="{{ $lotd->created_at }}">
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
                                                     </label>
                                                 </div>
                                                 <div class="col-12">
@@ -359,24 +351,6 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var clockdiv = document.getElementsByClassName("timer");
-                var stopdiv = document.getElementsByClassName("stime");
-
-                var countDownDate = new Array();
-                for (var j = 0; j < stopdiv.length; j++) {
-                    var now = new Date().getTime();
-                    countDownDate[j] = new Array();
-                    countDownDate[j]['el'] = stopdiv[j];
-                    countDownDate[j]['stime'] = new Date(stopdiv[j].getAttribute('stop-date')).getTime();
-
-                    var distance1 = now - countDownDate[j]['stime'];
-
-                    countDownDate[j]['hours'] = Math.floor((distance1 / (1000 * 60 * 60 * 24)) * 24);
-                    countDownDate[j]['minutes'] = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 *
-                        60));
-                    countDownDate[j]['seconds'] = Math.floor((distance1 % (1000 * 60)) / 1000);
-                    // console.log(countDownDate[j]['hours'], countDownDate[j]['minutes'], countDownDate[j][
-                    // 'seconds']);
-                }
                 var countDownDate = new Array();
                 for (var i = 0; i < clockdiv.length; i++) {
                     countDownDate[i] = new Array();
@@ -384,6 +358,7 @@
                     countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
                     countDownDate[i]['hours'] = 0;
                     countDownDate[i]['growth'] = clockdiv[i].getAttribute('data');
+                    // countDownDate[i]['stop'] = clockdiv[i].getAttribute('stop-date');
                     countDownDate[i]['seconds'] = 0;
                     countDownDate[i]['minutes'] = 0;
                 }
@@ -392,18 +367,17 @@
                         for (var i = 0; i < countDownDate.length; i++) {
                             var now = new Date().getTime();
                             var distance = now - countDownDate[i]['time'];
-
+                            // var diff = now > countDownDate[i]['stop'];
 
                             countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
-                            //   console.log(countDownDate[i]['hours']);
+
                             countDownDate[i]['growthhour'] = Math.floor((distance / (1000 * 60 * 60 * 24)) *
                                 24);
                             countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
                                 60));
                             countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
-                            //    console.log(countDownDate[i]['seconds']);
-                            if (distance < 0) {
-                                countDownDate[i]['el'].querySelector('.growthhour').innerHTML = 0;
+
+                            if (diff == false) {
                                 countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
                                 countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
                                 countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
@@ -411,61 +385,16 @@
                                 var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
                                     countDownDate[i]['hours'];
 
-                                // countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
-                                //     countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
+                                countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
+                                    countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
 
-                                countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[
-                                    i]['minutes'];
-                                countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[
-                                    i]['seconds'];
-
+                                var minute = countDownDate[i]['el'].querySelector('.minutes').innerHTML =
+                                    countDownDate[
+                                        i]['minutes'];
+                                var second = countDownDate[i]['el'].querySelector('.seconds').innerHTML =
+                                    countDownDate[
+                                        i]['seconds'];
                             }
-
-                            function stop() {
-                                window.clearInterval(countDownDate[i]['el']);
-                                countDownDate[i]['el'] = "stop";
-                                $.ajax({
-                                    headers: {
-                                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                                    },
-                                    type: "POST",
-                                    url: "{{ route('stopTimermachine') }}",
-                                    data: formData,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function() {
-                                        document.getElementsByClassName('stime');
-                                    }
-                                });
-                            }
-                            // $.ajax({
-                            //     url: "{{ route('stopTimermachine') }}",
-                            //     type: 'post',
-                            //     data: {
-                            //         countDownDate[i]: countDownDate[i];
-                            //     },
-                            //     success: function(response) {
-                            //         clearInterval(countDownDate[i]['hours'], countDownDate[i][
-                            //                 'minutes'
-                            //             ],
-                            //             countDownDate[i]['seconds']);
-                            //         document.getElementsByClassName('stime').innerHTML = "EXPIRED";
-                            //     }
-                            // });
-
-                            // for (var j = 0; j <= countDownDate[i].length; j++) {
-                            //     // console.log(stopdiv[j]);
-                            //     if (countDownDate[i] < stopdiv[j]) {
-                            //         clearInterval(countDownDate[i]['hours'], countDownDate[i]['minutes'],
-                            //             countDownDate[i]['seconds']);
-                            //         document.getElementsByClassName('stime').innerHTML = "EXPIRED";
-                            //         // $("#stopbtn").click(function() {
-                            //         //     clearTimeout(countdownfunction);
-                            //         //     document.getElementsByClassName('stime').innerHTML = "EXPIRED";
-                            //         // });
-                            //     }
-
-                            // }
                         }
                     },
                     1000);
@@ -477,7 +406,6 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 var stopdiv = document.getElementsByClassName("stoptimer");
-                // var restart = document.getElementsByClassName("restart");
                 var stopDate = new Array();
                 for (var i = 0; i < stopdiv.length; i++) {
                     stopDate[i] = new Array();
@@ -487,12 +415,6 @@
                     stopDate[i]['seconds'] = 0;
                     stopDate[i]['minutes'] = 0;
                 }
-
-                // for (var j = 0; j < restart.length; j++) {
-                //     stopDate[j] = new Array();
-                //     stopDate[j]['el'] = restart[j];
-                // }
-
                 var countdownfunction = setInterval(function() {
                         for (var i = 0; i < stopDate.length; i++) {
                             var now = new Date().getTime();
@@ -507,20 +429,8 @@
                             } else {
                                 stopDate[i]['els'].querySelector('.shour').innerHTML = stopDate[i]['hours'] +
                                     'h ' + stopDate[i]['minutes'] + 'm ' + stopDate[i]['seconds'] + 's';
-                                console.log(stopDate[i]['seconds']);
                             }
                         }
-
-                        // if (distance > 0) {
-                        //     clearInterval(countdownfunction);
-                        // }
-
-                        // setInterval(function() {
-                        //     if (new Date().getTime() - distance >= 60000) {
-                        //         window.location.reload(true);
-                        //         stop()
-                        //     }
-                        // }, 1000);
                     },
                     1000);
             }
