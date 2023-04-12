@@ -303,7 +303,7 @@
                                                                 <span class="hours"></span>h
                                                                 <span class="minutes ms-2"></span>m
                                                                 <span class="seconds ms-2"></span>s
-
+                                                                {{-- <input type="text" class="remove" value=""> --}}
                                                             </div>
                                                         @endif
                                                     </label>
@@ -358,16 +358,15 @@
                     countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
                     countDownDate[i]['hours'] = 0;
                     countDownDate[i]['growth'] = clockdiv[i].getAttribute('data');
-                    // countDownDate[i]['stop'] = clockdiv[i].getAttribute('stop-date');
+                    countDownDate[i]['stop'] = clockdiv[i].getAttribute('stop-date');
                     countDownDate[i]['seconds'] = 0;
                     countDownDate[i]['minutes'] = 0;
                 }
-
                 var countdownfunction = setInterval(function() {
                         for (var i = 0; i < countDownDate.length; i++) {
                             var now = new Date().getTime();
                             var distance = now - countDownDate[i]['time'];
-                            // var diff = now > countDownDate[i]['stop'];
+                            var diff = now > countDownDate[i]['stop'];
 
                             countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
 
@@ -378,22 +377,35 @@
                             countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
 
                             if (diff == false) {
+                                // clearInterval(now);
+
+                                clearInterval(
+                                    countDownDate[i]['el'].querySelector('.hours').innerHTML =
+                                    countDownDate[i]['hours'],
+                                    countDownDate[i]['el'].querySelector('.minutes').innerHTML =
+                                    countDownDate[i]['minutes'],
+                                    countDownDate[i]['el'].querySelector('.seconds').innerHTML =
+                                    countDownDate[i]['seconds']
+                                )
+
+                                // $('.remove').val('.shour');
+
+                                // setTimeout(function() {
+                                //     countDownDate[i]['seconds']
+                                // }, diff);
+
                                 countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
                                 countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
                                 countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
                             } else {
                                 var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
                                     countDownDate[i]['hours'];
-
                                 countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
                                     countDownDate[i]['growthhour'] * countDownDate[i]['growth'] / 100000;
-
                                 var minute = countDownDate[i]['el'].querySelector('.minutes').innerHTML =
-                                    countDownDate[
-                                        i]['minutes'];
+                                    countDownDate[i]['minutes'];
                                 var second = countDownDate[i]['el'].querySelector('.seconds').innerHTML =
-                                    countDownDate[
-                                        i]['seconds'];
+                                    countDownDate[i]['seconds'];
                             }
                         }
                     },
