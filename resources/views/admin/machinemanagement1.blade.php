@@ -298,13 +298,22 @@
 
                                                         @if(isset($machine->stop_timer) && !empty($machine->stop_timer))
                                                             <?php 
+
+                                                                $start_time = date_create($machine->timer);
+                                                                $end_time = date_create($machine->stop_timer);
+                                                                $diff=date_diff($start_time,$end_time);
+                                                                $diff_time = $diff->format("%a");
                                                                 $start_time = date('H:i:s', strtotime($machine->timer));
                                                                 $end_time = date('H:i:s', strtotime($machine->stop_timer));
                                                                 $arr1 = explode(':', $start_time);
                                                                 $arr2 = explode(':', $end_time);
+                                                                $h = 0 ;
                                                                 $h = isset($arr1,$arr2) ? $arr1[0] - $arr2[0] : 0; 
                                                                 $m = isset($arr1,$arr2) ? $arr1[1] - $arr2[1] : 0; 
                                                                 $s = isset($arr1,$arr2) ? $arr1[2] - $arr2[2] : 0; 
+                                                                if($diff_time != 0){
+                                                                    $h = $diff_time * 24;  
+                                                                }
                                                             ?>
                                                             <div class="d-flex">
                                                                 <span class="hours"></span>{{ abs($h) }}h
