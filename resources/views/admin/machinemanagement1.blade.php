@@ -295,11 +295,28 @@
                                             <div class="row form-group mt-2 mt-md-2 mt-lg-0">
                                                 <div class="col-12">
                                                     <label for="hf-password" class="form-control-label">
-                                                        @if ($machine->timer != 0)
-                                                            <div class="d-flex timer"
+
+                                                        @if(isset($machine->stop_timer) && !empty($machine->stop_timer))
+                                                            <?php 
+                                                                $start_time = date('H:i:s', strtotime($machine->timer));
+                                                                $end_time = date('H:i:s', strtotime($machine->stop_timer));
+                                                                $arr1 = explode(':', $start_time);
+                                                                $arr2 = explode(':', $end_time);
+                                                                $h = isset($arr1,$arr2) ? $arr1[0] - $arr2[0] : 0; 
+                                                                $m = isset($arr1,$arr2) ? $arr1[1] - $arr2[1] : 0; 
+                                                                $s = isset($arr1,$arr2) ? $arr1[2] - $arr2[2] : 0; 
+                                                            ?>
+                                                            <div class="d-flex">
+                                                                <span class="hours"></span>{{ abs($h) }}h
+                                                                <span class="minutes ms-2"></span>{{ abs($m) }}m
+                                                                <span class="seconds ms-2"></span>{{ abs($s) }}s
+                                                            </div>
+                                                        @elseif(isset($machine->timer) && !empty($machine->timer))
+                                                            <div class="d-flex timer stoptime"
                                                                 data-date="{{ $machine->timer }}"
                                                                 stop-date="{{ $machine->stop_timer }}">
                                                                 <input type="hidden" class="growthhour">
+                                                                <input type="hidden" id="stoptime" value="{{ $machine->stop_timer}}">
                                                                 <span class="hours"></span>h
                                                                 <span class="minutes ms-2"></span>m
                                                                 <span class="seconds ms-2"></span>s
@@ -355,10 +372,11 @@
                 for (var i = 0; i < clockdiv.length; i++) {
                     countDownDate[i] = new Array();
                     countDownDate[i]['el'] = clockdiv[i];
+                    
                     countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
                     countDownDate[i]['hours'] = 0;
                     countDownDate[i]['growth'] = clockdiv[i].getAttribute('data');
-                    countDownDate[i]['stop'] = clockdiv[i].getAttribute('stop-date');
+                    // countDownDate[i]['stop'] = clockdiv[i].getAttribute('stop-date');
                     countDownDate[i]['seconds'] = 0;
                     countDownDate[i]['minutes'] = 0;
                 }
@@ -366,7 +384,7 @@
                         for (var i = 0; i < countDownDate.length; i++) {
                             var now = new Date().getTime();
                             var distance = now - countDownDate[i]['time'];
-                            var diff = now > countDownDate[i]['stop'];
+                            // var diff = now > countDownDate[i]['stop'];
 
                             countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
 
@@ -376,17 +394,17 @@
                                 60));
                             countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
 
-                            if (diff == false) {
+                            if (distance < 0) {
                                 // clearInterval(now);
 
-                                clearInterval(
-                                    countDownDate[i]['el'].querySelector('.hours').innerHTML =
-                                    countDownDate[i]['hours'],
-                                    countDownDate[i]['el'].querySelector('.minutes').innerHTML =
-                                    countDownDate[i]['minutes'],
-                                    countDownDate[i]['el'].querySelector('.seconds').innerHTML =
-                                    countDownDate[i]['seconds']
-                                )
+                                // clearInterval(
+                                //     countDownDate[i]['el'].querySelector('.hours').innerHTML =
+                                //     countDownDate[i]['hours'],
+                                //     countDownDate[i]['el'].querySelector('.minutes').innerHTML =
+                                //     countDownDate[i]['minutes'],
+                                //     countDownDate[i]['el'].querySelector('.seconds').innerHTML =
+                                //     countDownDate[i]['seconds']
+                                // )
 
                                 // $('.remove').val('.shour');
 
@@ -394,10 +412,11 @@
                                 //     countDownDate[i]['seconds']
                                 // }, diff);
 
-                                countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
-                                countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
-                                countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
+                                // countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
+                                // countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
+                                // countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
                             } else {
+                              
                                 var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
                                     countDownDate[i]['hours'];
                                 countDownDate[i]['el'].querySelector('.growthhour').innerHTML =
@@ -431,6 +450,7 @@
                         for (var i = 0; i < stopDate.length; i++) {
                             var now = new Date().getTime();
                             var distance = now - stopDate[i]['time'];
+
 
                             stopDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
                             stopDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
