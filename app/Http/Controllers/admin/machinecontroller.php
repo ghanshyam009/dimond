@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\machine;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 use Exception;
+use App\Models\LotMove;
+use App\Models\machine;
 use App\Models\chocolate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class machinecontroller extends Controller
@@ -82,8 +83,11 @@ class machinecontroller extends Controller
         }
         return view('admin.machine')->with(['data' => $data]);
     }
-    public function machinemanagement1()
+    
+    public function machinemanagement1($machineType = null)
     {
+        $lotsData = LotMove::get(); 
+        $chocosData = chocolate::get(); 
         $machines = machine::get();
 
         $lots = DB::table('chocolates')
@@ -109,8 +113,7 @@ class machinecontroller extends Controller
                 $machine->update(['status' => '1']);
             }
         }
-
-        return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots]);
+        return view('admin.machinemanagement1')->with(['machines' => $machines, 'lots' => $lots ,'lotsData' => $lotsData , 'chocosData' => $chocosData , 'machineType' => $machineType]);
     }
     public function startTimermachine(Request $request)
     {

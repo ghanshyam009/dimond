@@ -20,7 +20,7 @@ class batchcontroller extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.batch1', compact('users'));
+        return view('admin.batch', compact('users'));
     }
 
     /**
@@ -31,7 +31,7 @@ class batchcontroller extends Controller
     public function create()
     {
         $roles  = Role::all();
-        return view('admin.batch1', compact('roles'));
+        return view('admin.batch', compact('roles'));
     }
 
     /**

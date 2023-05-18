@@ -36,6 +36,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
+    <style>
+        p {
+            font-size: 16px;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 400;
+            line-height: 24px;
+            color: #c92a2a;
+        }
+    </style>
 </head>
 
 <body>
@@ -751,14 +760,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-
                                     <div class="row">
                                         {{-- <?php $data = App\Models\LotDetail::with('bactch')->get(); ?> --}}
-
                                         @foreach ($data as $k => $ans)
                                             <div class="col-lg-4 col-md-6 col-xl-3">
                                                 <div class="card">
-
                                                     <div class="card-body card-block">
                                                         <input type="hidden" value="{{ $ans->id }}"
                                                             id="packet_id_{{ $ans->id }}" />
@@ -789,7 +795,6 @@
                                                                     Weight(Ct): {{ $ans->weight }}</label></div>
                                                         </div>
                                                         <div class="row form-group1">
-
                                                             <div class="col-12 col-md-4"><label for="hf-email"
                                                                     class=" form-control-label font_size">Lots:</label>
                                                             </div>
@@ -806,7 +811,6 @@
                                                                     {{ $ans->length }}
                                                                     x {{ $ans->width }}</label></div>
                                                         </div>
-
                                                         @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager' || Auth::user()->role == 'growing user')
                                                             <div class="row form-group1 mt-2">
                                                                 <div class="col-10">
@@ -816,21 +820,26 @@
                                                                                 <button id="start_{{ $ans->id }}"
                                                                                     class="start_button btn btn-secondary btn-sm float-left mt-2"
                                                                                     onclick="start({{ $k + 1 }})"
-                                                                                    style="font-size: 12px; padding: 3px;">Start</button>
+                                                                                    style="font-size: 12px; padding: 3px;"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#addpacketsModal2">Start</button>
                                                                             </div>
                                                                         @elseif($ans->timer != null && $ans->stop_timer != null)
-                                                                            <button disabled
-                                                                                id="stop_{{ $ans->id }}"
+                                                                            <button id="stop_{{ $ans->id }}"
                                                                                 class="stop_button btn btn-secondary btn-sm float-left w-auto ms-2 mt-2"
-                                                                                onclick="stop({{ $ans->id }})"
-                                                                                style="font-size: 12px; padding: 3px;">Growing
-                                                                                Done</button>
+                                                                                onclick="endProcess({{ $ans->lot_id }}); stop({{ $ans->id }})"
+                                                                                style="font-size: 12px; padding: 3px;"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#addpacketsModal1">End
+                                                                            </button>
                                                                         @else
                                                                             <div class="col-6">
                                                                                 <button id="stop_{{ $ans->id }}"
                                                                                     class="stop_button btn btn-secondary btn-sm float-left mt-2"
                                                                                     onclick="stop({{ $ans->id }})"
-                                                                                    style="font-size: 12px; padding: 3px;">Growing
+                                                                                    style="font-size: 12px; padding: 3px;"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#addpacketsModal">Growing
                                                                                     Done</button>
                                                                             </div>
                                                                             <div class="col-6 ps-3">
@@ -842,7 +851,6 @@
                                                                         @endif
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-2">
                                                                     <button type="button"
                                                                         class="btn btn-danger btn-sm float-right mt-2"
@@ -850,7 +858,6 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -860,10 +867,352 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="addpacketsModal" tabindex="-1"
+                        aria-labelledby="addpacketsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addpacketsModalLabel">Growing Done</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url('insertseeds') }}" method="post"
+                                        enctype="multipart/form-data" target="_blank">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body card-block">
+                                                    <div class="row form-group">
+                                                        <div class="col-12 col-md-2"><label for="select"
+                                                                cclass=" form-control-label">Process & Reason
+                                                            </label></div>
+                                                        <div class="col-12 col-md-10">
+                                                            <?php $batch = App\Models\processreson::get(); ?>
+                                                            <select class="custom-select d-block w-100"
+                                                                name="processresons_id" id="processresons_id"
+                                                                required>
+                                                                <option value="0">Please select</option>
+                                                                @foreach ($batch as $ans)
+                                                                    <option value="{{ $ans->id }}">
+                                                                        {{ $ans->name }}
+                                                                    </option>
+                                                                @endforeach
+
+                                                            </select>
+                                                            <p id="processresons_id_error"></p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-2"><label for="select"
+                                                                class=" form-control-label">Employee</label></div>
+                                                        <div class="col-12 col-md-10">
+                                                            <?php $users = App\Models\User::get(); ?>
+                                                            <select class="custom-select d-block w-100" name="user_id"
+                                                                id="user_id" required>
+                                                                <option value="0">Please select</option>
+                                                                @foreach ($users as $user)
+                                                                    <option value="{{ $user->id }}">
+                                                                        {{ $user->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <p id="user_id_error"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-2"><label for="select"
+                                                                class=" form-control-label">Growing Time</label></div>
+                                                        <div class="col-12 col-md-10">
+                                                            <input type="time" id="growing_time"
+                                                                name="growing_time" class="d-block w-100">
+                                                            <p id="growing_time_error"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-2"><label for="select"
+                                                                class=" form-control-label">Image</label></div>
+                                                        <div class="col-12 col-md-10">
+                                                            <input type="file" id="file" name="file"
+                                                                class="d-block w-100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="hidden_packet_id" id="hidden_packet_id" />
+                                        <div class="modal-footer float-left col-12">
+                                            <button type="button" onclick="growing_done();"
+                                                class="btn btn-secondary">Done</button>
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Discard</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="addpacketsModal1" tabindex="-1"
+                        aria-labelledby="addpacketsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addpacketsModalLabel">Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url('insertseeds') }}" method="post"
+                                        enctype="multipart/form-data" target="_blank">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body card-block">
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class=" form-control-label">Final
+                                                                Weight (Ct)</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="final_weight_ct"
+                                                                id="final_weight_ct" />
+                                                        </div>
+
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select"
+                                                                class=" form-control-label">Chocolate Start</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="file" name="chocolate_start"
+                                                                id="chocolate_start" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class=" form-control-label">Finish
+                                                                Type </label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="finish_type"
+                                                                id="finish_type" />
+                                                        </div>
+
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class=" form-control-label">Growing
+                                                                Done</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="file" name="growing_done"
+                                                                id="growing_done" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class=" form-control-label">End
+                                                                Images </label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="file" name="finish_type"
+                                                                id="finish_type" /><br><br>
+                                                            <input type="file" name="finish_type"
+                                                                id="finish_type" />
+                                                        </div>
+
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class=" form-control-label">Growing
+                                                                Time</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="growing_time"
+                                                                id="growing_time" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-2"><label for="select"
+                                                                class=" form-control-label">Note</label></div>
+                                                        <div class="col-12 col-md-10">
+                                                            <textarea></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <ul class="nav nav-tabs mt-4" id="myTab"
+                                                                        role="tablist">
+                                                                        <li class="nav-item">
+                                                                            <h6><b>Select Broken Pieces </b></h6>
+                                                                            <a class="nav-link active" id="home-tab"
+                                                                                data-toggle="tab" href="#home"
+                                                                                role="tab" aria-controls="home"
+                                                                                aria-selected="true">Chocolate
+                                                                                Lines</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="table-responsive">
+                                                                        <table id="dataTable"
+                                                                            class="cover table table-responsive">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Name</th>
+                                                                                    <th>Length(MM)..</th>
+                                                                                    <th>Width(MM)</th>
+                                                                                    <th>Weight(Ct)</th>
+                                                                                    <th>Height(Micro)</th>
+                                                                                    <th>Grow Height</th>
+                                                                                    <th>GRD</th>
+                                                                                    <th>Shape</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="add_rows">
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer float-left col-12">
+                                            <button type="button" onclick="chocolateConfirm();"
+                                                class="btn btn-secondary">Confirm</button>
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Discard</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal fade" id="addpacketsModal2" tabindex="-1"
+                        aria-labelledby="addpacketsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addpacketsModalLabel">Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url('insertseeds') }}" method="post"
+                                        enctype="multipart/form-data" target="_blank">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body card-block">
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Machine Number</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <div class="col-6 col-md-10">
+                                                                <?php $machine = App\Models\machine::get(); ?>
+                                                                <select class="custom-select d-block w-100" name="user_id"
+                                                                    id="user_id" required>
+                                                                    <option value="0">Please select</option>
+                                                                    @foreach ($machine as $machin_name)
+                                                                        <option value="{{ $machin_name->id }}">
+                                                                            {{ $machin_name->mname }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <p id="user_id_error"></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Start Date</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="datetime" disabled name="growing_time" id="growing_time" value="{{ date("Y/m/d H:i:m") }}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Employee </label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <div class="col-12 col-md-10">
+                                                                <?php $users = App\Models\User::get(); ?>
+                                                                <select class="custom-select d-block w-100" name="user_id"
+                                                                    id="user_id" required>
+                                                                    <option value="0">Please select</option>
+                                                                    @foreach ($users as $user)
+                                                                        <option value="{{ $user->id }}">
+                                                                            {{ $user->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <p id="user_id_error"></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Pcs</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="growing_time" id="growing_time" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Loose Weight(Ct) </label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="growing_time" id="growing_time" />
+                                                        </div>
+
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Weight(Ct)</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="growing_time"
+                                                                id="growing_time" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group">
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class="form-control-label">Images </label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="file" name="finish_type"
+                                                                id="finish_type" /><br><br>
+                                                            <input type="file" name="finish_type"
+                                                                id="finish_type" />
+                                                        </div>
+
+                                                        <div class="col-6 col-md-2">
+                                                            <label for="select" class=" form-control-label">Avg. Weight(Ct)	</label>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                            <input type="text" name="growing_time"
+                                                                id="growing_time" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer float-left col-12">
+                                            <button type="button" onclick="chocolateConfirm();"
+                                                class="btn btn-secondary">Confirm</button>
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Discard</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="countChocolateline">
                 </div>
             @endif
         @endif
-
         <script>
             function secToTimer(sec) {
                 const o = new Date(0),
@@ -896,13 +1245,10 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-
         <script>
             var timeArray = [];
-
+            var countChocolateline = 0;
             function timer(id) {
-
                 timeArray[id]['sec'] = timeArray[id]['sec'] + 1;
                 if (timeArray[id]['sec'] / 60 == 1) {
                     timeArray[id]['min'] = timeArray[id]['min'] + 1;
@@ -931,60 +1277,101 @@
                     'dispSec'
                 ]);
             }
-
-            function stop(id) {
-                window.clearInterval(timeArray[id]['timeoutId']);
-                timeArray[id]['check'] = "stop";
-
-                var packet_id = $('#packet_id_' + id).val();
+            function endProcess(lot_id) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 var formData = new FormData();
-                formData.append("id", packet_id);
+                formData.append("lot_id", lot_id);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
                     },
                     type: "POST",
-                    url: "{{ route('stopTimer') }}",
+                    url: "{{ route('getLotDetails') }}",
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function() {
-                        $("#stop_" + id).attr("disabled", true);
+                    success: function(lot_deatils) {
+                        htmlData = "";
+                        i = 1;
+                        lot_deatils.forEach(myFunction);
+
+                        function myFunction(item) {
+                            if (item.grow_height) {
+                                grow_height = item.grow_height;
+                            } else {
+                                grow_height = " ";
+
+                            }
+                            htmlData = htmlData + '<tr><td>-name-</td><td>' + item.length + '</td><td>' + item
+                                .width + '</td><td>' + item.weight + '</td><td>' + item.height +
+                                '</td><td><input type="text" id="' + i + '" value=' + grow_height +
+                                '></td><td>GRD</td><td>' + item.shape + '</td></tr><input type="hidden" value="' +
+                                item.id + '" id="hidden_lot_id_' + i + '"/>';
+                            i++;
+                            countChocolateline++;
+                            $('#countChocolateline').val(countChocolateline);
+                        }
+                        document.getElementById('add_rows').innerHTML = htmlData;
                     }
                 });
             }
+            function stop(id) {
 
+                window.clearInterval(timeArray[id]['timeoutId']);
+                timeArray[id]['check'] = "stop";
+
+                var packet_id = $('#packet_id_' + id).val();
+                $('#hidden_packet_id').val(packet_id);
+                // $.ajaxSetup({
+                //     headers: {
+                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //     }
+                // });
+                // var formData = new FormData();
+                // formData.append("id", packet_id);
+                // $.ajax({
+                //     headers: {
+                //         'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                //     },
+                //     type: "POST",
+                //     url: "{{ route('stopTimer') }}",
+                //     data: formData,
+                //     processData: false,
+                //     contentType: false,
+                //     success: function() {
+                //         $("#stop_" + id).attr("disabled", true);
+                //     }
+                // });
+            }
             function start(id, notreset = 0) {
 
-                if (notreset == 0) {
-                    timeArray[id] = [];
-                    timeArray[id]['hour'] = 0;
-                    timeArray[id]['min'] = 0;
-                    timeArray[id]['sec'] = 0;
-                    timeArray[id]['dispHour'] = 0;
-                    timeArray[id]['dispMin'] = 0;
-                    timeArray[id]['dispSec'] = 0;
-                    timeArray[id]['timeoutId'] = null;
-                    timeArray[id]['check'] = "stop";
-                }
+                // if (notreset == 0) {
+                //     timeArray[id] = [];
+                //     timeArray[id]['hour'] = 0;
+                //     timeArray[id]['min'] = 0;
+                //     timeArray[id]['sec'] = 0;
+                //     timeArray[id]['dispHour'] = 0;
+                //     timeArray[id]['dispMin'] = 0;
+                //     timeArray[id]['dispSec'] = 0;
+                //     timeArray[id]['timeoutId'] = null;
+                //     timeArray[id]['check'] = "stop";
+                // }
 
-                if (timeArray[id]['check'] === "stop") {
-                    timeArray[id]['timeoutId'] = window.setInterval(function() {
-                        timer(id);
-                    }, 1000);
+                // if (timeArray[id]['check'] === "stop") {
+                //     timeArray[id]['timeoutId'] = window.setInterval(function() {
+                //         timer(id);
+                //     }, 1000);
 
-                    $("#start_" + id).hide();
-                    $("#stop_" + id).show();
-                    timeArray[id]['check'] = "start";
+                //     $("#start_" + id).hide();
+                //     $("#stop_" + id).show();
+                //     timeArray[id]['check'] = "start";
 
-                }
+                // }
             }
-
             function clearAll() {
                 for (var a = 1; a <= 999; a++) {
                     window.clearInterval(a);
@@ -1050,38 +1437,35 @@
                 }
             });
             $(document).on('click', '.start_button', function() {
-                var id = this.id.replace('start_', '');
-
-                var packet_id = $('#packet_id_' + id).val();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                var formData = new FormData();
-                formData.append("id", packet_id);
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    },
-                    type: "POST",
-                    url: "{{ route('startTimer') }}",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function() {
-                        window.location.reload();
-                    }
-                });
+                // var id = this.id.replace('start_', '');
+                // var packet_id = $('#packet_id_' + id).val();
+                // $.ajaxSetup({
+                //     headers: {
+                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //     }
+                // });
+                // var formData = new FormData();
+                // formData.append("id", packet_id);
+                // $.ajax({
+                //     headers: {
+                //         'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                //     },
+                //     type: "POST",
+                //     url: "{{ route('startTimer') }}",
+                //     data: formData,
+                //     processData: false,
+                //     contentType: false,
+                //     success: function() {
+                //         window.location.reload();
+                //     }
+                // });
             });
-
             $('body').on('change', '.auto', function(e) {
                 e.preventDefault();
                 ApplyFilter(this.value);
                 $('.detailall').val(this.value)
                 $(this).val('');
             });
-
             function ApplyFilter(search) {
                 if (search != null && search != "") {
                     $.ajaxSetup({
@@ -1130,8 +1514,6 @@
                                 </tr>`);
                 $('#experienceSection').append(section);
             });
-
-
             $(document).ready(function() {
                 $("#locations").change(function() {
 
@@ -1176,7 +1558,6 @@
                     }
                 });
             });
-
             $(document).ready(function() {
                 $("#recevie").change(function() {
                     var test = $("#recevie").val();
@@ -1268,15 +1649,12 @@
                     }
                 });
             });
-
-
             $('body').on('change', '.rec', function(e) {
                 e.preventDefault();
                 ApplyFilterRecevie(this.value);
                 $('.reciveall').val(this.value);
                 $(this).val('');
             });
-
             function ApplyFilterRecevie(search) {
                 if (search != null && search != "") {
                     $.ajaxSetup({
@@ -1324,7 +1702,6 @@
                                 </tr>`);
                 $('#smartSection').append(section);
             });
-
             $('#AssignLot').click(function(e) {
                 e.preventDefault();
                 var url = $(this).attr('data-url');
@@ -1340,10 +1717,6 @@
                 });
                 return false;
             });
-
-
-
-
             $('#close').click(function(e) {
                 e.preventDefault();
                 var formData = new FormData(document.getElementById("assignchocolateall"));
@@ -1366,16 +1739,12 @@
                         $.each(response.responseJSON.errors, function() {
                             swal('Record does not exist or is not accessible.');
                         })
-
                     }
                 });
-
             });
-
             $('#closerecive').click(function(e) {
                 e.preventDefault();
                 var formData = new FormData(document.getElementById("recivechocolateall"));
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -1394,11 +1763,106 @@
                         $.each(response.responseJSON.errors, function() {
                             swal('Record does not exist or is not accessible.');
                         })
-
                     }
                 });
             });
         </script>
-</body>
+        <script>
+            function growing_done() {
+                var hidden_packet_id = $('#hidden_packet_id').val();
+                var processresons_id = $('#processresons_id').val();
+                var user_id = $('#user_id').val();
+                var growing_time = $('#growing_time').val();
+                var file = $('#file').val();
+                if (processresons_id == "0" && user_id == "0" && growing_time == "") {
+                    document.getElementById("processresons_id_error").innerHTML = "Please Select Process & Reason";
+                    document.getElementById("growing_time_error").innerHTML = "Growing Time is Required";
+                    document.getElementById("user_id_error").innerHTML = "Please Select Employee";
+                    return false;
+                } else {
+                    document.getElementById("processresons_id_error").innerHTML = "";
+                    document.getElementById("user_id_error").innerHTML = "";
+                    document.getElementById("growing_time_error").innerHTML = "";
+                }
+                if (processresons_id == "0") {
+                    document.getElementById("processresons_id_error").innerHTML = "Please Select Process & Reason";
+                    return false;
+                } else {
+                    document.getElementById("processresons_id_error").innerHTML = "";
+                }
 
+                if (user_id == "0") {
+                    document.getElementById("user_id_error").innerHTML = "Please Select Employee";
+                    return false;
+                } else {
+                    document.getElementById("user_id_error").innerHTML = "";
+                }
+
+                if (growing_time == "") {
+                    document.getElementById("growing_time_error").innerHTML = "Growing Time is Required";
+                    return false;
+                } else {
+                    document.getElementById("growing_time_error").innerHTML = "";
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData();
+                formData.append("id", hidden_packet_id);
+                formData.append("processresons_id", processresons_id);
+                formData.append("user_id", user_id);
+                formData.append("growing_time", growing_time);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    type: "POST",
+                    url: "{{ route('stopTimer') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function() {
+                        location.reload();
+                    }
+                });
+            }
+            function chocolateConfirm() {
+                const heightArray = [];
+                const lot_ids = [];
+                countChocolateline = $('#countChocolateline').val();
+                while (countChocolateline != 0) {
+                    let ids = "#" + countChocolateline;
+                    let lotids = "#hidden_lot_id_" + countChocolateline;
+                    grow_height = $(ids).val();
+                    lot_ids_val = $(lotids).val();
+                    heightArray.push(grow_height);
+                    lot_ids.push(lot_ids_val);
+                    countChocolateline--;
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData();
+                formData.append("heightArray", heightArray);
+                formData.append("lot_ids", lot_ids);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    type: "POST",
+                    url: "{{ route('confirmChocolate') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function() {
+                        location.reload();
+                    }
+                });
+            }
+        </script>
+</body>
 </html>

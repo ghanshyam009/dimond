@@ -234,7 +234,7 @@
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-4">
-                        <h4 class="headerborder1">Finish type </h4>
+                        <h4 class="headerborder1">Finish Type </h4>
                     </div>
                     <div class="col-md-4">
                     </div>

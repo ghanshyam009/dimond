@@ -249,6 +249,20 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                                <div class="col-12 col-md-3 col-lg-2">
+                                    <div class="card">
+                                        <div class="card-body color_maroon">
+                                            <div class="mx-auto d-block">
+                                                <a href="{{ url('planingFile') }}"><i class="fa-solid fa-book text-white"></i></a>
+                                                <h5 class="text-sm-center mt-2 mb-1 text-white h5class">Planing</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
                         @endif
                     </div>
                 </div>

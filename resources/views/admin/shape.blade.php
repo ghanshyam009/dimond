@@ -123,7 +123,8 @@
         </header>
 
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('createlot') }}">Batch</a></strong>
+            <strong class="card-title"><a href="{{ url('centerdepartment') }}">
+                <i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('createlot') }}">Batch</a></strong>
             <ul class="stockul">
                 <li class="stockli mt-2"><a href="{{ url('createlot') }}">Batch</a></li>
                 <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#addpacketsModal">Create Lots</a></li>
@@ -283,30 +284,30 @@
                                 <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="addpacketsModal1Label">Add Packets</h5>
+                                        <h5 class="modal-title" id="addpacketsModal1Label">Add Shape</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+
                                     <div class="modal-body">
                                         <form action="{{ url('insertshape') }}" method="post" enctype="multipart/form-data" >
                                             {{ csrf_field() }}
                                             <div class="row">
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-6">
                                                     <div class="card-body card-block">
                                                             <div class="row form-group">
-                                                                <div class="col-12 col-md-2"><label for="email-input" class=" form-control-label">Name</label></div>
-                                                                <div class="col-12 col-md-10"><input type="text" id="email-input" name="name" placeholder="Name.."  required class="form-control"></div>
+                                                                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Name</label></div>
+                                                                <div class="col-12 col-md-9"><input type="text" id="email-input" name="name" required placeholder="Name.." class="form-control"></div>
                                                             </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="modal-footer float-left col-12">
+                                           
+                                            <div class="modal-footer float-left">
                                                 <button type="submit" class="btn btn-secondary ajaxSubmit"  >Create</button>
-                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                                             </div>
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
                             </div>

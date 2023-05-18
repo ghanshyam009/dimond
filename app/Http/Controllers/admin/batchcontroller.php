@@ -206,35 +206,36 @@ class batchcontroller extends Controller
         return view('admin.createlot')->with(['data'=>$data,'id'=>$id]);
     }
     public function savelot(Request $request){
-        // dd('hello');
         $lot=new LotMaster();
         $lot->name=implode(",",array_filter(array_unique($request->name)));
         $lot->save();
 
         $lotDetail=[];
-        foreach($request->uid as $key=>$val){
-            if($request->uid[$key] != null){
-                
-                $packet=packet::find($request->uid[$key]);
-
-                $lotdetail = new LotDetail();
-                $lotdetail->batch_id=$request->batch_id;
-                $lotdetail->pcs=$packet->pcs;
-                $lotdetail->shape=$packet->shape;
-                $lotdetail->height=$packet->height;
-                $lotdetail->length=$packet->length;
-                $lotdetail->width=$packet->width;
-                $lotdetail->weight=$packet->weight;
-                $lotdetail->timer=$packet->timer;
-                $lotdetail->stop_timer=$packet->stop_timer;
-                $lotDetail[]=$lotdetail;
+        if(!empty($request->uid)){
+            foreach($request->uid as $key=>$val){
+                if($request->uid[$key] != null){
+                    
+                    $packet=packet::find($request->uid[$key]);
+    
+                    $lotdetail = new LotDetail();
+                    $lotdetail->batch_id=$request->batch_id;
+                    $lotdetail->pcs=$packet->pcs;
+                    $lotdetail->shape=$packet->shape;
+                    $lotdetail->height=$packet->height;
+                    $lotdetail->length=$packet->length;
+                    $lotdetail->width=$packet->width;
+                    $lotdetail->weight=$packet->weight;
+                    $lotdetail->timer=$packet->timer;
+                    $lotdetail->stop_timer=$packet->stop_timer;
+                    $lotDetail[]=$lotdetail;
+                }
+                packet::where('id',$request->uid[$key])->delete();
             }
-            packet::where('id',$request->uid[$key])->delete();
+            $lot->lotDetail()->saveMany($lotDetail);
+            return redirect()->route('createlot', ['id' => $lot]);
         }
         
-        $lot->lotDetail()->saveMany($lotDetail);
         
-        return redirect()->route('createlot', ['id' => $lot]);
     }
     public function createlotPrint($id){
         $data=LotMaster::with('lotDetail')->find($id);
@@ -302,9 +303,9 @@ class batchcontroller extends Controller
             ->where('name', "like", "%" . $request->search. "%")->get();
         return view('admin.batchlist')->with(['samedata'=>$samedata,'pro'=>$pro]);
        }
-    public function batch1(){
+    public function batch(){
         $data = DB::table('bactches')->get();
-        return view('admin.batch1')->with(['data'=>$data]);
+        return view('admin.batch')->with(['data'=>$data]);
        }
        public function insertbatch(Request $request)
        {
@@ -333,8 +334,9 @@ class batchcontroller extends Controller
            $data = DB::table('shaps')->where('id', $id)->delete();
            return redirect()->back()->with('message', 'delete succesfully');
        }
+
        public function lotprocess(){
-        $data = DB::table('bactches')->get();
+        $data = DB::table('lotprocesses')->get();
         return view('admin.lotprocess')->with(['data'=>$data]);
        }
        public function insertlotprocess(Request $request)
@@ -351,7 +353,7 @@ class batchcontroller extends Controller
        }
 
        public function processreson(){
-        $data = DB::table('bactches')->get();
+        $data = DB::table('processresons')->get();
         return view('admin.processreson')->with(['data'=>$data]);
        }
        public function insertprocessreson(Request $request)
@@ -368,7 +370,7 @@ class batchcontroller extends Controller
        }
 
        public function finishtype(){
-        $data = DB::table('bactches')->get();
+        $data = DB::table('finishtypes')->get();
         return view('admin.finishtype')->with(['data'=>$data]);
        }
        public function insertfinishtype(Request $request)
@@ -403,7 +405,7 @@ class batchcontroller extends Controller
        }
 
        public function purity(){
-        $data = DB::table('bactches')->get();
+        $data = DB::table('purities')->get();
         return view('admin.purity')->with(['data'=>$data]);
        }
        public function insertpurity(Request $request)
@@ -418,5 +420,112 @@ class batchcontroller extends Controller
            $data = DB::table('purities')->where('id', $id)->delete();
            return redirect()->back()->with('message', 'delete succesfully');
        }
+
+    public function searchlotProcess(Request $request)
+    {
+        $pro= $request->input('shapn');
+        $search = $request->input('datesearch');
+        if ($search == "lastmonth") {
+            $data = DB::table('lotprocesses')->whereMonth('created_at', '=', Carbon::now()->subMonth(1))->paginate(10);
+        } elseif ($search == "last7days") {
+            $data = DB::table('lotprocesses')->where('created_at', '>=', Carbon::now()->subDays(7))->paginate(10);
+        } elseif ($search == "last15days") {
+            $data = DB::table('lotprocesses')->where('created_at', '>=', Carbon::now()->subdays(15))->paginate(10);
+        } elseif ($search  == "lastyear") {
+            $data = DB::table('lotprocesses')->whereYear('created_at', date('Y', strtotime('-1 year')))->paginate(10);
+        } elseif ($search == "today") {
+            $data = DB::table('lotprocesses')->whereDate('created_at', Carbon::today())->paginate(10);
+        } elseif ($search == "yesterday") {
+            $data = DB::table('lotprocesses')->whereDate('created_at', '=', Carbon::yesterday())->paginate(10);
+        } elseif ($search == "thismonth") {
+            $data = DB::table('lotprocesses')->whereMonth('created_at', Carbon::now()->month)->paginate(10);
+        }elseif ($request->shapn) {
+            $data = DB::table('lotprocesses')->where('name', "like", "%" . $pro . "%")->paginate(10);
+        }else {
+            $data = DB::table('lotprocesses')->paginate(10);
+        }
+        return view('admin.lotprocess')->with(['data' => $data]);
+    }
+
+    public function searchProcessReason(Request $request)
+    {
+        $pro= $request->input('shapn');
+        $search = $request->input('datesearch');
+        if ($search == "lastmonth") {
+            $data = DB::table('processresons')->whereMonth('created_at', '=', Carbon::now()->subMonth(1))->paginate(10);
+        } elseif ($search == "last7days") {
+            $data = DB::table('processresons')->where('created_at', '>=', Carbon::now()->subDays(7))->paginate(10);
+        } elseif ($search == "last15days") {
+            $data = DB::table('processresons')->where('created_at', '>=', Carbon::now()->subdays(15))->paginate(10);
+        } elseif ($search  == "lastyear") {
+            $data = DB::table('processresons')->whereYear('created_at', date('Y', strtotime('-1 year')))->paginate(10);
+        } elseif ($search == "today") {
+            $data = DB::table('processresons')->whereDate('created_at', Carbon::today())->paginate(10);
+        } elseif ($search == "yesterday") {
+            $data = DB::table('processresons')->whereDate('created_at', '=', Carbon::yesterday())->paginate(10);
+        } elseif ($search == "thismonth") {
+            $data = DB::table('processresons')->whereMonth('created_at', Carbon::now()->month)->paginate(10);
+        }elseif ($request->shapn) {
+            $data = DB::table('processresons')->where('name', "like", "%" . $pro . "%")->paginate(10);
+        }else {
+            $data = DB::table('processresons')->paginate(10);
+        }
+        return view('admin.processreson')->with(['data' => $data]);
+    }
+
+    public function searchFinishType(Request $request)
+    {
+        $pro= $request->input('shapn');
+        $search = $request->input('datesearch');
+        if ($search == "lastmonth") {
+            $data = DB::table('finishtypes')->whereMonth('created_at', '=', Carbon::now()->subMonth(1))->paginate(10);
+        } elseif ($search == "last7days") {
+            $data = DB::table('finishtypes')->where('created_at', '>=', Carbon::now()->subDays(7))->paginate(10);
+        } elseif ($search == "last15days") {
+            $data = DB::table('finishtypes')->where('created_at', '>=', Carbon::now()->subdays(15))->paginate(10);
+        } elseif ($search  == "lastyear") {
+            $data = DB::table('finishtypes')->whereYear('created_at', date('Y', strtotime('-1 year')))->paginate(10);
+        } elseif ($search == "today") {
+            $data = DB::table('finishtypes')->whereDate('created_at', Carbon::today())->paginate(10);
+        } elseif ($search == "yesterday") {
+            $data = DB::table('finishtypes')->whereDate('created_at', '=', Carbon::yesterday())->paginate(10);
+        } elseif ($search == "thismonth") {
+            $data = DB::table('finishtypes')->whereMonth('created_at', Carbon::now()->month)->paginate(10);
+        }elseif ($request->shapn) {
+            $data = DB::table('finishtypes')->where('name', "like", "%" . $pro . "%")->paginate(10);
+        }else {
+            $data = DB::table('finishtypes')->paginate(10);
+        }
+        return view('admin.finishtype')->with(['data' => $data]);
+    }
+
+    public function searchPurity(Request $request)
+    {
+        $pro= $request->input('shapn');
+        $search = $request->input('datesearch');
+        if ($search == "lastmonth") {
+            $data = DB::table('purities')->whereMonth('created_at', '=', Carbon::now()->subMonth(1))->paginate(10);
+        } elseif ($search == "last7days") {
+            $data = DB::table('purities')->where('created_at', '>=', Carbon::now()->subDays(7))->paginate(10);
+        } elseif ($search == "last15days") {
+            $data = DB::table('purities')->where('created_at', '>=', Carbon::now()->subdays(15))->paginate(10);
+        } elseif ($search  == "lastyear") {
+            $data = DB::table('purities')->whereYear('created_at', date('Y', strtotime('-1 year')))->paginate(10);
+        } elseif ($search == "today") {
+            $data = DB::table('purities')->whereDate('created_at', Carbon::today())->paginate(10);
+        } elseif ($search == "yesterday") {
+            $data = DB::table('purities')->whereDate('created_at', '=', Carbon::yesterday())->paginate(10);
+        } elseif ($search == "thismonth") {
+            $data = DB::table('purities')->whereMonth('created_at', Carbon::now()->month)->paginate(10);
+        }elseif ($request->shapn) {
+            $data = DB::table('purities')->where('name', "like", "%" . $pro . "%")->paginate(10);
+        }else {
+            $data = DB::table('purities')->paginate(10);
+        }
+        return view('admin.purity')->with(['data' => $data]);
+    }
+
+    
+
 
     }
