@@ -4,6 +4,7 @@ use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class RolePermissionSeeder.
@@ -32,8 +33,11 @@ class RolePermissionSeeder extends Seeder
         // $roleAdmin = Role::create(['name' => 'admin']);
         // $roleEditor = Role::create(['name' => 'editor']);
         // $roleUser = Role::create(['name' => 'user']);
-
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('role_has_permissions')->truncate();
+        DB::table('model_has_roles')->truncate();
+        DB::table('roles')->truncate();
+        DB::table('permissions')->truncate();
         // Permission List as array
         $permissions = [
 

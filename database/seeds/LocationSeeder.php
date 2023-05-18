@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Location;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class LocationSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('locations')->truncate();
         $locations = [
             [
                 'id'         => 1,
@@ -40,7 +42,6 @@ class LocationSeeder extends Seeder
                 'name'      => 'Stock Final',
             ],
         ];
-
         Location::insert($locations);
     }
 }

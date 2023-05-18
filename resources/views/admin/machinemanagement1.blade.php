@@ -79,8 +79,6 @@
             </ul>
         </div>
         <!-- Header-->
-
-
         <div class="content mt-4">
             <div class="animated fadeIn">
                 <div class="row">
@@ -89,7 +87,7 @@
                         <div class="row">
                             <div class="col-lg-3 col-md-6 col-xl-3">
                                 <div class="card" style="background-color: #6DD4B1;">
-                                    <div class="card-body">
+                                    <div class="card-body"  onclick="activeMachine();">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-1">
                                                 <i class="pe-7s-users"></i>
@@ -115,7 +113,7 @@
 
                             <div class="col-lg-3 col-md-6 col-xl-3">
                                 <div class="card" style="background-color: #FFFF00;">
-                                    <div class="card-body">
+                                    <div class="card-body" onclick="stopMachine();">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-2">
                                                 <i class="pe-7s-users"></i>
@@ -141,7 +139,7 @@
 
                             <div class="col-lg-3 col-md-6 col-xl-3">
                                 <div class="card" style="background-color: #F78800;">
-                                    <div class="card-body">
+                                    <div class="card-body" onclick="inactiveMachine();">
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-3">
                                                 <i class="pe-7s-users"></i>
@@ -167,7 +165,7 @@
 
                             <div class="col-lg-3 col-md-6 col-xl-3">
                                 <div class="card" style="background-color: #C7813D;">
-                                    <div class="card-body">
+                                    <div class="card-body" onclick="oldinactiveMachine();" selected>
                                         <div class="stat-widget-five">
                                             <div class="stat-icon dib flat-color-4">
                                                 <i class="pe-7s-users"></i>
@@ -194,13 +192,21 @@
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
+                <?php 
+                    if($machineType == ""){
+                        $machines = App\Models\machine::where('status',1)->get();
+                    }else if($machineType == "stop"){
+                        $machines = App\Models\machine::where('status',0)->get();
+                    }else if($machineType == "inactive"){
+                        $machines = App\Models\machine::where('status',2)->get();
+                    }else if($machineType == "oldinactive"){
+                        $machines = App\Models\machine::where('status',3)->get();
+                    }
+                ?>
                 <div class="row">
                     <div class="col-lg-1"></div>
-
                     <div class="col-lg-10 col-md-12 col-12">
                         <div class="row">
-                            <?php $lots = App\Models\LotMove::get(); ?>
-                            <?php $chocos = App\Models\chocolate::get(); ?>
                             @foreach ($machines as $machine)
                                 <div class="col-lg-4 col-md-6 col-xl-3">
                                     <?php if ($machine->status == 1):
@@ -227,8 +233,8 @@
                                                 <?php $total = 0;
                                                 $i = 0;
                                                 $id = 1; ?>
-                                                @foreach ($lots as $lot)
-                                                    @foreach ($chocos as $choco)
+                                                @foreach ($lotsData as $lot)
+                                                    @foreach ($chocosData as $choco)
                                                         @if ($choco->lotno == $machine->lotno)
                                                             @if ($machine->lotno == $lot->lot_id && $lot->status == 1)
                                                                 <?php $id = ++$i; ?>
@@ -262,8 +268,8 @@
                                                         <?php $total1 = 0;
                                                         $i1 = 0;
                                                         $id1 = 1; ?>
-                                                        @foreach ($lots as $lot)
-                                                            @foreach ($chocos as $choco)
+                                                        @foreach ($lotsData as $lot)
+                                                            @foreach ($chocosData as $choco)
                                                                 @if ($choco->lotno == $machine->lotno)
                                                                     @if ($machine->lotno == $lot->lot_id && $lot->status == 1)
                                                                         <?php $id1 = ++$i1; ?>
@@ -280,14 +286,39 @@
                                                 <div class="col-6">
                                                     <label for="hf-password" class="form-control-label">
                                                         @if ($machine->timer != 0)
-                                                            <div class="d-flex timer"
-                                                                data-date="{{ $machine->timer }}"
-                                                                data="{{ $machine->growthrate }}">
-                                                                GH:<span class="growthhour ms-2"></span>
-                                                                <input type="hidden" class="hours">
-                                                                <input type="hidden" class="minutes ms-2">
-                                                                <input type="hidden" class="seconds ms-2">
+                                                            @if(isset($machine->stop_timer) && !empty($machine->stop_timer))
+                                                            <?php 
+                                                                $start_time = date_create($machine->timer);
+                                                                $end_time = date_create($machine->stop_timer);
+                                                                $diff=date_diff($start_time,$end_time);
+                                                                $diff_time = $diff->format("%a");
+                                                                $start_time = date('H:i:s', strtotime($machine->timer));
+                                                                $end_time = date('H:i:s', strtotime($machine->stop_timer));
+                                                                $arr1 = explode(':', $start_time);
+                                                                $arr2 = explode(':', $end_time);
+                                                                $h = 0 ;
+                                                                $h = isset($arr1,$arr2) ? $arr1[0] - $arr2[0] : 0; 
+                                                                $m = isset($arr1,$arr2) ? $arr1[1] - $arr2[1] : 0; 
+                                                                $s = isset($arr1,$arr2) ? $arr1[2] - $arr2[2] : 0; 
+                                                                if($diff_time != 0){
+                                                                    $h = $diff_time * 24;  
+                                                                }
+                                                                $grate = ($h * $machine->growthrate) / 100000;
+                                                                $finalrate = number_format($grate,2);
+                                                            ?>
+                                                            <div>
+                                                                GH:<span class="hours"></span>{{ abs($finalrate) }}
                                                             </div>
+                                                            @else
+                                                                <div class="d-flex timer"
+                                                                    data-date="{{ $machine->timer }}"
+                                                                    data="{{ $machine->growthrate }}">
+                                                                    GH:<span class="growthhour ms-2"></span>
+                                                                    <input type="hidden" class="hours">
+                                                                    <input type="hidden" class="minutes ms-2">
+                                                                    <input type="hidden" class="seconds ms-2">
+                                                                </div>
+                                                            @endif
                                                         @endif
                                                     </label>
                                                 </div>
@@ -477,6 +508,68 @@
             }
         });
     </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        function stopMachine(){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "GET",
+                url: "{{ url('machinemanagement1') }}/" + "stop",
+                processData: false,
+                contentType: false,
+                success: function() {
+                    window.location.replace("/machinemanagement1/stop");
+                }
+            });
+        }
+        function activeMachine(){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "GET",
+                url: "{{ url('machinemanagement1') }}",
+                processData: false,
+                contentType: false,
+                success: function() {
+                    window.location.replace("/machinemanagement1");
+                }
+            });
+        }
+        function inactiveMachine(){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "GET",
+                url: "{{ url('machinemanagement1') }}/" + "inactive",
+                processData: false,
+                contentType: false,
+                success: function() {
+                    window.location.replace("/machinemanagement1/inactive");
+                }
+            });
+        }
+        function oldinactiveMachine(){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "GET",
+                url: "{{ url('machinemanagement1') }}/" + "oldinactive",
+                processData: false,
+                contentType: false,
+                success: function() {
+                    window.location.replace("/machinemanagement1/oldinactive");
+                }
+            });
+        }
+    </script>
 </body>
-
 </html>

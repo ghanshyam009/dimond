@@ -149,7 +149,7 @@
                     </ul>
                 </li>
             </ul>
-       <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
+            <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -158,6 +158,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
+                        
                         <div class="modal-body">
                             <form action="{{ route('savelot') }}" method="post" id="myForm">
                                 @csrf
@@ -172,7 +173,7 @@
                                                 <div class="col-12 col-md-6">
                                                     <select class="custom-select d-block w-100" required=""
                                                         name="batch_id" id="batch_id">
-                                                        <?php $batch=App\Models\Bactch::get();?>
+                                                        <?php $batch = App\Models\Bactch::get(); ?>
                                                         <option value="0">Please select</option>
                                                         <option value="mix">Mix</option>
                                                         @foreach ($batch as $ans)
@@ -272,242 +273,193 @@
             </div>
         </div>
     </div>
-        <div class="content">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h4 class="headerborder1">Lot Process </h4>
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4"></div>
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="headerborder1">Lot Process </h4>
                 </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
-        <div class="content">
-            <div class="animated fadeIn">
-                <div class="row ms-2 ms-md-0">
-                    <div class="col-6 col-md-5 float-left">
-                        <button type="button" class="btn btn-outline-secondary mt-1" data-bs-toggle="modal"
-                            data-bs-target="#addpacketsModal1">Create</button>
-                        <div class="modal fade" id="addpacketsModal1" tabindex="-1"
-                            aria-labelledby="addpacketsModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addpacketsModalLabel">Add Packets</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ url('insertlotprocess') }}" method="post"
-                                            enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="card-body card-block">
-                                                        {{-- <form class="form-horizontal"> --}}
-
+    </div>
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row ms-2 ms-md-0">
+                <div class="col-6 col-md-5 float-left">
+                    <button type="button" class="btn btn-outline-secondary mt-1" data-bs-toggle="modal"
+                        data-bs-target="#addpacketsModal1">Create</button>
+                    <div class="modal fade" id="addpacketsModal1" tabindex="-1"
+                        aria-labelledby="addpacketsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addpacketsModalLabel">Add Lot</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url('insertlotprocess') }}" method="post" enctype="multipart/form-data" >
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="card-body card-block">
                                                         <div class="row form-group">
-                                                            <div class="col-12 col-md-2"><label for="email-input"
-                                                                    class=" form-control-label">Name</label></div>
-                                                            <div class="col-12 col-md-10"><input type="text"
-                                                                    id="email-input" name="name" required
-                                                                    placeholder="Name.." class="form-control"></div>
+                                                            <div class="col col-md-3"><label for="email-input" class=" form-control-label">Name</label></div>
+                                                            <div class="col-12 col-md-9"><input type="text" id="email-input" name="name" required placeholder="Name.." class="form-control"></div>
                                                         </div>
-                                                        {{-- </form> --}}
-                                                    </div>
                                                 </div>
                                             </div>
-
-                                            <div class="modal-footer float-left col-12">
-                                                <button type="submit"
-                                                    class="btn btn-secondary ajaxSubmit">Create</button>
-                                                <button type="button" class="btn btn-light"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                            </div>
-                                        </form>
-                                    </div>
-
+                                        </div>
+                                       
+                                        <div class="modal-footer float-left">
+                                            <button type="submit" class="btn btn-secondary ajaxSubmit"  >Create</button>
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-7 ps-2 ps-md-0">
-                        <li class="stockli nav-item dropdown filter">
-
-                            <a href="#" class="nav-link filter-btn">
-                                <button type="button" class="btn btn-outline-secondary"><i
-                                        class="fa-solid fa-filter"></i> Filter</button></a>
-                            <ul class="dropdown-menu filter-sub" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Confirmed Batch</a></li>
-                                <li class="stockli dropdown-submenu sub-filter">
-                                    <div class="btn-group dropright">
-
-                                        <a type="button" class=" dropdown-toggle" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            Add Custom Filter
-                                        </a>
-                                        <div class="dropdown-menu subfilter-drop">
-                                            <!-- Dropdown menu links -->
-                                            <ul class="filterul">
-                                                <li class="filterli">
-                                                    <a tabindex="-1" href="#">
-                                                        <div class="row form-group">
-                                                            <div class="col-md-12 ">
-                                                                <select class="custom-select d-block w-100"
-                                                                    required="">
-                                                                    <option value="">Action Needed....</option>
-                                                                    <option>SQ</option>
-                                                                    <option>Option #2</option>
-                                                                    <option>Option #3</option>
-                                                                </select>
-                                                            </div>
-
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="filterli">
-                                                    <a tabindex="-1" href="#">
-                                                        <div class="row form-group">
-                                                            <div class="col-12 col-md-12">
-                                                                <select class="custom-select d-block w-100"
-                                                                    required="">
-                                                                    <option>Is true</option>
-                                                                    <option>SQ</option>
-                                                                    <option>Option #2</option>
-                                                                    <option>Option #3</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="filterli">
-                                                    <a tabindex="-1" href="#">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Apply</button>
-                                                        <button type="button" class="btn btn-light"
-                                                            data-bs-dismiss="modal">Add a condition</button>
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="content">
-            <div class="animated fadeIn">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="card">
-
-                            <div class="card-body">
-                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th> Name</th>
-                                            <th> Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $lotprocess = App\Models\lotprocess::get(); ?>
-                                        @foreach ($lotprocess as $ans)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>
-                                                    <label class="form-check-label toggle_status"> {{ $ans->name }}
-                                                    </label>
-                                                </td>
-                                                <td> <button type="submit" class="btn btn-outline-secondary mt-1"><a
-                                                            href="lotprocessremove/{{ $ans->id }}"> Remove
-                                                        </a></button></td>
-
-                                            </tr>
+                <div class="col-6 col-md-7 ps-2 ps-md-0">
+                    <div class="dropdown float-right float-md-left mr-3 mt-1">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><i class="fa-solid fa-filter"></i>
+                            Filter
+                        </button>
+                        <div class="dropdown-menu mt-5 py-0" aria-labelledby="dropdownMenuButton">
+                            <form action="{{ url('searchlotProcess') }}" name="search" method="get">
+                                <div class="search_multiple">
+                                    <select class="form__input dropdown-item px-0" id="search" name="datesearch"
+                                        onchange="form.submit();">
+                                        <option selected disabled>Search Date..</option>
+                                        <option value="today">Today</option>
+                                        <option value="yesterday">Yesterday</option>
+                                        <option value="last7days">Last 7 Days</option>
+                                        <option value="last15days">Last 15 Days</option>
+                                        <option value="lastmonth">Lastmonth</option>
+                                        <option value="lastyear">Lastyear</option>
+                                        <option value="thismonth">ThisMonth</option>
+                                    </select>
+                                    <hr class="m-0">
+                                    <select class="form__input dropdown-item px-0" name="shapn" id="search"
+                                        onchange="form.submit();">
+                                        <option selected disabled>Search Name..</option>
+                                        @foreach ($data as $ans)
+                                            <option value="{{ $ans->name }}">{{ $ans->name }}</option>
                                         @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="{{ URL::asset('admin/assets/cdn/js/jquery.min.js') }} "></script>
-        <script src="{{ URL::asset('admin/assets/cdn/js/popper.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/cdn/js/bootstrap.min.js') }} "></script>
-        <script src="{{ URL::asset('admin/assets/cdn/js/matchHeight.min.js') }} "></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/datatables.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/jszip.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/init/datatables-init.js') }}"></script>
-        <script src="{{ URL::asset('admin/assets/js/main.js') }} "></script>
-        <script src="{{ URL::asset('admin/assets/js/lib/chosen/chosen.jquery.min.js') }} "></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
-        </script>
-        <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th> Name</th>
+                                        <th> Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $ans)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <label class="form-check-label toggle_status"> {{ $ans->name }}
+                                                </label>    
+                                            </td>
+                                            <td> <button type="submit" class="btn btn-outline-secondary mt-1">
+                                                <a href="lotprocessremove/{{ $ans->id }}"> Remove </a></button></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#bootstrap-data-table-export').DataTable();
-            });
-        </script>
-        <script>
-            jQuery(document).ready(function() {
-                jQuery(".standardSelect ").chosen({
-                    disable_search_threshold: 10,
-                    no_results_text: "Oops, nothing found! ",
-                    width: "100% "
-                });
-            });
-        </script>
+    <script src="{{ URL::asset('admin/assets/cdn/js/jquery.min.js') }} "></script>
+    <script src="{{ URL::asset('admin/assets/cdn/js/popper.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/cdn/js/bootstrap.min.js') }} "></script>
+    <script src="{{ URL::asset('admin/assets/cdn/js/matchHeight.min.js') }} "></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/datatables.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/jszip.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/init/datatables-init.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/main.js') }} "></script>
+    <script src="{{ URL::asset('admin/assets/js/lib/chosen/chosen.jquery.min.js') }} "></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
-        <script>
-            jQuery(document).ready(function() {
-                jQuery('.filter .filter-btn').on("click", function(e) {
-                    jQuery('.filter-sub').toggle();
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery(".standardSelect ").chosen({
+                disable_search_threshold: 10,
+                no_results_text: "Oops, nothing found! ",
+                width: "100% "
             });
-        </script>
-        <script>
-            jQuery(document).ready(function() {
-                jQuery('.group .group-btn').on("click", function(e) {
-                    jQuery('.group-sub').toggle();
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
+        });
+    </script>
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('.filter .filter-btn').on("click", function(e) {
+                jQuery('.filter-sub').toggle();
+                e.stopPropagation();
+                e.preventDefault();
             });
-        </script>
-        <script>
-            jQuery(document).ready(function() {
-                jQuery('.favorite .favorite-btn').on("click", function(e) {
-                    jQuery('.favorite-sub').toggle();
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('.group .group-btn').on("click", function(e) {
+                jQuery('.group-sub').toggle();
+                e.stopPropagation();
+                e.preventDefault();
             });
-        </script>
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('.favorite .favorite-btn').on("click", function(e) {
+                jQuery('.favorite-sub').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
     <script>
         function ApplyFilter(search) {
             var batch_id = $('#batch_id').val();
@@ -545,7 +497,7 @@
                                 if (!found) {
                                     var table = document.getElementById('dataTable');
                                     var rowCount = table.rows.length - 1;
-                                    if(rowCount == 0){
+                                    if (rowCount == 0) {
                                         var row = table.insertRow(-1);
                                         row.className = "hide";
 
@@ -620,17 +572,17 @@
                                         element7.className = "weight";
                                         element7.name = "weight[]";
                                         cell7.appendChild(element7);
-                                    }else{
-                                        rowCount=rowCount-1;
-                                        $("#name_"+rowCount).val(e.name);
-                                        $("#uid_"+rowCount).val(e.id);
-                                        $("#id_"+rowCount).val(e.id);
+                                    } else {
+                                        rowCount = rowCount - 1;
+                                        $("#name_" + rowCount).val(e.name);
+                                        $("#uid_" + rowCount).val(e.id);
+                                        $("#id_" + rowCount).val(e.id);
 
-                                        $("#height_"+rowCount).val(e.height);
-                                        $("#length_"+rowCount).val(e.length);
-                                        $("#width_"+rowCount).val(e.width);
-                                        $("#shape_"+rowCount).val(e.shape);
-                                        $("#weight_"+rowCount).val(e.weight);
+                                        $("#height_" + rowCount).val(e.height);
+                                        $("#length_" + rowCount).val(e.length);
+                                        $("#width_" + rowCount).val(e.width);
+                                        $("#shape_" + rowCount).val(e.shape);
+                                        $("#weight_" + rowCount).val(e.weight);
                                     }
                                     //***********************************************
                                     //add new row blanck
@@ -715,12 +667,12 @@
                                     element7.name = "weight[]";
                                     cell7.appendChild(element7);
 
-                                    $("#name_"+rowCount).focus();
+                                    $("#name_" + rowCount).focus();
                                 } else {
                                     alert('not valid');
                                 }
                             });
-                        }else{
+                        } else {
                             alert('please select valid batch');
                         }
                     }
@@ -742,23 +694,23 @@
             $('#addpacketsModal').modal('show');
             var table = document.getElementById('dataTable');
             var rowCount = table.rows.length - 1;
-            if(rowCount > 1){
+            if (rowCount > 1) {
                 $("#dataTable .hide").remove();
                 addDefaultRow();
             }
-                $("#name_0").val('');
-                $("#id_0").val('');
-                $("#height_0").val('');
-                $("#length_0").val('');
-                $("#width_0").val('');
-                $("#shape_0").val('');
-                $("#weight_0").val('');
-                $("#batch_id").val(0);
+            $("#name_0").val('');
+            $("#id_0").val('');
+            $("#height_0").val('');
+            $("#length_0").val('');
+            $("#width_0").val('');
+            $("#shape_0").val('');
+            $("#weight_0").val('');
+            $("#batch_id").val(0);
         });
         $("#batch_id").change(function() {
             var table = document.getElementById('dataTable');
             var rowCount = table.rows.length - 1;
-            if(rowCount > 1){
+            if (rowCount > 1) {
                 $("#dataTable .hide").remove();
                 addDefaultRow();
             }
@@ -767,7 +719,8 @@
                 $("#name_0").focus();
             }
         });
-        function addDefaultRow(){
+
+        function addDefaultRow() {
             var table = document.getElementById('dataTable');
             var rowCount = table.rows.length - 1;
             var row = table.insertRow(-1);
@@ -836,13 +789,13 @@
             element7.name = "weight[]";
             cell7.appendChild(element7);
         }
-        @if(isset($id))
-            var url_p = '{{ route("createlotprint", ":id") }}';
-            var id_p="{{ $id }}";
+        @if (isset($id))
+            var url_p = '{{ route('createlotprint', ':id') }}';
+            var id_p = "{{ $id }}";
             url_p = url_p.replace(':id', id_p);
             window.open(url_p, "_blank");
-            var url_r = '{{ route("createlot") }}';
-            window.location.href=url_r;
+            var url_r = '{{ route('createlot') }}';
+            window.location.href = url_r;
         @endif
     </script>
 </body>

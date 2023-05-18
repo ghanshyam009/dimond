@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\language;
+use Illuminate\Support\Facades\DB;
 class LanguageSeeder extends Seeder
 {
     /**
@@ -13,6 +14,7 @@ class LanguageSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('languages')->truncate();
          $languages = [
             [
                 'id'         => 1,
@@ -556,7 +558,6 @@ class LanguageSeeder extends Seeder
             ],
             
         ];
-
         language::insert($languages);
     }
 }

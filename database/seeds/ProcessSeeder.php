@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Processes;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 class ProcessSeeder extends Seeder
 {
     /**
@@ -14,6 +14,7 @@ class ProcessSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('processes')->truncate();
         $process = [
             [
                 'id'         => 1,
@@ -32,7 +33,6 @@ class ProcessSeeder extends Seeder
                 'name'      => 'FOUTH GROWING',
             ],
         ];
-
         Processes::insert($process);
     }
 }

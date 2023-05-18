@@ -95,17 +95,17 @@
 
         <div class="card-header">
             <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a href="{{ url('seeds1') }}">Seeds</a></strong>
+                        class="fa-solid fa-table-columns"></i></a> <a href="{{ url('seeds1') }}">Packets</a></strong>
             <ul class="stockul">
                 <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#addpacketsModal">Add
-                        Packets</a></li>
+                        Packet</a></li>
             </ul>
             <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addpacketsModalLabel">Add Packets</h5>
+                            <h5 class="modal-title" id="addpacketsModalLabel">Add Packet</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -124,7 +124,7 @@
                                                     <?php $batch = App\Models\Bactch::get(); ?>
                                                     <select class="custom-select d-block w-100" name="batch_id"
                                                         required>
-                                                        <option value="0">Please select</option>
+                                                        <option value="">Please select</option>
                                                         @foreach ($batch as $ans)
                                                             <option value="{{ $ans->id }}">{{ $ans->name }}
                                                             </option>
@@ -142,7 +142,7 @@
 
                                                     <select class="custom-select d-block w-100" id="experienceNo"
                                                         name="pcs" required>
-                                                        <option value="0">Please select</option>
+                                                        <option value="">Please select</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -176,7 +176,7 @@
 
                                                     <select class="custom-select d-block w-100" name="shape"
                                                         required>
-                                                        <option value="0">Please select</option>
+                                                        <option value="">Please select</option>
                                                         @foreach ($shape as $ans)
                                                             <option value="{{ $ans->name }}">{{ $ans->name }}
                                                             </option>
@@ -304,9 +304,7 @@
                                 </div>
 
                                 <div class="modal-footer float-left col-12">
-                                    <button type="submit"
-                                        onclick="return confirm('Are you sure enter data correct?')"
-                                        class="btn btn-secondary ajaxSubmit">Create</button>
+                                    <button type="submit" class="btn btn-secondary ajaxSubmit">Create</button>
                                     <button type="button" class="btn btn-light"
                                         data-bs-dismiss="modal">Cancel</button>
                                 </div>
@@ -320,7 +318,7 @@
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-4">
-                        <h4 class="headerborder1"> Packets </h4>
+                        <h4 class="headerborder1"> All Packets </h4>
                     </div>
                     <div class="col-md-4">
                     </div>

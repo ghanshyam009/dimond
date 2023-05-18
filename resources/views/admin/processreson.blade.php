@@ -232,7 +232,7 @@
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-4">
-                        <h4 class="headerborder1">process & Reason </h4>
+                        <h4 class="headerborder1">Process & Reason </h4>
                     </div>
                     <div class="col-md-4">
                     </div>
@@ -249,7 +249,7 @@
                               <div class="modal-dialog">
                              <div class="modal-content">
                                  <div class="modal-header">
-                                     <h5 class="modal-title" id="addpacketsModalLabel">Add Packets</h5>
+                                     <h5 class="modal-title" id="addpacketsModalLabel">Add Process Reason</h5>
                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                  </div>
                                  <div class="modal-body">
@@ -277,6 +277,41 @@
                          </div>
                          </div>
                      </div>
+                     <div class="col-6 col-md-7 ps-2 ps-md-0">
+                        <div class="dropdown float-right float-md-left mr-3 mt-1">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="fa-solid fa-filter"></i>
+                                Filter
+                            </button>
+                            <div class="dropdown-menu mt-5 py-0" aria-labelledby="dropdownMenuButton">
+                                <form action="{{ url('searchProcessReason') }}" name="search" method="get">
+                                    <div class="search_multiple">
+                                        <select class="form__input dropdown-item px-0" id="search" name="datesearch"
+                                            onchange="form.submit();">
+                                            <option selected disabled>Search Date..</option>
+                                            <option value="today">Today</option>
+                                            <option value="yesterday">Yesterday</option>
+                                            <option value="last7days">Last 7 Days</option>
+                                            <option value="last15days">Last 15 Days</option>
+                                            <option value="lastmonth">Lastmonth</option>
+                                            <option value="lastyear">Lastyear</option>
+                                            <option value="thismonth">ThisMonth</option>
+                                        </select>
+                                        <hr class="m-0">
+                                        <select class="form__input dropdown-item px-0" name="shapn" id="search"
+                                            onchange="form.submit();">
+                                            <option selected disabled>Search Name..</option>
+                                            @foreach ($data as $ans)
+                                                <option value="{{ $ans->name }}">{{ $ans->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-7">
                     </div>
                 </div>
@@ -300,8 +335,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $lotprocess = App\Models\processreson::get(); ?>
-@foreach($lotprocess as $ans)
+                                        @foreach($data as $ans)
                                         <tr>
                                            <td>{{ $loop->iteration }}</td>
                                              <td> 

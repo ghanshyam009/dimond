@@ -16,6 +16,8 @@ use App\Http\Controllers\admin\usercontroller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\AssignreceiveController;
 use App\Http\Controllers\admin\LaserController;
+use App\Http\Controllers\admin\PlaningController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -178,9 +180,13 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('search_date',[batchcontroller::class,'searchdate']);
     route::get('search',[batchcontroller::class,'search']);
     route::get('search_shape',[batchcontroller::class,'searchshape']);
+    route::get('searchlotProcess',[batchcontroller::class,'searchlotProcess']);
+    route::get('searchProcessReason',[batchcontroller::class,'searchProcessReason']);
+    route::get('searchFinishType',[batchcontroller::class,'searchFinishType']);
+    route::get('searchPurity',[batchcontroller::class,'searchPurity']);
     route::get('search_color',[batchcontroller::class,'searchcolor']);
-    route::get('batch1', [batchcontroller::class, 'batch1']);
-    route::post('insertbatch', [batchcontroller::class, 'insertbatch']);
+    route::get('batch', [batchcontroller::class, 'batch']);
+    route::post('insertbatch', [batchcontroller::class, 'insertbatch'])->name('insertbatch');
     route::get('shape', [batchcontroller::class, 'shape']);
     route::get('shaperemove/{id}',[batchcontroller::class,'shaperemove']);
     route::post('insertshape', [batchcontroller::class, 'insertshape']);
@@ -288,7 +294,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     Route::get('/status/update',  [machinecontroller::class, 'updateStatus'])->name('users.update.status');
     route::get('search_machine',[machinecontroller::class,'searchmachine']);
     route::get('machine', [machinecontroller::class, 'machine']);
-    route::get('machinemanagement1', [machinecontroller::class, 'machinemanagement1']);
+    route::get('machinemanagement1/{machine_type?}', [machinecontroller::class, 'machinemanagement1']);
     route::post('starttimermachine', [machinecontroller::class, 'startTimermachine'])->name('startTimermachine');
     route::post('stoptimermachine', [machinecontroller::class, 'stopTimermachine'])->name('stopTimermachine');
 
@@ -330,4 +336,11 @@ Route::group(['middleware'=>['auth','manager']],function()
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
     Route::resource('admins', 'Backend\AdminsController', ['names' => 'admin.admins']);
 
+    // ****************************************Planing**********************************************************
+    route::get('planingFile', [PlaningController::class, 'planingFile']);
+    route::post('fileupload', [PlaningController::class, 'fileupload'])->name('fileupload');
+    route::get('deleteFile/{id}', [PlaningController::class, 'deleteFile']);
+    route::post('getLotDetails', [chocolatecontroller::class, 'getLotDetails'])->name('getLotDetails');
+    route::post('confirmChocolate', [chocolatecontroller::class, 'confirmChocolate'])->name('confirmChocolate');
+    
 });

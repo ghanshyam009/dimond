@@ -92,6 +92,15 @@ class chocolatecontroller extends Controller
             $check = LotDetail::where("id", $request->id)->whereNotNull('timer')->first();
             if ($check) {
                 LotDetail::where("id", $request->id)->update(['stop_timer' => Carbon::now()->format('Y-m-d H:i:s')]);
+                DB::table('chocolate_close')->insert(
+                    [
+                        'processresons_id' => $request->processresons_id, 
+                        'user_id' => $request->user_id, 
+                        'growing_time' => $request->growing_time, 
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]   
+                );
             }
             return response()->json(['success' => true]);
         } catch (Exception $e) {
@@ -277,5 +286,29 @@ class chocolatecontroller extends Controller
         }
 
         return redirect('chocolatedashboard');
+    }
+
+    public function getLotDetails(Request $request){
+        $lot_deatils =  LotDetail::where("lot_id", $request->lot_id)->orderBy('id')->get();
+        return $lot_deatils;
+    }
+
+    public function confirmChocolate(Request $request)
+    {
+        $lot_ids = array();
+        $heightArray = array();
+        if(isset($request->lot_ids)){
+            $lot_ids = explode(",", $request->lot_ids);
+        }
+        if(isset($request->heightArray)){
+            $heightArray = explode(",", $request->heightArray);
+        }
+        if($lot_ids){
+            foreach($lot_ids as $key => $lotid){
+                $grow_height = isset($heightArray[$key]) ? $heightArray[$key] : 0;
+                DB::table('lot_details')->where('id',$lotid)->update(['grow_height' => $grow_height]);
+            }
+        }
+        return true;
     }
 }

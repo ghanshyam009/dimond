@@ -313,7 +313,7 @@
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-4 float-left">
-                        <a href="{{ url('batch1') }}">Lot</a>
+                        <a href="{{ url('batch') }}">Lot</a>
                     </div>
                     <div class="col-md-7">
                     </div>

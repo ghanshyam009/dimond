@@ -272,7 +272,7 @@
             <div class="row">
 
                 <div class="col-md-4 float-left">
-                    <a href="{{ url('batch1') }}"><button type="button"
+                    <a href="{{ url('batch') }}"><button type="button"
                             class="btn btn-outline-secondary mt-1">Create</button></a>
                 </div>
                 <div class="col-md-7 d-flex mt-1">
