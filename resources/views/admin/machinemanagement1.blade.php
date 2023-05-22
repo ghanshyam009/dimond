@@ -249,7 +249,7 @@
                                             </p>
                                         </div>
                                         <div class="card-body card-block"
-                                            style="background-color: {{ $body }}; border: 1px solid {{ $header }}; border-radius: 0px 0px 13px 13px !important;">
+                                            style="background-color: {{ $body }}; border: 1px solid {{ $header }};">
                                             <div class="row form-group1">
                                                 <div class="col-12">
                                                     <label for="hf-email" class="form-control-label">
