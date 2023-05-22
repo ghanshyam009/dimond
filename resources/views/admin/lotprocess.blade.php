@@ -61,7 +61,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Batch</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-recycle fa-lg"></i></a> &nbsp;
+                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><b><span>Batch</span></b></a>
                 </div>
             </div>
             <div class="top-right">
@@ -129,11 +130,9 @@
         <div class="card-header">
             <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
                         class="fa-solid fa-table-columns"></i></a> <a
-                    href="{{ url('createlot') }}">Batch</a></strong>
+                    href="{{ url('batch-module') }}">Batch</a></strong>
             <ul class="stockul">
-                <li class="stockli mt-2"><a href="{{ url('createlot') }}">Batch</a></li>
-                <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
-                        data-bs-target="#addpacketsModal">Create Lots</a></li>
+                <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('createlots') }}">Create Lot</a></li>
                 <li class="stockli nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -149,128 +148,6 @@
                     </ul>
                 </li>
             </ul>
-            <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addpacketsModalLabel">Create Lot</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        
-                        <div class="modal-body">
-                            <form action="{{ route('savelot') }}" method="post" id="myForm">
-                                @csrf
-                                <div class="row">
-
-                                    <div class="col-lg-9">
-                                        <div class="card-body card-block">
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3"><label for="select"
-                                                        class=" form-control-label">Batch</label></div>
-                                                <div class="col-12 col-md-6">
-                                                    <select class="custom-select d-block w-100" required=""
-                                                        name="batch_id" id="batch_id">
-                                                        <?php $batch = App\Models\Bactch::get(); ?>
-                                                        <option value="0">Please select</option>
-                                                        <option value="mix">Mix</option>
-                                                        @foreach ($batch as $ans)
-                                                            <option value="{{ $ans->id }}">
-                                                                {{ $ans->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col-12 col-md-3"><label
-                                                        class=" form-control-label">Print</label></div>
-                                                <div class="col-12 col-md-6 ps-0">
-                                                    <div class="form-check-inline form-check">
-                                                        <label for="inline-radio1" class="form-check-label d-flex">
-                                                            <input type="radio" id="inline-radio1"
-                                                                name="inline-radios" value="option1"
-                                                                class="form-check-input" checked>Lot
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="home-tab" data-toggle="tab"
-                                                            href="#home" role="tab" aria-controls="home"
-                                                            aria-selected="true">Add Packets</a>
-                                                    </li>
-
-                                                </ul>
-                                                <div class="table-responsive">
-                                                    <table id="dataTable" class="cover table table-responsive">
-                                                        <thead>
-                                                            <tr>
-                                                                <th> Name</th>
-                                                                <th>Height(Micro)</th>
-                                                                <th>Length(MM)..</th>
-                                                                <th>Width(MM)</th>
-                                                                <th>Shape</th>
-                                                                <th>Weight(Ct)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr id="default_row">
-                                                                <td>
-                                                                    <input type="text" id="name_0"
-                                                                        class="auto" name="name[]" />
-                                                                    <input type="hidden" id="id_0">
-                                                                </td>
-                                                                <td><input type="text" id="height_0"
-                                                                        name="height[]" /></td>
-                                                                <td><input type="text" id="length_0"
-                                                                        name="length[]" /></td>
-                                                                <td><input type="text" id="width_0"
-                                                                        name="width[]" /></td>
-                                                                <td><input type="text" id="shape_0"
-                                                                        name="shape[]" /></td>
-                                                                {{-- <td><input type="text" id="pcs_0" name="pcs[]" /></td> --}}
-                                                                <td><input type="text" id="weight_0"
-                                                                        name="weight[]" /></td>
-                                                                <td><input type="text" id="height_1" /></td>
-                                                                <td><input type="text" id="length_1" /></td>
-                                                                <td><input type="text" id="width_1" /></td>
-                                                                <td><input type="text" id="shape_1" /></td>
-                                                                <td><input type="text" id="pcs_1" /></td>
-                                                                <td><input type="text" id="weight_1" /></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                </div>
-                                                <div class="modal-footer float-left">
-                                                    <button type="button" id="submitBtn"
-                                                        class="btn btn-secondary">Create</button>
-                                                    <button type="reset" class="btn btn-light"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="content">
@@ -794,7 +671,7 @@
             var id_p = "{{ $id }}";
             url_p = url_p.replace(':id', id_p);
             window.open(url_p, "_blank");
-            var url_r = '{{ route('createlot') }}';
+            var url_r = '{{ route('batch-module') }}';
             window.location.href = url_r;
         @endif
     </script>

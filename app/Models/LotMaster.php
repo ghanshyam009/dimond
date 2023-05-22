@@ -13,6 +13,7 @@ class LotMaster extends Model
     {
         return $this->hasMany(LotDetail::class,'lot_id','id');
     }
+    
     public function laserDetail()
     {
         return $this->hasMany(returnlaser::class,'lot_id','id');

@@ -57,7 +57,7 @@ Route::group(['middleware'=>['auth','growing']],function()
 
 Route::group(['middleware'=>['auth','manager']],function()
 {
-    route::get('createlot/{id?}', [batchcontroller::class, 'createlot'])->name('createlot');
+    route::get('batch-module/{id?}', [batchcontroller::class, 'createlot'])->name('batch-module');
     route::get('createuserchocolate', [usercontroller::class, 'createuserchocolate']);
     route::get('boil', [homecontroller::class, 'boil']);
 
@@ -215,6 +215,9 @@ Route::group(['middleware'=>['auth','manager']],function()
     // route::get('editbatch/{id}',[batchcontroller::class,'editbatch']);
     route::get('batchlist', [batchcontroller::class, 'batchlist']);
     route::get('getbatch/{id}',[batchcontroller::class,'getbatch']);
+    route::get('lotprint',[batchcontroller::class,'lotprint']);
+    route::get('getPrint/{id}',[batchcontroller::class,'getPrint']);
+
     //************************* */ stockdasbord ***********************
     route::get('stockdashboard1', [stockdashbordcontroller::class, 'stockdashboard1']);
     route::get('clickstockdashboardseeds', [stockdashbordcontroller::class, 'clickstockdashboardseeds']);
@@ -342,5 +345,10 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('deleteFile/{id}', [PlaningController::class, 'deleteFile']);
     route::post('getLotDetails', [chocolatecontroller::class, 'getLotDetails'])->name('getLotDetails');
     route::post('confirmChocolate', [chocolatecontroller::class, 'confirmChocolate'])->name('confirmChocolate');
+
+
+    route::get('createlots', [batchcontroller::class, 'createlots']);
+    route::get('lot-search-date',[batchcontroller::class,'lotserchdate']);
+
     
 });

@@ -71,14 +71,15 @@ class seedcontroller extends Controller
 
             $students[] = $data;
         }
-
+        
         foreach ($students as $row) {
             Packet::create($row);
 
         }
         $user = Bactch::where('id', '=', $request->input('batch_id'))->first();
+        $packets = packet::orderBy('id', 'desc')->take($i)->get();
 
-        return view('admin.directPrint',  compact('user','students'));
+        return view('admin.directPrint',  compact('user','packets'));
    }
        public function seedslist(){
         return view('admin.seedslist');

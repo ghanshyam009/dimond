@@ -232,7 +232,7 @@ class batchcontroller extends Controller
                 packet::where('id',$request->uid[$key])->delete();
             }
             $lot->lotDetail()->saveMany($lotDetail);
-            return redirect()->route('createlot', ['id' => $lot]);
+            return redirect()->route('batch-module', ['id' => $lot]);
         }
         
         
@@ -312,7 +312,7 @@ class batchcontroller extends Controller
            $batch = new Bactch;
            $batch->name = $request->get('name');
            $batch->save();
-           return redirect()->back()->with('message', 'Batch added successfully');
+           return redirect()->back()->with('message', 'Batch added successfully.');
        }
     public function shape(Request $request){
         $requestData = ['id', 'name','status'];
@@ -525,7 +525,52 @@ class batchcontroller extends Controller
         return view('admin.purity')->with(['data' => $data]);
     }
 
+    public function lotprint()
+    {
+        $data = DB::table('lot_masters')->get();
+        return view('admin.lotprint')->with(['data' => $data]);
+    }
     
+    public function getPrint($id)
+    {
+        $data=LotDetail::select('id','lot_id','height')->with('lotMaster')->where('lot_id',$id)->get()->toArray();
+        return view('admin.lotPrintPaper')->with(['data'=>$data]); 
+    }
 
+    public function createlots(Request $request)
+    {
+        $data = DB::table('bactches')->get();
+        $lots = DB::table('lot_masters')->get();
+        return view('admin.createlots')->with(['data' => $data ,'lots' => $lots]);
 
     }
+
+    public function lotserchdate(Request $request){
+        
+        $search = $request->input('datesearch');
+
+        $data = DB::table('bactches')->get();
+        $lots = DB::table('lot_masters')->get();
+
+        if ($search == "lastmonth") {
+            $lots = DB::table('lot_masters')->whereMonth('created_at', '=', Carbon::now()->subMonth(1))->get();
+        } elseif ($search == "last7days") {
+            $lots = DB::table('lot_masters')->where('created_at', '>=', Carbon::now()->subDays(7))->get();
+        } elseif ($search == "last15days") {
+            $lots = DB::table('lot_masters')->where('created_at', '>=', Carbon::now()->subdays(15))->get();
+        } elseif ($search  == "lastyear") {
+            $lots = DB::table('lot_masters')->whereYear('created_at', date('Y', strtotime('-1 year')))->get();
+        } elseif ($search == "today") {
+            $lots = DB::table('lot_masters')->whereDate('created_at', Carbon::today())->get();
+        } elseif ($search == "yesterday") {
+            $lots = DB::table('lot_masters')->whereDate('created_at', '=', Carbon::yesterday())->get();
+        } elseif ($search == "thismonth") {
+            $lots = DB::table('lot_masters')->whereMonth('created_at', Carbon::now()->month)->get();
+        } else {
+            $lots = DB::table('lot_masters')->get();
+        }
+        return view('admin.createlots')->with(['data' => $data, 'lots' => $lots]);
+    }
+
+
+}

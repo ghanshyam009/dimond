@@ -59,7 +59,7 @@
                                     <div class="card">
                                         <div class="card-body color_green">
                                             <div class="mx-auto d-block">
-                                                <a href="{{ url('createlot') }}"><i class="fa-solid fa-recycle text-white"></i></a>
+                                                <a href="{{ url('batch-module') }}"><i class="fa-solid fa-recycle text-white"></i></a>
                                                 <h5 class="text-sm-center mt-2 mb-1 text-white h5class">Batch</h5>
                                             </div>
                                         </div>

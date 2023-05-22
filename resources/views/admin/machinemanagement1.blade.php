@@ -71,9 +71,8 @@
         </header>
 
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a href="{{ url('machinemanagement1') }}">Machine
-                    Management</a></strong>
+            <strong class="card-title"><a href="{{ url('machinemanagement1') }}"><i
+                        class="fa-solid fa-table-columns"></i></a> <a href="{{ url('machinemanagement1') }}">Dashboard</a></strong>
             <ul class="stockul">
                 <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('machine') }}">Machine</a></li>
             </ul>
