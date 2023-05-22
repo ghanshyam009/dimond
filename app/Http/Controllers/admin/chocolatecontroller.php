@@ -16,6 +16,7 @@ use DateTime;
 use App\Models\image;
 use App\Models\LotMove;
 use App\Models\machine;
+use CreateLotMovesTable;
 use Format;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,10 +24,15 @@ class chocolatecontroller extends Controller
 {
     public function chocolatedashboard(Request $request)
     {
-        $data = DB::table('bactches')
-            ->join('lot_details', 'lot_details.batch_id', '=', 'bactches.id')
-            ->where('name', "like", "%" . $request->search . "%")->get();
-        return view('admin.chocolatedashboard')->with(['data' => $data]);
+        $lotmoves = DB::table('lot_moves')
+            ->where('status', 2)
+            ->select(DB::raw('sum(height) as height1,lot_id,name,pcs,sum(weight) as weight1,sum(length) as length1,sum(height) as width1'))
+            ->groupBy('lot_id', 'name', 'pcs')
+            ->get();
+        // $data = DB::table('bactches')
+        //     ->join('lot_details', 'lot_details.batch_id', '=', 'bactches.id')
+        //     ->where('name', "like", "%" . $request->search . "%")->get();
+        return view('admin.chocolatedashboard')->with(['lotmoves' => $lotmoves]);
     }
     public function createchocolatedashboard()
     {
@@ -94,12 +100,12 @@ class chocolatecontroller extends Controller
                 LotDetail::where("id", $request->id)->update(['stop_timer' => Carbon::now()->format('Y-m-d H:i:s')]);
                 DB::table('chocolate_close')->insert(
                     [
-                        'processresons_id' => $request->processresons_id, 
-                        'user_id' => $request->user_id, 
-                        'growing_time' => $request->growing_time, 
+                        'processresons_id' => $request->processresons_id,
+                        'user_id' => $request->user_id,
+                        'growing_time' => $request->growing_time,
                         'created_at' => now(),
                         'updated_at' => now(),
-                    ]   
+                    ]
                 );
             }
             return response()->json(['success' => true]);
@@ -225,7 +231,6 @@ class chocolatecontroller extends Controller
 
     public function assignchocolate(Request $request)
     {
-
         $request->validate([
             'detailall' => 'required|exists:lot_masters,id',
             'location_id' => 'required',
@@ -233,7 +238,9 @@ class chocolatecontroller extends Controller
 
         $data = DB::table('lot_masters')
             ->join('lot_details', 'lot_details.batch_id', '=', 'lot_masters.id')
-            ->where('lot_details.batch_id', $request->detailall)->get();
+            ->where('lot_details.batch_id', $request->detailall)
+            // ->where('')
+            ->get();
         foreach ($data as $assign1) {
             $assign = new LotMove;
             $assign->location_id = $request->location_id;
@@ -256,39 +263,46 @@ class chocolatecontroller extends Controller
 
     public function chocolaterecive(Request $request)
     {
-        $request->validate([
-            'reciveall' => 'required|exists:lot_masters,id',
-            'location_id' => 'required'
-        ]);
+        // $data = DB::table('lot_masters')
+        //     ->join('lot_details', 'lot_details.batch_id', '=', 'lot_masters.id')
+        //     ->where('lot_details.batch_id', $request->lot_id)->get();
 
-        $data = DB::table('lot_masters')
-            ->join('lot_details', 'lot_details.batch_id', '=', 'lot_masters.id')
-            ->where('lot_details.batch_id', $request->reciveall)->get();
+        DB::table('lot_moves')->where('lot_id', $request->lot_id)
+            ->update(
+                [
+                    'status' => 2,
+                    'lot_id' => $request->lot_id,
+                    'location_id' => $request->location_id,
+                    'return_type' => $request->return_type,
+                    'print_packet' => $request->print_packet,
+                ]
+            );
 
-        foreach ($data as $assign1) {
-            $receive = new LotMove;
-            $receive->location_id = $request->location_id;
-            $receive->return_type = $request->returntype;
-            $receive->user_id = $request->user_id;
-            $receive->print_packet = $request->print;
-            $receive->status = '1';
-            // $receive->process = $request->process;
-            $receive->lot_id = $assign1->lot_id;
-            $receive->batch_id = $assign1->batch_id;
-            $receive->name = $assign1->name;
-            $receive->pcs = $assign1->pcs;
-            $receive->shape = $assign1->shape;
-            $receive->height = $assign1->height;
-            $receive->length = $assign1->length;
-            $receive->weight = $assign1->weight;
-            $receive->width = $assign1->width;
-            $receive->save();
-        }
+        // foreach ($data as $assign1) {
+        //     $receive = new LotMove;
+        //     $receive->location_id = $request->location_id;
+        //     $receive->return_type = $request->returntype;
+        //     $receive->user_id = $request->user_id;
+        //     $receive->print_packet = $request->print;
+        //     $receive->status = '1';
+        //     // $receive->process = $request->process;
+        //     $receive->lot_id = $assign1->lot_id;
+        //     $receive->batch_id = $assign1->batch_id;
+        //     $receive->name = $assign1->name;
+        //     $receive->pcs = $assign1->pcs;
+        //     $receive->shape = $assign1->shape;
+        //     $receive->height = $assign1->height;
+        //     $receive->length = $assign1->length;
+        //     $receive->weight = $assign1->weight;
+        //     $receive->width = $assign1->width;
+        //     $receive->save();
+        // }
 
         return redirect('chocolatedashboard');
     }
 
-    public function getLotDetails(Request $request){
+    public function getLotDetails(Request $request)
+    {
         $lot_deatils =  LotDetail::where("lot_id", $request->lot_id)->orderBy('id')->get();
         return $lot_deatils;
     }
@@ -297,16 +311,16 @@ class chocolatecontroller extends Controller
     {
         $lot_ids = array();
         $heightArray = array();
-        if(isset($request->lot_ids)){
+        if (isset($request->lot_ids)) {
             $lot_ids = explode(",", $request->lot_ids);
         }
-        if(isset($request->heightArray)){
+        if (isset($request->heightArray)) {
             $heightArray = explode(",", $request->heightArray);
         }
-        if($lot_ids){
-            foreach($lot_ids as $key => $lotid){
+        if ($lot_ids) {
+            foreach ($lot_ids as $key => $lotid) {
                 $grow_height = isset($heightArray[$key]) ? $heightArray[$key] : 0;
-                DB::table('lot_details')->where('id',$lotid)->update(['grow_height' => $grow_height]);
+                DB::table('lot_details')->where('id', $lotid)->update(['grow_height' => $grow_height]);
             }
         }
         return true;
