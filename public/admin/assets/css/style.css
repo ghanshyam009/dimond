@@ -2255,7 +2255,7 @@ header .form-inline .search-form.close {
     padding: 1.25em;
     position: relative;
     width: 100%;
-    border-radius: 0px 0px 13px 13px !important;
+    border-radius: 12px !important;
 }
 
 .card h4 {

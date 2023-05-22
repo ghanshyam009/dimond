@@ -606,13 +606,6 @@
                                                         <input type="file"  required name="image" accept="image/*" webcam>
                                                     </div>
                                                 </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Chocolate Image3 : </label></div>
-                                                    <div class="col-12 col-md-9" style="display:flex;">
-                                                        <input type="file"  name="img3" required  accept="image/*" webcam>
-                                                        
-                                                    </div>
-                                                </div>
                                                      <button type="submit" class="btn btn-secondary btn-sm float-left"> Save </button>
                                                      <template>
                                                         <input type="date" v-model="dateString" />
@@ -648,7 +641,7 @@
                                                                 <th scope="col">Starttime</th>
                                                                 <th scope="col">Image</th>
                                                                 <th scope="col">Image</th>
-                                                                <th scope="col">Image</th>
+                                                                {{-- <th scope="col">Image</th> --}}
 
                                                             </tr>
                                                         </thead>
@@ -664,7 +657,7 @@
                                                                 <td>{{ $ans->starttime }}</td>
                                                                 <td><img src="{{url('item_img')}}/{{$ans->img1}}" style="width: 70px; height: 70px;"></td>
                                                                 <td><img src="{{url('item_images')}}/{{$ans->img2}}" style="width: 70px; height: 70px;"></td>
-                                                                <td><img src="{{url('images3')}}/{{$ans->img3}}" style="width: 70px; height: 70px;"></td>
+                                                                {{-- <td><img src="{{url('images3')}}/{{$ans->img3}}" style="width: 70px; height: 70px;"></td> --}}
                                                             </tr>
                                                             @endforeach
                                                         </tbody>

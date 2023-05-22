@@ -127,7 +127,6 @@
 
                         <form action="{{ url('chocolaterecive') }}" method="post" name="recive"
                             enctype="multipart/form-data" id="recivechocolateall">
-                            @csrf
 
                             <div class="modal-body">
 
@@ -139,8 +138,10 @@
                                             data-val-cc-number="Please enter a valid card number">
                                     </div>
                                     <div class="col-lg-1">
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#largeModal">Recive</button>
+                                        {{-- <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target="#largeModal">Recive</button> --}}
+                                        <button type="button" id="closerecive"
+                                            class="btn btn-secondary ">Recive</button>
                                     </div>
                                     <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
                                         aria-labelledby="largeModalLabel" aria-hidden="true">
@@ -186,7 +187,7 @@
                                                                 <p class="form-control-static"><input type="email"
                                                                         id="email-input" class="form-control rec">
                                                                     <input type="hidden" class="reciveall"
-                                                                        name="reciveall">
+                                                                        name="lot_id">
                                                                 </p>
 
                                                             </div>
@@ -217,7 +218,7 @@
 
                                                             </div>
                                                         </div>
-                                                        <div style="display:none"; id="receiveemployee"
+                                                        {{-- <div style="display:none"; id="receiveemployee"
                                                             class="row form-group">
                                                             <div class="col col-md-3">
                                                                 <label class=" form-control-label">Employee : </label>
@@ -234,7 +235,7 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
 
 
                                                         <div id="return" class="row form-group">
@@ -251,14 +252,14 @@
                                                                     <label for="inline-radio1"
                                                                         class="form-check-label ">
                                                                         <input required type="radio"
-                                                                            id="inline-radio1" name="returntype"
+                                                                            id="inline-radio1" name="return_type"
                                                                             value="0"
                                                                             class="form-check-input">Stock
                                                                     </label>
                                                                     <label for="inline-radio2"
                                                                         class="form-check-label ">
                                                                         <input required type="radio"
-                                                                            id="inline-radio2" name="returntype"
+                                                                            id="inline-radio2" name="return_type"
                                                                             value="1"
                                                                             class="form-check-input">Seeds
                                                                     </label>
@@ -273,10 +274,10 @@
                                                             <div class="col-12 col-md-6">
                                                                 <div class="form-check-inline form-check">
                                                                     <input type="hidden" id="inline-radio1"
-                                                                        name="print" value="0"
+                                                                        name="print_packet" value="0"
                                                                         class="form-check-input">
                                                                     <input type="radio" id="inline-radio1"
-                                                                        name="print" value="1"
+                                                                        name="print_packet" value="1"
                                                                         class="form-check-input">
                                                                 </div>
                                                             </div>
@@ -420,7 +421,6 @@
                                 </div>
                             </div>
                             <div class="modal-footer float-left1">
-                                <button type="button" id="closerecive" class="btn btn-secondary ">Create</button>
                                 <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </form>
@@ -452,8 +452,8 @@
                                             data-val-cc-number="Please enter a valid card number">
                                     </div>
                                     <div class="col-lg-1">
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#largeModal">Assign</button>
+                                        <button type="button" id="close"
+                                            class="btn btn-secondary">Assign</button>
                                     </div>
                                     <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
                                         aria-labelledby="largeModalLabel" aria-hidden="true">
@@ -697,7 +697,6 @@
                                 </div>
 
                                 <div class="modal-footer float-left1">
-                                    <button type="button" id="close" class="btn btn-secondary">Create</button>
                                     <button type="reset" class="btn btn-light"
                                         data-bs-dismiss="modal">Cancel</button>
                                 </div>
@@ -722,24 +721,21 @@
                             <div class="dropdown-menu mt-5 py-0" aria-labelledby="dropdownMenuButton">
                                 <form action="{{ url('searchchocolate') }}" name="search" method="get">
                                     <div class="search_multiple">
-                                        <select class="form__input dropdown-item px-0" name="chocolate"
-                                            id="search" onchange="form.submit();">
-                                            <option selected disabled>Search Name..</option>
-                                            <?php $users = App\Models\Bactch::select('name')
-                                                ->distinct()
-                                                ->get(); ?>
-                                            @foreach ($users as $ans)
-                                                <option value="{{ $ans->name }}">{{ $ans->name }}</option>
+                                        {{-- <select class="form__input dropdown-item px-0" name="name" id="search"
+                                            onchange="form.submit();">
+                                            <option selected>selectName.</option>
+                                            @foreach ($lots as $lot)
+                                                <option value="{{ $lot->name }}"> {{ $lot->name }}</option>
                                             @endforeach
-                                        </select>
-                                        <select class="form__input dropdown-item px-0" name="id" id="search"
+                                        </select> --}}
+                                        {{-- <select class="form__input dropdown-item px-0" name="id" id="search"
                                             onchange="form.submit();">
                                             <option selected disabled>Search Lot..</option>
                                             <?php $lots = App\Models\LotDetail::select('id')->get(); ?>
                                             @foreach ($lots as $lo)
                                                 <option value="{{ $lo->id }}">L:{{ $lo->id }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </form>
                             </div>
@@ -761,38 +757,36 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="row">
-                                        {{-- <?php $data = App\Models\LotDetail::with('bactch')->get(); ?> --}}
-                                        @foreach ($data as $k => $ans)
+                                        @foreach ($lotmoves as $lotmove)
                                             <div class="col-lg-4 col-md-6 col-xl-3">
                                                 <div class="card">
                                                     <div class="card-body card-block">
-                                                        <input type="hidden" value="{{ $ans->id }}"
-                                                            id="packet_id_{{ $ans->id }}" />
-                                                        <input type="hidden" value="{{ $ans->timer }}"
-                                                            class="current_timer"
-                                                            id="old_timer_{{ $ans->id }}" />
-                                                        <input type="hidden" value="{{ $ans->stop_timer }}"
-                                                            class="current_stop_timer"
-                                                            id="stop_timer_{{ $ans->id }}" />
-                                                        <div style="color: green;font-weight: bold;text-align: right;"
-                                                            id="timer_{{ $ans->id }}">00:00:00</div>
                                                         <div class="row form-group1">
-                                                            <div class="col-12 col-md-4"><label for="hf-email"
+                                                            <div class="col-12 col-md-4">
+                                                                <label for="hf-email"
                                                                     class=" form-control-label font_size">Batch:
-                                                                    {{ $ans->name }}</label>
+                                                                    {{ $lotmove->name }}
+                                                                </label>
                                                             </div>
-                                                            <div class="col-12 col-md-8"><label for="hf-email"
+                                                            <div class="col-12 col-md-8">
+                                                                <label for="hf-email"
                                                                     class=" form-control-label font_size">Total
-                                                                    Weight(Ct): {{ $ans->weight }}</label></div>
+                                                                    Weight(Ct):
+                                                                    {{ $lotmove->weight1 }}
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                         <div class="row form-group1">
                                                             <div class="col-12 col-md-4"><label for="hf-email"
                                                                     class=" form-control-label font_size">Pcs:
-                                                                    {{ $ans->pcs }}</label>
+                                                                    {{ $lotmove->pcs }}</label>
                                                             </div>
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg
-                                                                    Weight(Ct): {{ $ans->weight }}</label></div>
+                                                                    Weight(Ct):
+                                                                    {{ $lotmove->weight1 / $lotmove->pcs }}
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                         <div class="row form-group1">
                                                             <div class="col-12 col-md-4"><label for="hf-email"
@@ -800,64 +794,34 @@
                                                             </div>
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg
-                                                                    Height(Micron):</label></div>
+                                                                    Height(Micron):
+                                                                    {{ $lotmove->height1 / $lotmove->pcs }}
+                                                                </label></div>
                                                         </div>
                                                         <div class="row form-group1">
-                                                            <div class="col-12 col-md-4"><label for="hf-email"
-                                                                    class=" form-control-label font_size">L-{{ $ans->id }}</label>
+                                                            <div class="col-12 col-md-4">
+                                                                <label for="hf-email"
+                                                                    class=" form-control-label font_size">
+                                                                    <?php $lotmasters = App\Models\LotMaster::get(); ?>
+                                                                    @foreach ($lotmasters as $lotmaster)
+                                                                        @if ($lotmaster->name == $lotmove->name)
+                                                                            {{ $lotmaster->name }}
+                                                                            LOT-{{ $lotmaster->id }}
+                                                                        @endif
+                                                                    @endforeach
+                                                                    {{-- L-{{ $ans->id }} --}}
+                                                                </label>
                                                             </div>
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg. L x W:
-                                                                    {{ $ans->length }}
-                                                                    x {{ $ans->width }}</label></div>
+                                                                    {{ $lotmove->length1 / $lotmove->pcs }} x
+                                                                    {{ $lotmove->width1 / $lotmove->pcs }}
+                                                                </label></div>
                                                         </div>
-                                                        @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager' || Auth::user()->role == 'growing user')
-                                                            <div class="row form-group1 mt-2">
-                                                                <div class="col-10">
-                                                                    <div class="row">
-                                                                        @if ($ans->timer == null && $ans->stop_timer == null)
-                                                                            <div class="col-6">
-                                                                                <button id="start_{{ $ans->id }}"
-                                                                                    class="start_button btn btn-secondary btn-sm float-left mt-2"
-                                                                                    onclick="start({{ $k + 1 }})"
-                                                                                    style="font-size: 12px; padding: 3px;"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#addpacketsModal2">Start</button>
-                                                                            </div>
-                                                                        @elseif($ans->timer != null && $ans->stop_timer != null)
-                                                                            <button id="stop_{{ $ans->id }}"
-                                                                                class="stop_button btn btn-secondary btn-sm float-left w-auto ms-2 mt-2"
-                                                                                onclick="endProcess({{ $ans->lot_id }}); stop({{ $ans->id }})"
-                                                                                style="font-size: 12px; padding: 3px;"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#addpacketsModal1">End
-                                                                            </button>
-                                                                        @else
-                                                                            <div class="col-6">
-                                                                                <button id="stop_{{ $ans->id }}"
-                                                                                    class="stop_button btn btn-secondary btn-sm float-left mt-2"
-                                                                                    onclick="stop({{ $ans->id }})"
-                                                                                    style="font-size: 12px; padding: 3px;"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#addpacketsModal">Growing
-                                                                                    Done</button>
-                                                                            </div>
-                                                                            <div class="col-6 ps-3">
-                                                                                <button type="button"
-                                                                                    class="btn btn-success btn-sm mt-2"
-                                                                                    style="font-size: 12px; padding: 3px;">In
-                                                                                    Progress</button>
-                                                                            </div>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-2">
-                                                                    <button type="button"
-                                                                        class="btn btn-danger btn-sm float-right mt-2"
-                                                                        style="font-size: 12px; padding: 3px 6px;">B</button>
-                                                                </div>
-                                                            </div>
-                                                        @endif
+
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm float-right mt-2"
+                                                            style="font-size: 12px; padding: 3px 6px;">B</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1109,13 +1073,14 @@
                                                 <div class="card-body card-block">
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Machine Number</label>
+                                                            <label for="select" class="form-control-label">Machine
+                                                                Number</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
                                                             <div class="col-6 col-md-10">
                                                                 <?php $machine = App\Models\machine::get(); ?>
-                                                                <select class="custom-select d-block w-100" name="user_id"
-                                                                    id="user_id" required>
+                                                                <select class="custom-select d-block w-100"
+                                                                    name="user_id" id="user_id" required>
                                                                     <option value="0">Please select</option>
                                                                     @foreach ($machine as $machin_name)
                                                                         <option value="{{ $machin_name->id }}">
@@ -1127,21 +1092,25 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Start Date</label>
+                                                            <label for="select" class="form-control-label">Start
+                                                                Date</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
-                                                            <input type="datetime" disabled name="growing_time" id="growing_time" value="{{ date("Y/m/d H:i:m") }}"/>
+                                                            <input type="datetime" disabled name="growing_time"
+                                                                id="growing_time"
+                                                                value="{{ date('Y/m/d H:i:m') }}" />
                                                         </div>
                                                     </div>
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Employee </label>
+                                                            <label for="select" class="form-control-label">Employee
+                                                            </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
                                                             <div class="col-12 col-md-10">
                                                                 <?php $users = App\Models\User::get(); ?>
-                                                                <select class="custom-select d-block w-100" name="user_id"
-                                                                    id="user_id" required>
+                                                                <select class="custom-select d-block w-100"
+                                                                    name="user_id" id="user_id" required>
                                                                     <option value="0">Please select</option>
                                                                     @foreach ($users as $user)
                                                                         <option value="{{ $user->id }}">
@@ -1153,22 +1122,27 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Pcs</label>
+                                                            <label for="select"
+                                                                class="form-control-label">Pcs</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
-                                                            <input type="text" name="growing_time" id="growing_time" />
+                                                            <input type="text" name="growing_time"
+                                                                id="growing_time" />
                                                         </div>
                                                     </div>
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Loose Weight(Ct) </label>
+                                                            <label for="select" class="form-control-label">Loose
+                                                                Weight(Ct) </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
-                                                            <input type="text" name="growing_time" id="growing_time" />
+                                                            <input type="text" name="growing_time"
+                                                                id="growing_time" />
                                                         </div>
 
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Weight(Ct)</label>
+                                                            <label for="select"
+                                                                class="form-control-label">Weight(Ct)</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
                                                             <input type="text" name="growing_time"
@@ -1178,7 +1152,8 @@
 
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class="form-control-label">Images </label>
+                                                            <label for="select" class="form-control-label">Images
+                                                            </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
                                                             <input type="file" name="finish_type"
@@ -1188,7 +1163,8 @@
                                                         </div>
 
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class=" form-control-label">Avg. Weight(Ct)	</label>
+                                                            <label for="select" class=" form-control-label">Avg.
+                                                                Weight(Ct) </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
                                                             <input type="text" name="growing_time"
@@ -1248,6 +1224,7 @@
         <script>
             var timeArray = [];
             var countChocolateline = 0;
+
             function timer(id) {
                 timeArray[id]['sec'] = timeArray[id]['sec'] + 1;
                 if (timeArray[id]['sec'] / 60 == 1) {
@@ -1277,6 +1254,7 @@
                     'dispSec'
                 ]);
             }
+
             function endProcess(lot_id) {
                 $.ajaxSetup({
                     headers: {
@@ -1319,6 +1297,7 @@
                     }
                 });
             }
+
             function stop(id) {
 
                 window.clearInterval(timeArray[id]['timeoutId']);
@@ -1347,6 +1326,7 @@
                 //     }
                 // });
             }
+
             function start(id, notreset = 0) {
 
                 // if (notreset == 0) {
@@ -1372,6 +1352,7 @@
 
                 // }
             }
+
             function clearAll() {
                 for (var a = 1; a <= 999; a++) {
                     window.clearInterval(a);
@@ -1466,6 +1447,7 @@
                 $('.detailall').val(this.value)
                 $(this).val('');
             });
+
             function ApplyFilter(search) {
                 if (search != null && search != "") {
                     $.ajaxSetup({
@@ -1655,6 +1637,7 @@
                 $('.reciveall').val(this.value);
                 $(this).val('');
             });
+
             function ApplyFilterRecevie(search) {
                 if (search != null && search != "") {
                     $.ajaxSetup({
@@ -1731,11 +1714,11 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-
                         $('#returnModal').modal('hide');
                         location.reload();
                     },
                     error: function(response) {
+                        console.log(response);
                         $.each(response.responseJSON.errors, function() {
                             swal('Record does not exist or is not accessible.');
                         })
@@ -1828,6 +1811,7 @@
                     }
                 });
             }
+
             function chocolateConfirm() {
                 const heightArray = [];
                 const lot_ids = [];
@@ -1865,4 +1849,5 @@
             }
         </script>
 </body>
+
 </html>
