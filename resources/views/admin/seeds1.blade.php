@@ -69,7 +69,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Seeds</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-person-chalkboard fa-lg"></i></a> &nbsp;
+                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><b><span>Seeds</span></b></a>
                 </div>
             </div>
             <div class="top-right">
@@ -314,62 +315,6 @@
                 </div>
             </div>
         </div>
-        <div class="content mt-3">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h4 class="headerborder1"> All Packets </h4>
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4"></div>
-                </div>
-            </div>
-        </div>
-        <div class="content">
-            <div class="animated fadeIn">
-                <div class="row ms-2 ms-md-0">
-                    <div class="col-6 col-md-5 float-left">
-                    </div>
-                    <div class="col-6 col-md-7 ps-2 ps-md-0 mt-1">
-                        <div class="dropdown float-right float-md-left mr-3">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"><i class="fa-solid fa-filter"></i>
-                                Filter
-                            </button>
-                            <div class="dropdown-menu mt-5 py-0" aria-labelledby="dropdownMenuButton">
-                                <form action="{{ url('search_seed') }}" method="get">
-                                    <div class="search_multiple">
-
-                                        <select class="form__input dropdown-item px-0" name="seedn" id="search"
-                                            onchange="form.submit();">
-                                            <option selected disabled>Search Name..</option>
-                                            <?php $users = App\Models\Bactch::select('name')
-                                                ->distinct()
-                                                ->get(); ?>
-                                            @foreach ($users as $ans)
-                                                <option value="{{ $ans->name }}">{{ $ans->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <select class="form__input dropdown-item px-0" name="heightsearch"
-                                            id="search" onchange="form.submit();">
-                                            <option selected disabled>Search Height..</option>
-                                            <?php $height = App\Models\packet::select('height')
-                                                ->distinct()
-                                                ->get(); ?>
-                                            @foreach ($height as $ans)
-                                                <option value="{{ $ans->height }}">{{ $ans->height }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="content">
             <div class="animated fadeIn">
@@ -409,7 +354,7 @@
                                                             class="custom-control custom-checkbox  custom-control-right">
 
                                                             <input class="coupon_question" type="checkbox"
-                                                                name="chk"> {{ $ans->name }}<br>
+                                                                name="chk"> {{ $ans->name . ' - '. $ans->id }}<br>
                                                         </div>
                                                     </div>
                                                 </td>

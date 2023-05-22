@@ -1,64 +1,29 @@
 <!doctype html>
 <html class="no-js" lang="">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Jusco Lab Grown Diamond</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="{{ URL::asset('admin/i.imgur.com/QRAUqs9.png') }}">
-    <link rel="shortcut icon" href="{{ URL::asset('admin/i.imgur.com/QRAUqs9.png') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/normalize.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/pe-icon-7-stroke.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/flag-icon.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/cs-skin-elastic.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/lib/chosen/chosen.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-</head>
-
+@include('admin.head')
 <body>
     <div id="right-panel" class="right-panel">
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Batch</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-recycle fa-lg"></i></a> &nbsp;
+                    <a class="navbar-brand" href="{{ url('batch-module') }}"><b><span>Batch / New </b></span></a>
                 </div>
             </div>
             <div class="top-right">
                 <div class="header-menu">
                     <div class="header-left">
                     </div>
-                    <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active gap-2" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-                            <span>{{ Session::get('studname') }}
-                            </span>
-                        </a>
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="{{ url('logout') }}"><i class="fa fa-power-off"></i>Logout</a>
-                        </div>
-                    </div>
+                    @include('admin.logout')
                 </div>
             </div>
         </header>
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a href="{{ url('createlot') }}">Batch</a></strong>
+            <strong class="card-title"><a href="{{ url('batch-module') }}">
+                <i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('batch-module') }}">Batch</a></strong>
             <ul class="stockul">
-                <li class="stockli mt-2"><a href="{{ url('createlot') }}">Batch</a></li>
-                <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#addpacketsModal">Create
-                        Lots</a></li>
+                <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('createlots') }}">Create Lot</a></li>
                 <li class="stockli nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -204,6 +169,9 @@
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8 mt-4">
                             <div class="card">
+                                @if (Session::has('message'))
+                                    <div class="alert alert-success">{{ Session::get('message') }}</div>
+                                @endif
                                 <div class="card-header">
                                     <h4> <i class="fa-solid fa-pen-to-square"></i> Batch </h4>
                                 </div>

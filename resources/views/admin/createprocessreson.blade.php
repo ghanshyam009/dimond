@@ -84,9 +84,9 @@
         </header>
 
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('createlot') }}">Batch</a></strong>
+            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('batch-module') }}">Batch</a></strong>
             <ul class="stockul">
-                <li class="stockli mt-2"><a href="{{ url('createlot') }}">Batch</a></li>
+                <li class="stockli mt-2"><a href="{{ url('batch-module') }}">Batch</a></li>
                 <li class="stockli"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#addpacketsModal">Create Lots</a></li>
                 <li class="stockli nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

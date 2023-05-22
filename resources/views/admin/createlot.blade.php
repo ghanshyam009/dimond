@@ -46,87 +46,30 @@
 </head>
 
 <body>
-
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
-
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Batch</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-recycle fa-lg"></i></a> &nbsp;
+                    <b><a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Batch</span></a></b>
                 </div>
             </div>
             <div class="top-right">
                 <div class="header-menu">
-                    <div class="header-left">
-                        <div class="dropdown for-message">
-                            <div class="dropdown-menu" aria-labelledby="message">
-                                <p class="red">You have 4 Mails</p>
-                                <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar"
-                                            src="{{ URL::asset('admin/assets/images/avatar/1.jpg') }}"></span>
-                                    <div class="message media-body">
-                                        <span class="name float-left">Jonathan Smith</span>
-                                        <span class="time float-right">Just now</span>
-                                        <p>Hello, this is an example msg</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar"
-                                            src="{{ URL::asset('admin/assets/images/avatar/2.jpg') }}"></span>
-                                    <div class="message media-body">
-                                        <span class="name float-left">Jack Sanders</span>
-                                        <span class="time float-right">5 minutes ago</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar"
-                                            src="{{ URL::asset('admin/assets/images/avatar/3.jpg') }}"></span>
-                                    <div class="message media-body">
-                                        <span class="name float-left">Cheryl Wheeler</span>
-                                        <span class="time float-right">10 minutes ago</span>
-                                        <p>Hello, this is an example msg</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar"
-                                            src="{{ URL::asset('admin/assets/images/avatar/4.jpg') }}"></span>
-                                    <div class="message media-body">
-                                        <span class="name float-left">Rachel Santos</span>
-                                        <span class="time float-right">15 minutes ago</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active gap-2" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-                            <span>{{ Session::get('studname') }}
-                            </span>
-                        </a>
-
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="{{ url('logout') }}"><i class="fa fa-power-off"></i>Logout</a>
-                        </div>
-                    </div>
+                    @include('admin.logout')
                 </div>
             </div>
         </header>
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a
-                    href="{{ url('createlot') }}">Batch</a></strong>
+            <strong class="card-title"><a href="{{ url('batch-module') }}">
+                <i class="fa-solid fa-table-columns"></i>
+            </a> 
+            <a href="{{ url('batch-module') }}">Batch</a></strong>
             <ul class="stockul">
-                <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('createlot') }}">Batch</a></li>
-                <li class="stockli d-block d-md-inline-block"><a class="ms-0 ms-md-1 mt-1" data-bs-toggle="modal"
-                        data-bs-target="#addpacketsModal">Create Lots</a></li>
-                <li class="stockli d-block d-md-inline-block nav-item dropdown">
+                    <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('createlots') }}">Create Lot</a></li>
+                    <li class="stockli d-block d-md-inline-block nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-0" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Configuration
@@ -141,7 +84,6 @@
                     </ul>
                 </li>
             </ul>
-
             <div class="modal fade" id="addpacketsModal" tabindex="-1" aria-labelledby="addpacketsModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -153,9 +95,8 @@
                         </div>
                         <div class="modal-body">
                             <form action="{{ route('savelot') }}" method="post" id="myForm">
-                                @csrf
+                            {{-- <form action="#" method="post" class="form-horizontal"> --}}
                                 <div class="row">
-
                                     <div class="col-lg-9">
                                         <div class="card-body card-block">
 
@@ -192,7 +133,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-
                                         <div class="card-body">
                                             <div class="row">
                                                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
@@ -783,7 +723,7 @@
             var id_p="{{ $id }}";
             url_p = url_p.replace(':id', id_p);
             window.open(url_p, "_blank");
-            var url_r = '{{ route("createlot") }}';
+            var url_r = '{{ route("batch-module") }}';
             window.location.href=url_r;
         @endif
     </script>

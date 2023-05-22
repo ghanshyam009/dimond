@@ -636,7 +636,7 @@
                     window.open(url_p, "_blank");
         
         
-                    var url_r = '{{ route("createlot") }}';
+                    var url_r = '{{ route("batch-module") }}';
                     window.location.href=url_r;
                 @endif
             </script>

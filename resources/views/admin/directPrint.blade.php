@@ -20,14 +20,14 @@
     </head>
 
     <body onload="window.print()">
-        @foreach ($students as $key => $stu)
+        @foreach ($packets as $key => $val)
             
             <div style="font-size:10px;width:100%;padding:2px;min-height:100px">
-                <b>{{ $user->name }} - {{ $key+1 }}</b><br/>
+                <b>{{ $user->name }} - {{ $val->id}}</b><br/>
                     {{-- <span style="float:right">Pcs: {{ $data->pcs }}</span></b><br> --}}
-                <b>L x W : {{ $stu['length'] }} x {{ $stu['width'] }}</b><br>
-                Height : {{ $stu['height'] }}<br>
-                weight : {{ $stu['weight'] }}<br>
+                <b>L x W : {{ $val->length }} x {{ $val->width }}</b><br>
+                Height : {{ $val->height }}<br>
+                weight : {{ $val->weight }}<br>
                 Date : {{ date('d/m/Y') }}<br>
                 <span style="float:right;margin-top:-70px;margin-right:5px">{!! DNS2D::getBarcodeSVG("$user->name", 'QRCODE') !!}</span>
             </div>    
