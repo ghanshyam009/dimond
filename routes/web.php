@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\homecontroller;
 use App\Http\Controllers\admin\pakegecontroller;
-USE App\Http\Controllers\admin\batchcontroller;
-USE App\Http\Controllers\admin\stockdashbordcontroller;
-USE App\Http\Controllers\admin\seedcontroller;
-USE App\Http\Controllers\admin\stockcontroller;
+use App\Http\Controllers\admin\batchcontroller;
+use App\Http\Controllers\admin\stockdashbordcontroller;
+use App\Http\Controllers\admin\seedcontroller;
+use App\Http\Controllers\admin\stockcontroller;
 use App\Http\Controllers\admin\finalstock;
 use App\Http\Controllers\admin\jobworkcontroller;
 use App\Http\Controllers\admin\settingcontroller;
@@ -39,29 +39,25 @@ route::get('index1', [homecontroller::class, 'index1']);
 route::get('centerdepartment', [homecontroller::class, 'centerdepartment']);
 route::get('chocolatedashboard', [chocolatecontroller::class, 'chocolatedashboard']);
 
-Route::group(['middleware'=>['auth','laser']],function()
-{
+Route::group(['middleware' => ['auth', 'laser']], function () {
     route::get('createchocolatedashboard', [chocolatecontroller::class, 'createchocolatedashboard']);
 });
 
-Route::group(['middleware'=>['auth','cliving']],function()
-{
+Route::group(['middleware' => ['auth', 'cliving']], function () {
     route::get('chocolateimage', [chocolatecontroller::class, 'chocolateimage']);
 });
 
-Route::group(['middleware'=>['auth','growing']],function()
-{
+Route::group(['middleware' => ['auth', 'growing']], function () {
     route::post('starttimer', [chocolatecontroller::class, 'startTimer'])->name('startTimer');
     route::post('stoptimer', [chocolatecontroller::class, 'stopTimer'])->name('stopTimer');
 });
 
-Route::group(['middleware'=>['auth','manager']],function()
-{
+Route::group(['middleware' => ['auth', 'manager']], function () {
     route::get('batch-module/{id?}', [batchcontroller::class, 'createlot'])->name('batch-module');
     route::get('createuserchocolate', [usercontroller::class, 'createuserchocolate']);
     route::get('boil', [homecontroller::class, 'boil']);
 
-     route::get('boiling1', [homecontroller::class, 'boiling1']);
+    route::get('boiling1', [homecontroller::class, 'boiling1']);
     route::get('boiling1list', [homecontroller::class, 'boiling1list']);
     route::get('boiling1lots', [homecontroller::class, 'boiling1lots']);
     route::get('boiling1lotslist', [homecontroller::class, 'boiling1lotslist']);
@@ -176,35 +172,35 @@ Route::group(['middleware'=>['auth','manager']],function()
 
 
     // ***************************batch **************************************
-    route::get('search_seed',[batchcontroller::class,'searchseed']);
-    route::get('search_date',[batchcontroller::class,'searchdate']);
-    route::get('search',[batchcontroller::class,'search']);
-    route::get('search_shape',[batchcontroller::class,'searchshape']);
-    route::get('searchlotProcess',[batchcontroller::class,'searchlotProcess']);
-    route::get('searchProcessReason',[batchcontroller::class,'searchProcessReason']);
-    route::get('searchFinishType',[batchcontroller::class,'searchFinishType']);
-    route::get('searchPurity',[batchcontroller::class,'searchPurity']);
-    route::get('search_color',[batchcontroller::class,'searchcolor']);
+    route::get('search_seed', [batchcontroller::class, 'searchseed']);
+    route::get('search_date', [batchcontroller::class, 'searchdate']);
+    route::get('search', [batchcontroller::class, 'search']);
+    route::get('search_shape', [batchcontroller::class, 'searchshape']);
+    route::get('searchlotProcess', [batchcontroller::class, 'searchlotProcess']);
+    route::get('searchProcessReason', [batchcontroller::class, 'searchProcessReason']);
+    route::get('searchFinishType', [batchcontroller::class, 'searchFinishType']);
+    route::get('searchPurity', [batchcontroller::class, 'searchPurity']);
+    route::get('search_color', [batchcontroller::class, 'searchcolor']);
     route::get('batch', [batchcontroller::class, 'batch']);
     route::post('insertbatch', [batchcontroller::class, 'insertbatch'])->name('insertbatch');
     route::get('shape', [batchcontroller::class, 'shape']);
-    route::get('shaperemove/{id}',[batchcontroller::class,'shaperemove']);
+    route::get('shaperemove/{id}', [batchcontroller::class, 'shaperemove']);
     route::post('insertshape', [batchcontroller::class, 'insertshape']);
     route::get('lotprocess', [batchcontroller::class, 'lotprocess']);
     route::post('insertlotprocess', [batchcontroller::class, 'insertlotprocess']);
-    route::get('lotprocessremove/{id}',[batchcontroller::class,'lotprocessremove']);
+    route::get('lotprocessremove/{id}', [batchcontroller::class, 'lotprocessremove']);
     route::get('processreson', [batchcontroller::class, 'processreson']);
     route::post('insertprocessreson', [batchcontroller::class, 'insertprocessreson']);
-    route::get('processresonremove/{id}',[batchcontroller::class,'processresonremove']);
+    route::get('processresonremove/{id}', [batchcontroller::class, 'processresonremove']);
     route::get('finishtype', [batchcontroller::class, 'finishtype']);
     route::post('insertfinishtype', [batchcontroller::class, 'insertfinishtype']);
-    route::get('finishtyperemove/{id}',[batchcontroller::class,'finishtyperemove']);
+    route::get('finishtyperemove/{id}', [batchcontroller::class, 'finishtyperemove']);
     route::get('color', [batchcontroller::class, 'color']);
     route::post('insertcolor', [batchcontroller::class, 'insertcolor']);
-    route::get('colorremove/{id}',[batchcontroller::class,'colorremove']);
+    route::get('colorremove/{id}', [batchcontroller::class, 'colorremove']);
     route::get('purity', [batchcontroller::class, 'purity']);
     route::post('insertpurity', [batchcontroller::class, 'insertpurity']);
-    route::get('purityremove/{id}',[batchcontroller::class,'purityremove']);
+    route::get('purityremove/{id}', [batchcontroller::class, 'purityremove']);
     route::post('getlot', [batchcontroller::class, 'getlot'])->name('getlot');
     route::post('savelot', [batchcontroller::class, 'savelot'])->name('savelot');
     route::get('createlotprint/{id}', [batchcontroller::class, 'createlotPrint'])->name('createlotprint');
@@ -214,9 +210,9 @@ Route::group(['middleware'=>['auth','manager']],function()
     // route::get('clickbatch', [batchcontroller::class, 'clickbatch']);
     // route::get('editbatch/{id}',[batchcontroller::class,'editbatch']);
     route::get('batchlist', [batchcontroller::class, 'batchlist']);
-    route::get('getbatch/{id}',[batchcontroller::class,'getbatch']);
-    route::get('lotprint',[batchcontroller::class,'lotprint']);
-    route::get('getPrint/{id}',[batchcontroller::class,'getPrint']);
+    route::get('getbatch/{id}', [batchcontroller::class, 'getbatch']);
+    route::get('lotprint', [batchcontroller::class, 'lotprint']);
+    route::get('getPrint/{id}', [batchcontroller::class, 'getPrint']);
 
     //************************* */ stockdasbord ***********************
     route::get('stockdashboard1', [stockdashbordcontroller::class, 'stockdashboard1']);
@@ -232,7 +228,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('multiPrint', [seedcontroller::class, 'multiPrint'])->name('multiPrint');
     route::post('insertseeds', [seedcontroller::class, 'insertseeds']);
     route::get('seedslist', [seedcontroller::class, 'seedslist']);
-    route::get('search_seed',[seedcontroller::class,'searchseeds']);
+    route::get('search_seed', [seedcontroller::class, 'searchseeds']);
     // *************************** STOCK********************************
     route::get('stock1/{id?}', [stockcontroller::class, 'stock1']);
     route::post('insertstock', [stockcontroller::class, 'insertstock']);
@@ -254,13 +250,13 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('packets', [stockcontroller::class, 'packets']);
     route::post('insertstockpackets', [stockcontroller::class, 'insertstockpackets']);
     // route::get('clickstock', [stockcontroller::class, 'clickstock']);
-    route::get('getstock/{id}',[stockcontroller::class,'getstock']);
+    route::get('getstock/{id}', [stockcontroller::class, 'getstock']);
 
     // *****************************finalstock**************************************
     route::get('finalstock', [finalstock::class, 'finalstock']);
     route::get('batchsequence', [finalstock::class, 'batchsequence']);
     route::post('insertbatchsequence', [finalstock::class, 'insertbatchsequence']);
-    route::get('batchsequenceremove/{id}',[finalstock::class,'batchsequenceremove']);
+    route::get('batchsequenceremove/{id}', [finalstock::class, 'batchsequenceremove']);
 
     // ********************************setting***********************************************
     route::get('createsettinguser', [settingcontroller::class, 'createsettinguser']);
@@ -270,7 +266,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::post('insertlanguage', [settingcontroller::class, 'insertlanguage']);
     route::get('createsettingcompanies', [settingcontroller::class, 'createsettingcompanies']);
     route::post('insertcompany', [settingcontroller::class, 'insertcompany']);
-    route::get('getdis/{id}',[settingcontroller::class,'getdis']);
+    route::get('getdis/{id}', [settingcontroller::class, 'getdis']);
     route::get('settingcompanies', [settingcontroller::class, 'settingcompanies']);
     route::get('createsettingimage', [settingcontroller::class, 'createsettingimage']);
     route::get('settingbackgroundimage', [settingcontroller::class, 'settingbackgroundimage']);
@@ -295,7 +291,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('deletemachine/{id}', [machinecontroller::class, 'deletemachine']);
     // Route::get('changeStatus', [machinecontroller::class, 'changeStatus']);
     Route::get('/status/update',  [machinecontroller::class, 'updateStatus'])->name('users.update.status');
-    route::get('search_machine',[machinecontroller::class,'searchmachine']);
+    route::get('search_machine', [machinecontroller::class, 'searchmachine']);
     route::get('machine', [machinecontroller::class, 'machine']);
     route::get('machinemanagement1/{machine_type?}', [machinecontroller::class, 'machinemanagement1']);
     route::post('starttimermachine', [machinecontroller::class, 'startTimermachine'])->name('startTimermachine');
@@ -310,18 +306,18 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('recivelot', [chocolatecontroller::class, 'recivelot']);
     route::post('insertendgrowing', [chocolatecontroller::class, 'insertendgrowing']);
     route::get('lots', [chocolatecontroller::class, 'lots']);
-    route::get('searchchocolate',[chocolatecontroller::class,'searchchocolate']);
-    route::post('assignchocolate',[chocolatecontroller::class,'assignchocolate']);
-    route::post('chocolaterecive',[chocolatecontroller::class,'chocolaterecive'])->name('chocolaterecive');
+    route::get('searchchocolate', [chocolatecontroller::class, 'searchchocolate']);
+    route::post('assignchocolate', [chocolatecontroller::class, 'assignchocolate']);
+    route::post('chocolaterecive', [chocolatecontroller::class, 'chocolaterecive'])->name('chocolaterecive');
     route::post('insertimages', [chocolatecontroller::class, 'insertimages']);
     route::get('growingassign', [chocolatecontroller::class, 'growingassign']);
 
-   // ***************************************assignandrecieve*********************************************************
+    // ***************************************assignandrecieve*********************************************************
     route::get('receive', [AssignreceiveController::class, 'receive']);
     route::get('assign', [AssignreceiveController::class, 'assign']);
     route::get('assignreceive', [AssignreceiveController::class, 'assignreceive']);
-    route::post('receivechocolate',[AssignreceiveController::class,'receivechocolate']);
-    route::post('assigngrowing',[AssignreceiveController::class,'assigngrowing']);
+    route::post('receivechocolate', [AssignreceiveController::class, 'receivechocolate']);
+    route::post('assigngrowing', [AssignreceiveController::class, 'assigngrowing']);
 
     // **********************************Laser****************************************************************
     route::get('laser1', [LaserController::class, 'laser1']);
@@ -348,7 +344,5 @@ Route::group(['middleware'=>['auth','manager']],function()
 
 
     route::get('createlots', [batchcontroller::class, 'createlots']);
-    route::get('lot-search-date',[batchcontroller::class,'lotserchdate']);
-
-    
+    route::get('lot-search-date', [batchcontroller::class, 'lotserchdate']);
 });

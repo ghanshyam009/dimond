@@ -18,24 +18,25 @@
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="{{URL:: asset('admin/assets/i.imgur.com/QRAUqs9.png')}}">
-    <link rel="shortcut icon" href="{{URL:: asset('admin/assets/i.imgur.com/QRAUqs9.png')}}">
+    <link rel="apple-touch-icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
+    <link rel="shortcut icon" href="{{ URL::asset('admin/assets/i.imgur.com/QRAUqs9.png') }}">
 
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/normalize.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/themify-icons.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/pe-icon-7-stroke.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/cdn/flag-icon.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/cs-skin-elastic.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/lib/chosen/chosen.min.css')}}">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/lib/datatable/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/normalize.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/pe-icon-7-stroke.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/cdn/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/lib/chosen/chosen.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{URL:: asset('admin/assets/css/paginate.css')}}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/paginate.css') }}">
 </head>
 
 <body>
@@ -55,9 +56,10 @@
                     </div>
 
                     <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active gap-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle active gap-2" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-                            <span>{{Session::get('studname')}}
+                            <span>{{ Session::get('studname') }}
                             </span>
                         </a>
 
@@ -69,33 +71,38 @@
             </div>
         </header>
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-table-columns"></i></a> <a href="{{ url('chocolatedashboard') }}">Chocolate</a></strong>
+            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
+                        class="fa-solid fa-table-columns"></i></a> <a
+                    href="{{ url('chocolatedashboard') }}">Chocolate</a></strong>
 
-                @if(Auth::check())
-                    <ul class="stockul">
-                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager' || Auth::user()->role == 'laser user')
-                            <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('createchocolatedashboard')}}">CreateChocolate</a></li>
-                        @endif
-                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
-                            <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('lots')}}">EndGrowing</a></li>
-                        @endif
+            @if (Auth::check())
+                <ul class="stockul">
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager' || Auth::user()->role == 'laser user')
+                        <li class="stockli mt-2 d-block d-md-inline-block"><a
+                                href="{{ url('createchocolatedashboard') }}">CreateChocolate</a></li>
+                    @endif
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                        <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('lots') }}">EndGrowing</a>
+                        </li>
+                    @endif
 
-                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                    {{-- @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
                             <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#returnModal">AssignLot</a></li>
                         @endif
 
-                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                        @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
                             <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#receiveModal">ReciveLot</a></li>
-                        @endif
+                        @endif --}}
 
-                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
-                            <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('chocolateimage') }}">Images</a></li>
-                        @endif
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                        <li class="stockli mt-2 d-block d-md-inline-block"><a
+                                href="{{ url('chocolateimage') }}">Images</a></li>
+                    @endif
 
-                    </ul>
-                @endif
+                </ul>
+            @endif
 
-            <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel" aria-hidden="true">
+            {{-- <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -304,8 +311,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
+            </div> --}}
+            {{-- <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -496,7 +503,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="content" style="background-color: rgba(0,0,0,.03);">
             <div class="animated fadeIn">
@@ -539,80 +546,94 @@
                                         <h2>New</h2>
                                     </a>
                                 </div> --}}
-                                @if(Auth::check())
-                                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                                @if (Auth::check())
+                                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="card-body card-block">
-                                                    @if(Session::has('message'))
-                                                    <div class="alert alert-success">
-                                                        <i class="fa-lg fa fa-warning"></i>
-                                                        {!! session('message') !!}
-                                                    </div>
+                                                    @if (Session::has('message'))
+                                                        <div class="alert alert-success">
+                                                            <i class="fa-lg fa fa-warning"></i>
+                                                            {!! session('message') !!}
+                                                        </div>
                                                     @elseif(Session::has('error'))
-                                                    <div class="alert alert-danger">
-                                                        <i class="fa-lg fa fa-warning"></i>
-                                                        {!! session('error') !!}
-                                                    </div>
+                                                        <div class="alert alert-danger">
+                                                            <i class="fa-lg fa fa-warning"></i>
+                                                            {!! session('error') !!}
+                                                        </div>
                                                     @endif
-                                       <form action="{{ url('insertchocolatedashboard') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                                {{ csrf_field() }}
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Lot No : </label></div>
-                                                    <div class="col-12 col-md-9">
-                                                        
-                                                        <input type="no" id="email-input" name="mno" placeholder="lot No.." required class="form-control">
-                                                         {{-- <?php $lot=App\Models\LotMaster::get();?>
+                                                    <form action="{{ url('insertchocolatedashboard') }}"
+                                                        method="post" enctype="multipart/form-data"
+                                                        class="form-horizontal">
+                                                        {{ csrf_field() }}
+                                                        <div class="row form-group">
+                                                            <div class="col col-md-3"><label
+                                                                    class=" form-control-label">Lot No : </label></div>
+                                                            <div class="col-12 col-md-9">
+
+                                                                <input type="no" id="email-input" name="mno"
+                                                                    placeholder="lot No.." required
+                                                                    class="form-control">
+                                                                {{-- <?php $lot = App\Models\LotMaster::get(); ?>
                                                         <select class="custom-select d-block w-100" name="mno" required>
                                                             <option value="0">Please select Lotno</option>
-                                                            @foreach($lot as $lotans)
+                                                            @foreach ($lot as $lotans)
                                                             <option value="{{ $lotans->name }}">{{ $lotans->name }}</option>
                                                             @endforeach
                                                         </select> --}}
 
 
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label for="select" class=" form-control-label">Machine No :</label></div>
-                                                    <div class="col-12 col-md-9">
-                                                        <?php $machine=App\Models\machine::get();?>
-                                                        <select class="custom-select d-block w-100" name="machinename" required>
-                                                            <option value="0">Please select Machine</option>
-                                                            @foreach($machine as $ans)
-                                                            <option value="{{ $ans->mname }}">{{ $ans->mname }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group">
+                                                            <div class="col col-md-3"><label for="select"
+                                                                    class=" form-control-label">Machine No :</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <?php $machine = App\Models\machine::get(); ?>
+                                                                <select class="custom-select d-block w-100"
+                                                                    name="machinename" required>
+                                                                    <option value="0">Please select Machine
+                                                                    </option>
+                                                                    @foreach ($machine as $ans)
+                                                                        <option value="{{ $ans->mname }}">
+                                                                            {{ $ans->mname }}</option>
+                                                                    @endforeach
+                                                                </select>
 
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Start Date : </label></div>
-                                                    <div class="col-12 col-md-9">
-                                                        <input type="date" id="date" name="sdate" value={{$now }}   required class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Start time : </label></div>
-                                                    <div class="col-12 col-md-9">
-                                                        <input type="time"  value={{$date }}  name="stime"  required class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Chocolate Image1 : </label></div>
-                                                    <div class="col-12 col-md-9" style="display:flex;">
-                                                        <input type="file"  name="img" required  accept="image/*" webcam>
-                                                        <label class=" form-control-label pe-2">Chocolate Image2 :  </label>
-                                                        <input type="file"  required name="image" accept="image/*" webcam>
-                                                    </div>
-                                                </div>
-                                                     <button type="submit" class="btn btn-secondary btn-sm float-left"> Save </button>
-                                                     <template>
-                                                        <input type="date" v-model="dateString" />
-                                                        <input type="time" v-model="timeString" />
-                                                      </template>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group">
+                                                            <div class="col col-md-3"><label
+                                                                    class=" form-control-label">Start Date : </label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <input class="datetimepicker" type="datetime-local"
+                                                                    required name="stime"
+                                                                    value="{{ $now }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group">
+                                                            <div class="col col-md-3"><label
+                                                                    class=" form-control-label">Chocolate Image1 :
+                                                                </label></div>
+                                                            <div class="col-12 col-md-9" style="display:flex;">
+                                                                <input type="file" name="img" required
+                                                                    accept="image/*" webcam>
+                                                                <label class=" form-control-label pe-2">Chocolate
+                                                                    Image2 : </label>
+                                                                <input type="file" required name="image"
+                                                                    accept="image/*" webcam>
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit"
+                                                            class="btn btn-secondary btn-sm float-left"> Save </button>
+                                                        <template>
+                                                            <input type="date" v-model="dateString" />
+                                                            <input type="time" v-model="timeString" />
+                                                        </template>
 
-                                            </form>
+                                                    </form>
                                                 </div>
 
                                             </div>
@@ -621,16 +642,20 @@
                                 @endif
                                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Chocolate Lines</a>
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+                                            role="tab" aria-controls="home" aria-selected="true">Chocolate
+                                            Lines</a>
                                     </li>
 
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                        aria-labelledby="home-tab">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="card-body">
-                                                    <table id="bootstrap-data-table" class="table table-responsive-lg">
+                                                    <table id="bootstrap-data-table"
+                                                        class="table table-responsive-lg">
                                                         <thead>
                                                             <tr>
 
@@ -645,20 +670,21 @@
 
                                                             </tr>
                                                         </thead>
-                                                        {{-- <?php $data=App\Models\chocolate::get(); ?> --}}
-                                                         <tbody>
-                                                            @foreach($lot as $ans)
-
-                                                            <tr>
-                                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                                <td>{{ $ans->name }}</td>
-                                                                <td>{{ $ans->machineno }}</td>
-                                                                <td>{{ $ans->startdate }}</td>
-                                                                <td>{{ $ans->starttime }}</td>
-                                                                <td><img src="{{url('item_img')}}/{{$ans->img1}}" style="width: 70px; height: 70px;"></td>
-                                                                <td><img src="{{url('item_images')}}/{{$ans->img2}}" style="width: 70px; height: 70px;"></td>
-                                                                {{-- <td><img src="{{url('images3')}}/{{$ans->img3}}" style="width: 70px; height: 70px;"></td> --}}
-                                                            </tr>
+                                                        {{-- <?php $data = App\Models\chocolate::get(); ?> --}}
+                                                        <tbody>
+                                                            @foreach ($lot as $ans)
+                                                                <tr>
+                                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                                    <td>{{ $ans->name }}</td>
+                                                                    <td>{{ $ans->machineno }}</td>
+                                                                    <td>{{ $ans->startdate }}</td>
+                                                                    <td>{{ $ans->starttime }}</td>
+                                                                    <td><img src="{{ url('item_img') }}/{{ $ans->img1 }}"
+                                                                            style="width: 70px; height: 70px;"></td>
+                                                                    <td><img src="{{ url('item_images') }}/{{ $ans->img2 }}"
+                                                                            style="width: 70px; height: 70px;"></td>
+                                                                    {{-- <td><img src="{{url('images3')}}/{{$ans->img3}}" style="width: 70px; height: 70px;"></td> --}}
+                                                                </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -675,46 +701,51 @@
             </div>
         </div>
         <script setup>
-            import { computed, ref } from "vue";
+            import {
+                computed,
+                ref
+            } from "vue";
 
             function completeZero(value) {
-              return (value < 10 ? "0" : "") + value;
+                return (value < 10 ? "0" : "") + value;
             }
 
             const now = new Date();
 
             const dateString = ref(
-              `${now.getFullYear()}-${completeZero(now.getMonth() + 1)}-${completeZero(
+                `${now.getFullYear()}-${completeZero(now.getMonth() + 1)}-${completeZero(
                 now.getDate()
               )}`
             );
             const timeString = ref(
-              `${completeZero(now.getHours())}:${completeZero(now.getMinutes())}`
+                `${completeZero(now.getHours())}:${completeZero(now.getMinutes())}`
             );
 
             const date = computed(
-              () => new Date(`${dateString.value} ${timeString.value}`)
+                () => new Date(`${dateString.value} ${timeString.value}`)
             );
-            </script>
+        </script>
 
 
-        <script src="{{URL:: asset('admin/assets/cdn/js/jquery.min.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/popper.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/bootstrap.min.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/matchHeight.min.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/datatables.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/jszip.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/vfs_fonts.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.html5.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/init/datatables-init.js')}}"></script>
-        <script src="{{URL:: asset('admin/assets/js/main.js')}} "></script>
-        <script src="{{URL:: asset('admin/assets/cdn/js/chosen.jquery.min.js')}} "></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/jquery.min.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/popper.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/bootstrap.min.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/matchHeight.min.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/datatables.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/jszip.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/init/datatables-init.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/main.js') }} "></script>
+        <script src="{{ URL::asset('admin/assets/cdn/js/chosen.jquery.min.js') }} "></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+        </script>
         <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script>
             jQuery(document).ready(function() {
@@ -730,7 +761,7 @@
                 $('#bootstrap-data-table-export').DataTable();
             });
         </script>
-           <script>
+        {{-- <script>
             function ApplyFilter(search) {
                 var batch_id = $('#batch_id').val();
                 if (batch_id != null && batch_id != "") {
@@ -767,7 +798,7 @@
                                     if (!found) {
                                         var table = document.getElementById('dataTable');
                                         var rowCount = table.rows.length - 1;
-                                        if(rowCount == 0){
+                                        if (rowCount == 0) {
                                             var row = table.insertRow(-1);
                                             row.className = "hide";
 
@@ -842,17 +873,17 @@
                                             element7.className = "weight";
                                             element7.name = "weight[]";
                                             cell7.appendChild(element7);
-                                        }else{
-                                            rowCount=rowCount-1;
-                                            $("#name_"+rowCount).val(e.name);
-                                            $("#uid_"+rowCount).val(e.id);
-                                            $("#id_"+rowCount).val(e.id);
+                                        } else {
+                                            rowCount = rowCount - 1;
+                                            $("#name_" + rowCount).val(e.name);
+                                            $("#uid_" + rowCount).val(e.id);
+                                            $("#id_" + rowCount).val(e.id);
 
-                                            $("#height_"+rowCount).val(e.height);
-                                            $("#length_"+rowCount).val(e.length);
-                                            $("#width_"+rowCount).val(e.width);
-                                            $("#shape_"+rowCount).val(e.shape);
-                                            $("#weight_"+rowCount).val(e.weight);
+                                            $("#height_" + rowCount).val(e.height);
+                                            $("#length_" + rowCount).val(e.length);
+                                            $("#width_" + rowCount).val(e.width);
+                                            $("#shape_" + rowCount).val(e.shape);
+                                            $("#weight_" + rowCount).val(e.weight);
                                         }
                                         //***********************************************
                                         //add new row blanck
@@ -937,12 +968,12 @@
                                         element7.name = "weight[]";
                                         cell7.appendChild(element7);
 
-                                        $("#name_"+rowCount).focus();
+                                        $("#name_" + rowCount).focus();
                                     } else {
                                         alert('not valid');
                                     }
                                 });
-                            }else{
+                            } else {
                                 alert('please select valid batch');
                             }
                         }
@@ -964,23 +995,23 @@
                 $('#addpacketsModal').modal('show');
                 var table = document.getElementById('dataTable');
                 var rowCount = table.rows.length - 1;
-                if(rowCount > 1){
+                if (rowCount > 1) {
                     $("#dataTable .hide").remove();
                     addDefaultRow();
                 }
-                    $("#name_0").val('');
-                    $("#id_0").val('');
-                    $("#height_0").val('');
-                    $("#length_0").val('');
-                    $("#width_0").val('');
-                    $("#shape_0").val('');
-                    $("#weight_0").val('');
-                    $("#batch_id").val(0);
+                $("#name_0").val('');
+                $("#id_0").val('');
+                $("#height_0").val('');
+                $("#length_0").val('');
+                $("#width_0").val('');
+                $("#shape_0").val('');
+                $("#weight_0").val('');
+                $("#batch_id").val(0);
             });
             $("#batch_id").change(function() {
                 var table = document.getElementById('dataTable');
                 var rowCount = table.rows.length - 1;
-                if(rowCount > 1){
+                if (rowCount > 1) {
                     $("#dataTable .hide").remove();
                     addDefaultRow();
                 }
@@ -989,7 +1020,8 @@
                     $("#name_0").focus();
                 }
             });
-            function addDefaultRow(){
+
+            function addDefaultRow() {
                 var table = document.getElementById('dataTable');
                 var rowCount = table.rows.length - 1;
                 var row = table.insertRow(-1);
@@ -1058,15 +1090,16 @@
                 element7.name = "weight[]";
                 cell7.appendChild(element7);
             }
-            @if(isset($id))
-                var url_p = '{{ route("createlotprint", ":id") }}';
-                var id_p="{{ $id }}";
+            @if (isset($id))
+                var url_p = '{{ route('createlotprint', ':id') }}';
+                var id_p = "{{ $id }}";
                 url_p = url_p.replace(':id', id_p);
                 window.open(url_p, "_blank");
 
-                var url_r = '{{ route("batch-module") }}';
-                window.location.href=url_r;
+                var url_r = '{{ route('batch-module') }}';
+                window.location.href = url_r;
             @endif
-        </script>
+        </script> --}}
 </body>
+
 </html>
