@@ -77,14 +77,14 @@
                 <li class="stockli mt-2 d-block d-md-inline-block"><a
                         href="{{ url('createchocolatedashboard') }}">CreateChocolate</a></li>
                 <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('lots') }}">EndGrowing</a></li>
-                <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
+                {{-- <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
                         data-bs-target="#returnModal">AssignLot</a></li>
                 <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
-                        data-bs-target="#receiveModal">ReciveLot</a></li>
+                        data-bs-target="#receiveModal">ReciveLot</a></li> --}}
                 <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('chocolateimage') }}">Images</a>
                 </li>
             </ul>
-            <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel"
+            {{-- <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -374,8 +374,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel"
+            </div> --}}
+            {{-- <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -636,7 +636,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="content" style="background-color: rgba(0,0,0,.03);">
             <div class="animated fadeIn">
@@ -847,7 +847,7 @@
                 $('#bootstrap-data-table-export').DataTable();
             });
         </script>
-        <script>
+        {{-- <script>
             function ApplyFilter(search) {
                 var batch_id = $('#batch_id').val();
                 if (batch_id != null && batch_id != "") {
@@ -1193,7 +1193,7 @@
                 var url_r = '{{ route('batch-module') }}';
                 window.location.href = url_r;
             @endif
-        </script>
+        </script> --}}
 </body>
 
 </html>

@@ -98,12 +98,12 @@
                         </li>
                     @endif
                     {{-- @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager') --}}
-                    <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
-                            data-bs-target="#returnModal">AssignLot</a></li>
+                    {{-- <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
+                            data-bs-target="#returnModal">AssignLot</a></li> --}}
                     {{-- @endif --}}
                     {{-- @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager') --}}
-                    <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
-                            data-bs-target="#receiveModal">ReciveLot</a></li>
+                    {{-- <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
+                            data-bs-target="#receiveModal">ReciveLot</a></li> --}}
                     {{-- @endif --}}
                     @if (Auth::user()->role == 'admin' ||
                             Auth::user()->role == 'manager' ||
@@ -114,7 +114,7 @@
                     @endif
                 @endif
             </ul>
-            <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel"
+            {{-- <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="col-lg-1">
                                         {{-- <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#largeModal">Recive</button> --}}
+                                            data-target="#largeModal">Recive</button> 
                                         <button type="button" id="closerecive"
                                             class="btn btn-secondary ">Recive</button>
                                     </div>
@@ -235,7 +235,7 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                        </div> --}}
+                                                        </div> 
 
 
                                                         <div id="return" class="row form-group">
@@ -248,7 +248,7 @@
                                                                                 <input type="radio" id="inline-radio1"
                                                                                     name="0" value="0"
                                                                                     class="form-check-input" checked>Stock
-                                                                            </label> --}}
+                                                                            </label> 
                                                                     <label for="inline-radio1"
                                                                         class="form-check-label ">
                                                                         <input required type="radio"
@@ -426,9 +426,9 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="modal fade" id="returnModal" aria-labelledby="returnModalLabel" aria-hidden="true"
+            {{-- <div class="modal fade" id="returnModal" aria-labelledby="returnModalLabel" aria-hidden="true"
                 role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -535,7 +535,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            </div> --}}
+                                            </div> 
                                             <div style="display:none"; id="employee" class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label class=" form-control-label">Employee : </label>
@@ -703,7 +703,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="content">
             <div class="animated fadeIn">
@@ -758,14 +758,56 @@
                                 <div class="card">
                                     <div class="row">
                                         @foreach ($lotmoves as $lotmove)
+                                            <?php $machine = App\Models\machine::where('lotno', $lotmove->lot_id)->first(); ?>
                                             <div class="col-lg-4 col-md-6 col-xl-3">
                                                 <div class="card">
                                                     <div class="card-body card-block">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="fw-bold">New</div>
+                                                            @if ($machine == '')
+                                                                <div>00:00:00</div>
+                                                            @elseif (isset($machine->stop_timer) && !empty($machine->stop_timer))
+                                                                <?php
+                                                                $start_time = date_create($machine->timer);
+                                                                $end_time = date_create($machine->stop_timer);
+                                                                $diff = date_diff($start_time, $end_time);
+                                                                $diff_time = $diff->format('%a');
+                                                                $start_time = date('H:i:s', strtotime($machine->timer));
+                                                                $end_time = date('H:i:s', strtotime($machine->stop_timer));
+                                                                $arr1 = explode(':', $start_time);
+                                                                $arr2 = explode(':', $end_time);
+                                                                $h = 0;
+                                                                $h = isset($arr1, $arr2) ? $arr1[0] - $arr2[0] : 00;
+                                                                $m = isset($arr1, $arr2) ? $arr1[1] - $arr2[1] : 00;
+                                                                $s = isset($arr1, $arr2) ? $arr1[2] - $arr2[2] : 00;
+                                                                if ($diff_time != 0) {
+                                                                    $h = $diff_time * 24;
+                                                                }
+                                                                ?>
+                                                                <div class="fw-bold">
+                                                                    <span
+                                                                        class="hours">{{ abs($h) < 10 ? '0' . abs($h) : abs($h) }}</span>:<span
+                                                                        class="minutes">{{ abs($m) < 10 ? '0' . abs($m) : abs($m) }}</span>:<span
+                                                                        class="seconds ms-0">{{ abs($s) < 10 ? '0' . abs($s) : abs($s) }}</span>
+                                                                </div>
+                                                            @elseif(isset($machine->timer) && !empty($machine->timer))
+                                                                <div class="timer stoptime text-success fw-bold"
+                                                                    data-date="{{ $machine->timer }}"
+                                                                    stop-date="{{ $machine->stop_timer }}">
+                                                                    <input type="hidden" id="stoptime"
+                                                                        value="{{ $machine->stop_timer }}">
+                                                                    <span class="hours"></span>:<span
+                                                                        class="minutes"></span>:<span
+                                                                        class="seconds"></span>
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
                                                         <div class="row form-group1">
                                                             <div class="col-12 col-md-4">
                                                                 <label for="hf-email"
                                                                     class=" form-control-label font_size">Batch:
-                                                                    {{ $lotmove->name }}
+                                                                    {{ $lotmove->batch_name }}
                                                                 </label>
                                                             </div>
                                                             <div class="col-12 col-md-8">
@@ -802,26 +844,70 @@
                                                             <div class="col-12 col-md-4">
                                                                 <label for="hf-email"
                                                                     class=" form-control-label font_size">
-                                                                    <?php $lotmasters = App\Models\LotMaster::get(); ?>
-                                                                    @foreach ($lotmasters as $lotmaster)
-                                                                        @if ($lotmaster->name == $lotmove->name)
-                                                                            {{ $lotmaster->name }}
-                                                                            LOT-{{ $lotmaster->id }}
-                                                                        @endif
-                                                                    @endforeach
-                                                                    {{-- L-{{ $ans->id }} --}}
+
+                                                                    {{ $lotmove->lot_name }}
+                                                                    LOT-{{ $lotmove->lot_id }}
                                                                 </label>
                                                             </div>
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg. L x W:
                                                                     {{ $lotmove->length1 / $lotmove->pcs }} x
-                                                                    {{ $lotmove->width1 / $lotmove->pcs }}
+                                                                    {{ $lotmove->width / $lotmove->pcs }}
                                                                 </label></div>
                                                         </div>
-
-                                                        <button type="button"
-                                                            class="btn btn-danger btn-sm float-right mt-2"
-                                                            style="font-size: 12px; padding: 3px 6px;">B</button>
+                                                        @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager' || Auth::user()->role == 'growing user')
+                                                            <div class="row form-group1">
+                                                                <div class="col-11">
+                                                                    <div class="row">
+                                                                        @if ($machine == '')
+                                                                            <div class="col-12 text-right mt-2">
+                                                                                <small>Draft</small>
+                                                                            </div>
+                                                                        @elseif ($machine->timer != null && $machine->stop_timer != null)
+                                                                            <div class="col-6">
+                                                                                <button
+                                                                                    id="stop_{{ $lotmove->lot_id }}"
+                                                                                    class="stop_button btn btn-secondary btn-sm float-left w-auto mt-2"
+                                                                                    onclick="endProcess({{ $lotmove->lot_id }}); stop({{ $lotmove->lot_id }})"
+                                                                                    style="font-size: 12px; padding: 3px;"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#addpacketsModal1">End
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="col-6 text-right mt-2">
+                                                                                <small>Growing Done</small>
+                                                                            </div>
+                                                                        @elseif ($machine->timer != null && $machine->stop_timer == null)
+                                                                            <div class="col-6">
+                                                                                <div>
+                                                                                    <button
+                                                                                        id="stop_{{ $lotmove->lot_id }}"
+                                                                                        class="stop_button btn btn-secondary btn-sm float-left mt-2"
+                                                                                        onclick="stop({{ $lotmove->lot_id }})"
+                                                                                        style="font-size: 12px; padding: 3px;"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#addpacketsModal">Growing
+                                                                                        Done</button>
+                                                                                    <input type="hidden"
+                                                                                        value="{{ $lotmove->lot_id }}"
+                                                                                        id="stopgrowing">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-6 text-right mt-2">
+                                                                                <small
+                                                                                    class="bg-info py-1 px-2 rounded-pill text-white w-auto">In
+                                                                                    Progress</small>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <button type="button"
+                                                                        class="btn btn-danger btn-sm float-right mt-2"
+                                                                        style="font-size: 12px; padding: 3px 6px;">B</button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -841,8 +927,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url('insertseeds') }}" method="post"
-                                        enctype="multipart/form-data" target="_blank">
+                                    <form enctype="multipart/form-data" target="_blank">
                                         {{ csrf_field() }}
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -889,17 +974,18 @@
                                                         <div class="col col-md-2"><label for="select"
                                                                 class=" form-control-label">Growing Time</label></div>
                                                         <div class="col-12 col-md-10">
-                                                            <input type="time" id="growing_time"
-                                                                name="growing_time" class="d-block w-100">
+                                                            <input type="datetime-local" value="{{ $now }}"
+                                                                id="growing_time" name="growing_time"
+                                                                class="datetimepicker d-block w-100">
                                                             <p id="growing_time_error"></p>
                                                         </div>
                                                     </div>
                                                     <div class="row form-group">
                                                         <div class="col col-md-2"><label for="select"
-                                                                class=" form-control-label">Image</label></div>
+                                                                class="form-control-label">Image</label></div>
                                                         <div class="col-12 col-md-10">
-                                                            <input type="file" id="file" name="file"
-                                                                class="d-block w-100">
+                                                            <input type="file" id="image" name="image"
+                                                                accept="image/*" webcam class="d-block w-100">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -927,15 +1013,14 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url('insertseeds') }}" method="post"
-                                        enctype="multipart/form-data" target="_blank">
+                                    <form enctype="multipart/form-data" target="_blank">
                                         {{ csrf_field() }}
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="card-body card-block">
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class=" form-control-label">Final
+                                                            <label for="select" class="form-control-label">Final
                                                                 Weight (Ct)</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
@@ -979,10 +1064,10 @@
                                                                 Images </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
-                                                            <input type="file" name="finish_type"
-                                                                id="finish_type" /><br><br>
-                                                            <input type="file" name="finish_type"
-                                                                id="finish_type" />
+                                                            <input type="file" name="finish_type_1"
+                                                                id="finish_type_1" /><br><br>
+                                                            <input type="file" name="finish_type_2"
+                                                                id="finish_type_2" />
                                                         </div>
 
                                                         <div class="col-6 col-md-2">
@@ -994,12 +1079,13 @@
                                                                 id="growing_time" />
                                                         </div>
                                                     </div>
-
+                                                    <input type="hidden" name="lotid" id="lotid"
+                                                        value="{{ $lotmove->lot_id }}">
                                                     <div class="row form-group">
                                                         <div class="col col-md-2"><label for="select"
                                                                 class=" form-control-label">Note</label></div>
                                                         <div class="col-12 col-md-10">
-                                                            <textarea></textarea>
+                                                            <textarea id="note" name="note"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -1222,6 +1308,53 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script>
+            document.addEventListener('readystatechange', event => {
+                if (event.target.readyState === "complete") {
+                    var clockdiv = document.getElementsByClassName("timer");
+                    var countDownDate = new Array();
+                    for (var i = 0; i < clockdiv.length; i++) {
+                        countDownDate[i] = new Array();
+                        countDownDate[i]['el'] = clockdiv[i];
+                        countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
+                        countDownDate[i]['hours'] = 0;
+                        countDownDate[i]['seconds'] = 0;
+                        countDownDate[i]['minutes'] = 0;
+                    }
+                    var countdownfunction = setInterval(function() {
+                            for (var i = 0; i < countDownDate.length; i++) {
+                                var now = new Date().getTime();
+                                var distance = now - countDownDate[i]['time'];
+
+                                countDownDate[i]['hours'] = Math.floor((distance / (1000 * 60 * 60 * 24)) * 24);
+
+                                countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 *
+                                    60));
+                                countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                if (distance < 0) {
+                                    countDownDate[i]['el'].querySelector('.hours').innerHTML = 00;
+                                    countDownDate[i]['el'].querySelector('.minutes').innerHTML = 00;
+                                    countDownDate[i]['el'].querySelector('.seconds').innerHTML = 00;
+                                } else {
+                                    var hour = countDownDate[i]['el'].querySelector('.hours').innerHTML =
+                                        countDownDate[i]['hours'] < 10 ? "0" + countDownDate[i]['hours'] :
+                                        countDownDate[i]['hours'];
+                                    var minute = countDownDate[i]['el'].querySelector('.minutes').innerHTML =
+                                        countDownDate[i]['minutes'] < 10 ? "0" + countDownDate[i]['minutes'] :
+                                        countDownDate[i]['minutes'];
+                                    var second = countDownDate[i]['el'].querySelector('.seconds').innerHTML =
+                                        countDownDate[i]['seconds'] < 10 ? "0" + countDownDate[i]['seconds'] :
+                                        countDownDate[i]['seconds'];
+                                }
+                            }
+                        },
+                        1000);
+                }
+            });
+        </script>
+
+
+        <script>
             var timeArray = [];
             var countChocolateline = 0;
 
@@ -1300,10 +1433,13 @@
 
             function stop(id) {
 
-                window.clearInterval(timeArray[id]['timeoutId']);
-                timeArray[id]['check'] = "stop";
+                // window.clearInterval(timeArray[id]['timeoutId']);
+                // timeArray[id]['check'] = "stop";
 
-                var packet_id = $('#packet_id_' + id).val();
+                // var packet_id = $('#packet_id_' + id).val();
+                var packet_id = $('#stopgrowing').val();
+                // console.log(packet_id);
+
                 $('#hidden_packet_id').val(packet_id);
                 // $.ajaxSetup({
                 //     headers: {
@@ -1484,279 +1620,280 @@
                     });
                 }
             }
-            $('#returnModal').on('hidden.bs.modal', function(e) {
-                $('#experienceSection').html('');
-                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">Name</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>`);
-                $('#experienceSection').append(section);
-            });
-            $(document).ready(function() {
-                $("#locations").change(function() {
+            // $('#returnModal').on('hidden.bs.modal', function(e) {
+            //     $('#experienceSection').html('');
+            //     var section = $(`<tr>
+    //                         <td style="vertical-align: middle;text-align:left">Name</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                     </tr>`);
+            //     $('#experienceSection').append(section);
+            // });
+            // $(document).ready(function() {
+            //     $("#locations").change(function() {
 
-                    var dropdownval = $("#locations").val();
-                    switch (dropdownval) {
-                        case '1':
-                            $("#employee").show();
-                            $("#process").show();
-                            $("#choco").hide();
-                            break;
-                        case '2':
-                            $("#employee").show();
-                            $("#choco").show();
-                            $("#process").hide();
-                            break;
-                        case '3':
-                            $("#employee").hide();
-                            $("#choco").hide();
-                            $("#process").hide();
-                            break;
-                        case '4':
-                            $("#employee").show();
-                            $("#choco").hide();
-                            $("#process").hide();
-                            break;
-                        case '5':
-                            $("#employee").show();
-                            $("#choco").hide();
-                            $("#process").hide();
-                            break;
-                        case '6':
-                            $("#employee").hide();
-                            $("#choco").hide();
-                            $("#process").hide();
-                            break;
-                        default:
-                            $("#location").show();
-                            $("#choco").hide();
-                            $("#process").hide();
-                            $("#employee").hide();
-                            break;
-                    }
-                });
-            });
-            $(document).ready(function() {
-                $("#recevie").change(function() {
-                    var test = $("#recevie").val();
-                    switch (test) {
-                        case '1':
-                            $("#chocolate").show();
-                            $("#loste").show();
-                            $("#notes").hide();
-                            $("#notese").hide();
-                            $("#return").show();
-                            $("#print").hide();
-                            $("#weightloss").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").show();
+            //         var dropdownval = $("#locations").val();
+            //         switch (dropdownval) {
+            //             case '1':
+            //                 $("#employee").show();
+            //                 $("#process").show();
+            //                 $("#choco").hide();
+            //                 break;
+            //             case '2':
+            //                 $("#employee").show();
+            //                 $("#choco").show();
+            //                 $("#process").hide();
+            //                 break;
+            //             case '3':
+            //                 $("#employee").hide();
+            //                 $("#choco").hide();
+            //                 $("#process").hide();
+            //                 break;
+            //             case '4':
+            //                 $("#employee").show();
+            //                 $("#choco").hide();
+            //                 $("#process").hide();
+            //                 break;
+            //             case '5':
+            //                 $("#employee").show();
+            //                 $("#choco").hide();
+            //                 $("#process").hide();
+            //                 break;
+            //             case '6':
+            //                 $("#employee").hide();
+            //                 $("#choco").hide();
+            //                 $("#process").hide();
+            //                 break;
+            //             default:
+            //                 $("#location").show();
+            //                 $("#choco").hide();
+            //                 $("#process").hide();
+            //                 $("#employee").hide();
+            //                 break;
+            //         }
+            //     });
+            // });
+            // $(document).ready(function() {
+            //     $("#recevie").change(function() {
+            //         var test = $("#recevie").val();
+            //         switch (test) {
+            //             case '1':
+            //                 $("#chocolate").show();
+            //                 $("#loste").show();
+            //                 $("#notes").hide();
+            //                 $("#notese").hide();
+            //                 $("#return").show();
+            //                 $("#print").hide();
+            //                 $("#weightloss").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").show();
 
-                            break;
-                        case '2':
-                            $("#notes").show();
-                            $("#notese").show();
-                            $("#recevie").show();
-                            $("#return").show();
-                            $("#print").show();
-                            $("#weightloss").show();
-                            $("#chocolate").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").show();
-                            $("#loste").hide();
-                            break;
-                        case '3':
-                            $("#recevie").show();
-                            $("#return").show();
-                            $("#print").hide();
-                            $("#weightloss").hide();
-                            $("#chocolate").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").hide();
-                            $("#loste").show();
-                            $("#notes").hide();
-                            $("#notese").hide();
+            //                 break;
+            //             case '2':
+            //                 $("#notes").show();
+            //                 $("#notese").show();
+            //                 $("#recevie").show();
+            //                 $("#return").show();
+            //                 $("#print").show();
+            //                 $("#weightloss").show();
+            //                 $("#chocolate").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").show();
+            //                 $("#loste").hide();
+            //                 break;
+            //             case '3':
+            //                 $("#recevie").show();
+            //                 $("#return").show();
+            //                 $("#print").hide();
+            //                 $("#weightloss").hide();
+            //                 $("#chocolate").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").hide();
+            //                 $("#loste").show();
+            //                 $("#notes").hide();
+            //                 $("#notese").hide();
 
-                            break;
-                        case '4':
-                            $("#recevie").show();
-                            $("#return").show();
-                            $("#print").hide();
-                            $("#weightloss").hide();
-                            $("#chocolate").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").show();
-                            $("#chocolate").hide();
-                            $("#notes").hide();
-                            $("#notese").hide();
+            //                 break;
+            //             case '4':
+            //                 $("#recevie").show();
+            //                 $("#return").show();
+            //                 $("#print").hide();
+            //                 $("#weightloss").hide();
+            //                 $("#chocolate").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").show();
+            //                 $("#chocolate").hide();
+            //                 $("#notes").hide();
+            //                 $("#notese").hide();
 
-                            break;
-                        case '5':
-                            $("#recevie").show();
-                            $("#return").show();
-                            $("#print").hide();
-                            $("#weightloss").hide();
-                            $("#chocolate").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").show();
-                            $("#chocolate").hide();
-                            $("#notes").hide();
-                            $("#notese").hide();
+            //                 break;
+            //             case '5':
+            //                 $("#recevie").show();
+            //                 $("#return").show();
+            //                 $("#print").hide();
+            //                 $("#weightloss").hide();
+            //                 $("#chocolate").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").show();
+            //                 $("#chocolate").hide();
+            //                 $("#notes").hide();
+            //                 $("#notese").hide();
 
-                            break;
-                        case '6':
-                            $("#recevie").show();
-                            $("#return").show();
-                            $("#print").hide();
-                            $("#weightloss").hide();
-                            $("#chocolate").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").hide();
-                            $("#chocolate").hide();
+            //                 break;
+            //             case '6':
+            //                 $("#recevie").show();
+            //                 $("#return").show();
+            //                 $("#print").hide();
+            //                 $("#weightloss").hide();
+            //                 $("#chocolate").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").hide();
+            //                 $("#chocolate").hide();
 
-                            break;
-                        default:
-                            $("#recevie").show();
-                            $("#return").show();
-                            $("#print").show();
-                            $("#weightloss").show();
-                            $("#chocolate").hide();
-                            $("#process").hide();
-                            $("#receiveemployee").hide();
-                            $("#chocolate").hide();
-                            break;
-                    }
-                });
-            });
-            $('body').on('change', '.rec', function(e) {
-                e.preventDefault();
-                ApplyFilterRecevie(this.value);
-                $('.reciveall').val(this.value);
-                $(this).val('');
-            });
+            //                 break;
+            //             default:
+            //                 $("#recevie").show();
+            //                 $("#return").show();
+            //                 $("#print").show();
+            //                 $("#weightloss").show();
+            //                 $("#chocolate").hide();
+            //                 $("#process").hide();
+            //                 $("#receiveemployee").hide();
+            //                 $("#chocolate").hide();
+            //                 break;
+            //         }
+            //     });
+            // });
+            // $('body').on('change', '.rec', function(e) {
+            //     e.preventDefault();
+            //     ApplyFilterRecevie(this.value);
+            //     $('.reciveall').val(this.value);
+            //     $(this).val('');
+            // });
 
-            function ApplyFilterRecevie(search) {
-                if (search != null && search != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    var formData = new FormData();
-                    formData.append("search", search);
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ route('recevieLot') }}",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $('#smartSection').html('');
-                            $.each(res.lot_detail, function(i, val) {
-                                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">${res.name}</td>
-                                    <td>${val.height}</td>
-                                    <td>${val.length}</td>
-                                    <td>${val.width}</td>
-                                    <td>${val.pcs}</td>
-                                    <td>${val.weight}</td>
-                                </tr>`);
-                                $('#smartSection').append(section);
-                            });
-                        }
-                    });
-                }
-            }
-            $('#receiveModal').on('hidden.bs.modal', function(e) {
-                $('#smartSection').html('');
-                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">Name</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>`);
-                $('#smartSection').append(section);
-            });
-            $('#AssignLot').click(function(e) {
-                e.preventDefault();
-                var url = $(this).attr('data-url');
-                var id = $(this).attr('id');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('recevieLot') }}",
-                    data: {
-                        id: id
-                    },
-                    cache: false,
-                    success: function(data) {}
-                });
-                return false;
-            });
-            $('#close').click(function(e) {
-                e.preventDefault();
-                var formData = new FormData(document.getElementById("assignchocolateall"));
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    },
-                    type: "POST",
-                    url: "{{ url('assignchocolate') }}",
-                    data: formData,
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        $('#returnModal').modal('hide');
-                        location.reload();
-                    },
-                    error: function(response) {
-                        console.log(response);
-                        $.each(response.responseJSON.errors, function() {
-                            swal('Record does not exist or is not accessible.');
-                        })
-                    }
-                });
-            });
-            $('#closerecive').click(function(e) {
-                e.preventDefault();
-                var formData = new FormData(document.getElementById("recivechocolateall"));
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    },
-                    type: "POST",
-                    url: "{{ url('chocolaterecive') }}",
-                    data: formData,
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        $('#receiveModal').modal('hide');
-                        location.reload();
-                    },
-                    error: function(response) {
-                        $.each(response.responseJSON.errors, function() {
-                            swal('Record does not exist or is not accessible.');
-                        })
-                    }
-                });
-            });
+            // function ApplyFilterRecevie(search) {
+            //     if (search != null && search != "") {
+            //         $.ajaxSetup({
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             }
+            //         });
+            //         var formData = new FormData();
+            //         formData.append("search", search);
+            //         $.ajax({
+            //             headers: {
+            //                 'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            //             },
+            //             type: "POST",
+            //             url: "{{ route('recevieLot') }}",
+            //             data: formData,
+            //             processData: false,
+            //             contentType: false,
+            //             success: function(res) {
+            //                 $('#smartSection').html('');
+            //                 $.each(res.lot_detail, function(i, val) {
+            //                     var section = $(`<tr>
+    //                         <td style="vertical-align: middle;text-align:left">${res.name}</td>
+    //                         <td>${val.height}</td>
+    //                         <td>${val.length}</td>
+    //                         <td>${val.width}</td>
+    //                         <td>${val.pcs}</td>
+    //                         <td>${val.weight}</td>
+    //                     </tr>`);
+            //                     $('#smartSection').append(section);
+            //                 });
+            //             }
+            //         });
+            //     }
+            // }
+            // $('#receiveModal').on('hidden.bs.modal', function(e) {
+            //     $('#smartSection').html('');
+            //     var section = $(`<tr>
+    //                         <td style="vertical-align: middle;text-align:left">Name</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                         <td>0</td>
+    //                     </tr>`);
+            //     $('#smartSection').append(section);
+            // });
+            // $('#AssignLot').click(function(e) {
+            //     e.preventDefault();
+            //     var url = $(this).attr('data-url');
+            //     var id = $(this).attr('id');
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ route('recevieLot') }}",
+            //         data: {
+            //             id: id
+            //         },
+            //         cache: false,
+            //         success: function(data) {}
+            //     });
+            //     return false;
+            // });
+            // $('#close').click(function(e) {
+            //     e.preventDefault();
+            //     var formData = new FormData(document.getElementById("assignchocolateall"));
+            //     $.ajax({
+            //         headers: {
+            //             'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            //         },
+            //         type: "POST",
+            //         url: "{{ url('assignchocolate') }}",
+            //         data: formData,
+            //         cache: false,
+            //         processData: false,
+            //         contentType: false,
+            //         success: function(response) {
+            //             $('#returnModal').modal('hide');
+            //             location.reload();
+            //         },
+            //         error: function(response) {
+            //             console.log(response);
+            //             $.each(response.responseJSON.errors, function() {
+            //                 swal('Record does not exist or is not accessible.');
+            //             })
+            //         }
+            //     });
+            // });
+            // $('#closerecive').click(function(e) {
+            //     e.preventDefault();
+            //     var formData = new FormData(document.getElementById("recivechocolateall"));
+            //     $.ajax({
+            //         headers: {
+            //             'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            //         },
+            //         type: "POST",
+            //         url: "{{ url('chocolaterecive') }}",
+            //         data: formData,
+            //         cache: false,
+            //         processData: false,
+            //         contentType: false,
+            //         success: function(response) {
+            //             $('#receiveModal').modal('hide');
+            //             location.reload();
+            //         },
+            //         error: function(response) {
+            //             $.each(response.responseJSON.errors, function() {
+            //                 swal('Record does not exist or is not accessible.');
+            //             })
+            //         }
+            //     });
+            // });
         </script>
         <script>
             function growing_done() {
                 var hidden_packet_id = $('#hidden_packet_id').val();
                 var processresons_id = $('#processresons_id').val();
                 var user_id = $('#user_id').val();
+                var fileData  = $('#image').prop('files')[0];
                 var growing_time = $('#growing_time').val();
-                var file = $('#file').val();
+                // var file = $('#image').val();
                 if (processresons_id == "0" && user_id == "0" && growing_time == "") {
                     document.getElementById("processresons_id_error").innerHTML = "Please Select Process & Reason";
                     document.getElementById("growing_time_error").innerHTML = "Growing Time is Required";
@@ -1797,6 +1934,9 @@
                 formData.append("processresons_id", processresons_id);
                 formData.append("user_id", user_id);
                 formData.append("growing_time", growing_time);
+                formData.append("fileData", fileData);
+                // formData.append("image", file);
+                // $('#image').val($(this).data('image'));
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -1806,6 +1946,7 @@
                     data: formData,
                     processData: false,
                     contentType: false,
+                    // contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
                     success: function() {
                         location.reload();
                     }
@@ -1815,10 +1956,17 @@
             function chocolateConfirm() {
                 const heightArray = [];
                 const lot_ids = [];
+                var final_weight_ct = $('#final_weight_ct').val();
+                var finish_type = $('#finish_type').val();
+                var growing_time = $('#growing_time').val();
+                var lotid = $('#lotid').val();
+                var note = $('#note').val();
+
                 countChocolateline = $('#countChocolateline').val();
                 while (countChocolateline != 0) {
                     let ids = "#" + countChocolateline;
                     let lotids = "#hidden_lot_id_" + countChocolateline;
+
                     grow_height = $(ids).val();
                     lot_ids_val = $(lotids).val();
                     heightArray.push(grow_height);
@@ -1831,8 +1979,13 @@
                     }
                 });
                 var formData = new FormData();
+                // console.log(heightArray);
                 formData.append("heightArray", heightArray);
-                formData.append("lot_ids", lot_ids);
+                formData.append("lotid", lotid);
+                formData.append("final_weight_ct", final_weight_ct);
+                formData.append("finish_type", finish_type);
+                formData.append("growing_time", growing_time);
+                formData.append("note", note);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
