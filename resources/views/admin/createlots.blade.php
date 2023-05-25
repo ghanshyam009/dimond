@@ -98,17 +98,14 @@
                             <form action="{{ route('savelot') }}" method="post" id="myForm">
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-lg-9">
                                         <div class="card-body card-block">
-
                                             <div class="row form-group">
                                                 <div class="col col-md-3"><label for="select"
                                                         class=" form-control-label">Batch</label></div>
                                                 <div class="col-12 col-md-6">
-                                                    <select class="custom-select d-block w-100" required=""
-                                                        name="batch_id" id="batch_id">
-                                                        <option value="0">Please select</option>
+                                                    <select class="custom-select d-block w-100" name="batch_id" id="batch_id"  required>
+                                                        <option value="" selected>Please select</option>
                                                         <option value="mix">Mix</option>
                                                         @foreach ($data as $ans)
                                                             <option value="{{ $ans->id }}">
@@ -135,7 +132,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-
                                         <div class="card-body">
                                             <div class="row">
                                                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
@@ -188,7 +184,7 @@
 
                                                 </div>
                                                 <div class="modal-footer float-left">
-                                                    <button type="button" id="submitBtn"
+                                                    <button type="submit" 
                                                         class="btn btn-secondary">Create</button>
                                                     <button type="reset" class="btn btn-light"
                                                         data-bs-dismiss="modal">Cancel</button>
@@ -594,6 +590,7 @@
             ApplyFilter(this.value);
             $(this).val('');
         });
+
         $(document).ready(function() {
             $("#submitBtn").click(function() {
                 $("#myForm").submit(); // Submit the form

@@ -165,7 +165,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::get('purchase1currentlyrate', [homecontroller::class, 'purchase1currentlyrate']);
     route::get('clickfinalstock', [homecontroller::class, 'clickfinalstock']);
     route::get('clickchocolatedashboard', [homecontroller::class, 'clickchocolatedashboard']);
-    route::get('clicklaser', [homecontroller::class, 'clicklaser']);
+    route::get('clicklaser/{id}', [homecontroller::class, 'clicklaser']);
     route::get('clickmachinemanagement', [homecontroller::class, 'clickmachinemanagement']);
     route::get('clickjobwork1', [homecontroller::class, 'clickjobwork1']);
     route::get('clickfinalpacketkarben', [homecontroller::class, 'clickfinalpacketkarben']);
@@ -209,6 +209,10 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::post('savelot', [batchcontroller::class, 'savelot'])->name('savelot');
     route::get('createlotprint/{id}', [batchcontroller::class, 'createlotPrint'])->name('createlotprint');
     route::post('searchLot', [batchcontroller::class, 'searchLot'])->name('searchLot');
+
+
+    
+
     route::post('recevieLot', [batchcontroller::class, 'recevieLot'])->name('recevieLot');
     route::post('returnlot', [batchcontroller::class, 'returnlot'])->name('returnlot');
     // route::get('clickbatch', [batchcontroller::class, 'clickbatch']);
@@ -332,7 +336,11 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::post('assignlaser', [LaserController::class, 'assignlaser']);
     route::post('laserreturn', [LaserController::class, 'laserreturn']);
     route::post('laserreturntostock', [LaserController::class, 'laserreturntostock']);
+    route::post('startlaser/{id}', [LaserController::class, 'startlaser'])->name('startlaser');
+    route::post('saveCutLasser', [LaserController::class, 'saveCutLasser'])->name('saveCutLasser');
+    route::post('searchLotmoves', [LaserController::class, 'searchLotmoves'])->name('searchLotmoves');
 
+    
     // ****************************************RoleandPermission**********************************************************
     Route::get('index', 'Backend\DashboardController@index')->name('admin.dashboard');
     Route::resource('roles', 'Backend\RolesController', ['names' => 'admin.roles']);
@@ -347,7 +355,7 @@ Route::group(['middleware'=>['auth','manager']],function()
     route::post('confirmChocolate', [chocolatecontroller::class, 'confirmChocolate'])->name('confirmChocolate');
 
 
-    route::get('createlots', [batchcontroller::class, 'createlots']);
+    route::get('createlots', [batchcontroller::class, 'createlots'])->name('createlots');
     route::get('lot-search-date',[batchcontroller::class,'lotserchdate']);
 
     

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class homecontroller extends Controller
 {
@@ -349,8 +350,20 @@ class homecontroller extends Controller
            public function clickchocolatedashboard(){
             return view('admin.clickchocolatedashboard');
            }
-           public function clicklaser(){
-            return view('admin.clicklaser');
+           public function clicklaser($id){
+
+            $data = DB::table('chocolates')
+                ->select((DB::raw('lotno,startdate,starttime,machineno,lot_id,img1,img2,batch_id,bactches.name as batch_name,lot_masters.name as lot_name,sum(height) as heights,sum(weight) as weights,sum(length) as lengths,sum(width) as widths,count(pcs) as pc')))
+                ->leftJoin('lot_moves','lot_moves.lot_id','=','chocolates.lotno')
+                ->leftJoin('lot_masters','lot_masters.id','=','lot_moves.lot_id')
+                ->leftJoin('bactches','bactches.id','=','lot_moves.batch_id')
+                ->where('lot_moves.status', 1)
+                ->where('lot_moves.location_id', 2)
+                ->where('lot_moves.lot_id', $id)
+                ->groupBy('machineno','startdate','starttime','lotno','lot_id','batch_id','bactches.name','lot_masters.name','img1','img2')
+                ->first();
+            return view('admin.clicklaser')->with(['data' => $data]);
+
            }
            public function clickmachinemanagement(){
             return view('admin.clickmachinemanagement');

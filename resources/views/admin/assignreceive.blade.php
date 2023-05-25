@@ -50,7 +50,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Assign/Receive</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-box-tissue "></i></a> &nbsp;
+                    <a class="navbar-brand" href="{{ url('assignreceive') }}"><b><span>Assign/Receive</b></span></a>
                 </div>
             </div>
             <div class="top-right">
@@ -75,11 +76,6 @@
         </header>
 
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a
-                    href="{{ url('assignreceive') }}">Assign/Receive</a></strong>
-
-
             <div class="content mt-5">
                 <div class="animated fadeIn">
                     <div class="row mt-5">

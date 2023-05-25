@@ -51,7 +51,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Assign/Receive</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-box-tissue "></i></a> &nbsp;
+                    <a class="navbar-brand" href="{{ url('assignreceive') }}"><b><span>Receive</b></span></a>
                 </div>
             </div>
             <div class="top-right">
@@ -76,12 +77,7 @@
         </header>
 
         <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a
-                    href="{{ url('assignreceive') }}">Assign/Receive</a></strong>
-
         </div>
-
         <div class="content mt-5">
             <div class="animated fadeIn">
                 <div class="row mt-5">
@@ -100,42 +96,14 @@
                                         @csrf
 
                                         <div class="modal-body">
-
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-lg-11">
                                                     <input type="tel" class="form-control cc-number identified visa"
                                                         value="" data-val="true"
                                                         data-val-required="Please enter the card number"
                                                         data-val-cc-number="Please enter a valid card number">
                                                 </div>
-                                                <div class="col-lg-1">
-                                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                                        data-target="#largeModal">Recive</button>
-                                                </div>
-                                                <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
-                                                    aria-labelledby="largeModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>
-                                                                    Are you sure you want to Return a lot?
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-info"
-                                                                    data-dismiss="modal">Ok</button>
-                                                                <button type="button" class="btn btn-light">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="card-body card-block">
@@ -270,7 +238,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="card-body">
                                                         <div class="row">
@@ -284,8 +252,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div style="display:none"; id="chocolate" class="row">
+                                            </div> --}}
+                                            {{-- <div style="display:none"; id="chocolate" class="row">
                                                 <div class="col-lg-12">
                                                     <div class="card-body">
                                                         <div class="row">
@@ -303,9 +271,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
-                                            <div id="loste" class="row">
+                                            {{-- <div id="loste" class="row">
                                                 <div class="col-lg-12">
                                                     <div class="card-body">
                                                         <div class="row">
@@ -323,7 +291,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="row">
                                                 <div class="col-lg-12">
 
@@ -392,10 +360,7 @@
                                         </div>
                                         <div class="modal-footer float-left1">
                                             <button type="button" id="closerecive"
-
-                                                class="btn btn-secondary ">Create</button>
-
-                                            {{-- <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button> --}}
+                                                class="btn btn-info">Receive</button>
                                         </div>
                                 </form>
 
@@ -823,7 +788,6 @@
             $('#closerecive').click(function(e) {
                 e.preventDefault();
                 var formData = new FormData(document.getElementById("recivechocolateall"));
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -835,8 +799,35 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        $('#receiveModal').modal('hide');
-                        location.reload();
+                        if(response == 0){
+                            swal('Already Lot Receive For Chocolate');
+                        }else if(response == 1){
+                            swal('Already Lot Receive For Laser');
+                        }else if(response == 2){
+                            swal('Already Lot Receive For Stock Loss');
+                        }else if(response == 3){
+                            swal('Already Lot Receive For Boiling');
+                        }else if(response == 4){
+                            swal('Already Lot Receive For Polish');
+                        }else if(response == 5){
+                            swal('Already Lot Receive For Stock Final');
+                        }else if(response == "chocolate"){
+                            swal('Lot does not assign to chocolate !');
+                        }else if(response == "laser"){
+                            swal('Lot does not assign to laser !');
+                        }else if(response == "stock"){
+                            swal('Lot does not assign to stock !');
+                        }else if(response == "boiling"){
+                            swal('Lot does not assign to boiling !');
+                        }else if(response == "polish"){
+                            swal('Lot does not assign to polish !');
+                        }else if(response == "stockfinal"){
+                            swal('Lot does not assign to stock final !');
+                        }else if(response == "success"){
+                            swal('Lot Receive Sucessfully..');
+                        }
+                        // $('#receiveModal').modal('hide');
+                        // location.reload();
                     },
                         error:function (response){
                             $.each(response.responseJSON.errors,function(){
