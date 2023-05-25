@@ -236,7 +236,7 @@ class LaserController extends Controller
 
   public function searchLotmoves(Request $request){
 
-    $data = DB::table('lot_moves')->select('name','height','width','length','weight')->where('lot_id',$request->search)->get();
+    $data = DB::table('lot_moves')->select('name','height','width','length','weight')->where('lot_id',$request->search)->where('location_id',2)->where('status',2)->get();
     if($data != null){
         return response()->json($data);
     }else{
