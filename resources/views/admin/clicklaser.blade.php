@@ -80,9 +80,9 @@
                 {{-- <li class="stockli mt-2"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#receiveModal">Receive</a></li> --}}
                 {{-- <li class="stockli"><a href="{{ url('lotsdashboard') }}">Lots</a></li>
                 <li class="stockli"><a href="{{ url('packetlaserdashboard') }}">Packets</a></li>
-                <li class="stockli"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#assignModal">Assign</a></li>
+                <li class="stockli"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#assignModal">Assign</a></li> --}}
                 <li class="stockli mt-2"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#returnModal">Return</a></li>
-                <li class="stockli"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#returnstockModal">Return to stock</a></li>
+                {{-- <li class="stockli"><a class=" mt-1" data-bs-toggle="modal" data-bs-target="#returnstockModal">Return to stock</a></li>
                 <li class="stockli"><a href="{{ url('machinelaser') }}">Machine</a></li> --}}
 
             </ul>
@@ -606,7 +606,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-lg-12">
                                         <div class="card-body">
                                             <div class="row">
@@ -620,7 +620,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-lg-12">
 
@@ -686,7 +686,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="returnstockModal" tabindex="-1" aria-labelledby="returnstockModalLabel"
+            {{-- <div class="modal fade" id="returnstockModal" tabindex="-1" aria-labelledby="returnstockModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -820,7 +820,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="content" style="background-color: rgba(0,0,0,.03);">
             <div class="animated fadeIn">
