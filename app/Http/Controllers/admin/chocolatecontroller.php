@@ -110,21 +110,30 @@ class chocolatecontroller extends Controller
 
     public function stopTimer(Request $request)
     {
-         dd($request);
+        // dd($request->fileData);
         try {
             $check = LotDetail::where("lot_id", $request->id)->first();
             // dd($check);
             if ($check) {
                 LotDetail::where("id", $request->id)->update(['stop_timer' => Carbon::now()->format('Y-m-d H:i:s')]);
+
+                if ($request->hasFile('fileData')) {
+                    $file = $request->file('fileData');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $extension;
+                    $file->move('growingdone', $filename);
+                }
                 DB::table('chocolate_close')->insert(
                     [
                         'lot_id' => $request->id,
                         'processresons_id' => $request->processresons_id,
                         'user_id' => $request->user_id,
                         'growing_time' => $request->growing_time,
+                        'image' => $filename,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]
+
                 );
                 DB::table('machine')->where('lotno', $request->id)
                     ->update(['stop_timer' => $request->growing_time]);
@@ -329,6 +338,7 @@ class chocolatecontroller extends Controller
 
     public function confirmChocolate(Request $request)
     {
+        // dd($request->chocolate_start);
         $lot_ids = array();
         $heightArray = array();
         if (isset($request->lot_ids)) {
@@ -343,12 +353,40 @@ class chocolatecontroller extends Controller
                 DB::table('lot_details')->where('id', $lotid)->update(['grow_height' => $grow_height]);
             }
         }
+        if ($request->hasFile('chocolate_start')) {
+            $file1 = $request->file('chocolate_start');
+            $extension1 = $file1->getClientOriginalExtension();
+            $filename1 = time() . '.' . $extension1;
+            $file1->move('chocolate_start', $filename1);
+        }
+        if ($request->hasFile('growing_done')) {
+            $file2 = $request->file('growing_done');
+            $extension2 = $file2->getClientOriginalExtension();
+            $filename2 = time() . '.' . $extension2;
+            $file2->move('growing_done', $filename2);
+        }
+        if ($request->hasFile('finish_type_1')) {
+            $file3 = $request->file('finish_type_1');
+            $extension3 = $file3->getClientOriginalExtension();
+            $filename3 = time() . '.' . $extension3;
+            $file3->move('finish_type_1', $filename3);
+        }
+        if ($request->hasFile('finish_type_2')) {
+            $file4 = $request->file('finish_type_2');
+            $extension4 = $file4->getClientOriginalExtension();
+            $filename4 = time() . '.' . $extension4;
+            $file4->move('finish_type_2', $filename4);
+        }
         DB::table('chocolate_confirmation')->insert(
             [
                 'lot_id' => $request->lotid,
                 'final_weight' => $request->final_weight_ct,
                 'finish_type_id' => $request->finish_type,
                 'growing_time' => $request->growing_time,
+                'chocoloate_start_image' => $filename1,
+                'growing_done_image' => $filename2,
+                'end_images' => $filename3,
+                'end_images_2' => $filename4,
                 'note' => $request->note,
                 'created_at' => now(),
                 'updated_at' => now(),

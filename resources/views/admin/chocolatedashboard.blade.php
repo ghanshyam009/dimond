@@ -1040,7 +1040,7 @@
 
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class=" form-control-label">Finish
+                                                            <label for="select" class="form-control-label">Finish
                                                                 Type </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
@@ -1049,7 +1049,7 @@
                                                         </div>
 
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class=" form-control-label">Growing
+                                                            <label for="select" class="form-control-label">Growing
                                                                 Done</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
@@ -1891,7 +1891,7 @@
                 var hidden_packet_id = $('#hidden_packet_id').val();
                 var processresons_id = $('#processresons_id').val();
                 var user_id = $('#user_id').val();
-                var fileData  = $('#image').prop('files')[0];
+                var fileData = $('#image').prop('files')[0];
                 var growing_time = $('#growing_time').val();
                 // var file = $('#image').val();
                 if (processresons_id == "0" && user_id == "0" && growing_time == "") {
@@ -1956,6 +1956,11 @@
             function chocolateConfirm() {
                 const heightArray = [];
                 const lot_ids = [];
+                var chocolate_start = $('#chocolate_start').prop('files')[0];
+                var growing_done = $('#growing_done').prop('files')[0];
+                var finish_type_1 = $('#finish_type_1').prop('files')[0];
+                var finish_type_2 = $('#finish_type_2').prop('files')[0];
+
                 var final_weight_ct = $('#final_weight_ct').val();
                 var finish_type = $('#finish_type').val();
                 var growing_time = $('#growing_time').val();
@@ -1986,6 +1991,10 @@
                 formData.append("finish_type", finish_type);
                 formData.append("growing_time", growing_time);
                 formData.append("note", note);
+                formData.append("chocolate_start", chocolate_start);
+                formData.append("growing_done", growing_done);
+                formData.append("finish_type_1", finish_type_1);
+                formData.append("finish_type_2", finish_type_2);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
