@@ -75,17 +75,17 @@
                         class="fa-solid fa-table-columns"></i></a> <a href="{{ url('laser1') }}">Laser</a></strong>
             <ul class="stockul">
                 <li class="stockli"><a href="{{ url('laser1') }}">Laser</a></li>
-                <li class="stockli mt-2"><a class=" mt-1" data-bs-toggle="modal"
-                        data-bs-target="#receiveModal">Receive</a></li>
-                <li class="stockli"><a href="{{ url('lotsdashboard') }}">Lots</a></li>
-                <li class="stockli"><a href="{{ url('packetlaserdashboard') }}">Packets</a></li>
-                <li class="stockli"><a class="mt-1" data-bs-toggle="modal" data-bs-target="#assignModal">Assign</a>
-                </li>
-                <li class="stockli"><a class="mt-1" data-bs-toggle="modal" data-bs-target="#returnModal">Return</a>
-                </li>
-                <li class="stockli"><a class="mt-1" data-bs-toggle="modal" data-bs-target="#returnstockModal">Return
-                        to stock</a></li>
-                <li class="stockli"><a href="{{ url('machinelaser') }}">Machine</a></li>
+                {{-- <li class="stockli mt-2"><a class=" mt-1" data-bs-toggle="modal"
+                        data-bs-target="#receiveModal">Receive</a></li> --}}
+                {{-- <li class="stockli"><a href="{{ url('lotsdashboard') }}">Lots</a></li> --}}
+                {{-- <li class="stockli"><a href="{{ url('packetlaserdashboard') }}">Packets</a></li> --}}
+                {{-- <li class="stockli"><a class="mt-1" data-bs-toggle="modal" data-bs-target="#assignModal">Assign</a>
+                </li> --}}
+                {{-- <li class="stockli"><a class="mt-1" data-bs-toggle="modal" data-bs-target="#returnModal">Return</a>
+                </li> --}}
+                {{-- <li class="stockli"><a class="mt-1" data-bs-toggle="modal" data-bs-target="#returnstockModal">Return
+                        to stock</a></li> --}}
+                {{-- <li class="stockli"><a href="{{ url('machinelaser') }}">Machine</a></li> --}}
 
             </ul>
             <div class="modal fade" id="receiveModal" aria-labelledby="receiveModalLabel" aria-hidden="true">
@@ -174,6 +174,7 @@
                                                                     <option value="0">Please select Location
                                                                     </option>
                                                                     <?php $recevies = App\Models\location::get(); ?>
+                                                                
                                                                     @foreach ($recevies as $rec)
                                                                         <option value="{{ $rec->id }}">
                                                                             {{ $rec->name }}
@@ -1185,891 +1186,73 @@
                     <div class="card">
 
                         <div class="row">
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <a href="{{ url('clicklaser') }}">
-                                    <div class="card">
-                                        <div class="card-body card-block">
-                                            <form action="#" method="post" class="form-horizontal">
-                                                <div class="row form-group1">
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size">A7-CH708-28</label>
+                            @if ($data)
+                                @foreach ($data as $value)
+                                <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
+                                        <div class="card">
+                                            <div class="card-body card-block">
+                                                    <div class="row form-group1">
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                                                class=" form-control-label font_size">A7-CH708-28</label>
+                                                        </div>
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                                                class=" form-control-label font_size float-right">15:40:04</label>
+                                                        </div>
                                                     </div>
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size float-right">15:40:04</label>
+                                                    <div class="row form-group1">
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                                                class=" form-control-label font_size"><b>Batch :</b>{{ $value->batch_name }}</label>
+                                                        </div>
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                                                class=" form-control-label font_size"><b>Total
+                                                                Weight(Ct) : </b>{{ $value->weights }}</label></div>
                                                     </div>
-                                                </div>
-                                                <div class="row form-group1">
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size">Batch:KOHINOOR</label>
+                                                    <div class="row form-group1">
+                                                        <div class="col col-md-6"><label for="hf-password"
+                                                                class=" form-control-label font_size"><b>Pcs : </b>{{ $value->pc }}</label></div>
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                                                class=" form-control-label font_size">
+                                                                <b>Avg Weight(Ct) : </b>{{ $value->weights / $value->pc }}</label></div>
                                                     </div>
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size">Total
-                                                            Weight(Ct):40.00</label></div>
-                                                </div>
-                                                <div class="row form-group1">
-                                                    <div class="col col-md-6"><label for="hf-password"
-                                                            class=" form-control-label font_size">Pcs:2</label></div>
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size">Avg
-                                                            Weight(Ct):5.97</label></div>
-                                                </div>
-                                                <div class="row form-group1">
-                                                    <div class="col col-md-6"><label for="hf-password"
-                                                            class=" form-control-label font_size">Lots:KOHINOOR</label>
+                                                    <div class="row form-group1">
+                                                        <div class="col col-md-6"><label for="hf-password"
+                                                                class=" form-control-label font_size"><b>Lots : </b>{{ $value->lot_name }} Lot-{{ $value->lot_id }}
+                                                            </label>
+                                                        </div>
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                                                class=" form-control-label font_size"><b>Avg
+                                                                Height(Micron) : </b>{{ $value->heights / $value->pc  }}</></label></div>
                                                     </div>
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size">Avg
-                                                            Height(Micron):7.86</label></div>
-                                                </div>
-                                                <div class="row form-group1">
-                                                    <div class="col col-md-6"><label for="hf-password"
-                                                            class=" form-control-label font_size">LOT40-2</label></div>
-                                                    <div class="col col-md-6"><label for="hf-email"
-                                                            class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
+                                                    <div class="row form-group1">
+                                                        <div class="col col-md-6"><label for="hf-email"
+                                            class=" form-control-label font_size"><b>Avg.L*W: </b>{{ $value->lengths / $value->pc  }} * {{ $value->lengths / $value->pc  }}</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row form-group1 mt-2">
-                                                    <div class="col col-md-6"> <button type="button"
-                                                            class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                        </button></div>
-                                                    <div class="col col-md-6"> <button type="button"
-                                                            class="btn btn-info btn-sm float-right"> In Progress
-                                                        </button></div>
-                                                </div>
-                                            </form>
+                                                    <div class="row form-group1 mt-2">
+                                                        <div class="col col-md-6"> 
+                                                                <?php 
+                                                                    $checkData = App\Models\Laser::where('lot_id',$value->lot_id)->first(); 
+                                                                    if($checkData){ 
+                                                                        $laser_cut = DB::table('laser_cut_details')->where('lot_id',$value->lot_id)->first();
+                                                                        if($laser_cut){ ?>
+                                                                                <button class="btn btn-success btn-sm float-left">Done</button>
+                                                                        <?php }else{ ?>
+                                                                            <a href="{{ url('clicklaser') }}/{{ $value->lot_id }}" class="btn btn-success btn-sm float-left"/>Cut</a>
+                                                                        <?php }
+                                                                        ?>
+                                                                <?php }else{ ?>
+                                                                    <a href="{{ url('clicklaser') }}/{{ $value->lot_id }}" class="btn btn-success btn-sm float-left"/>Start</a>
+                                                                <?php }
+                                                                ?>
+                                                    </div>
+                                                            <div class="col col-md-6"><button type="button"
+                                                                class="btn btn-danger btn-sm float-right">B</button></div>
+                                                    </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"><button type="button"
-                                                        class="btn btn-danger btn-sm float-right">B</button></div>
-                                            </div>
-                                        </form>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> Done </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> starts </button>
-                                                </div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-left"> In Progress </button>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> B</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-right"> In Progress </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"><button type="button"
-                                                        class="btn btn-danger btn-sm float-right">B</button></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> Done </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> starts </button>
-                                                </div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-left"> In Progress </button>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> B</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> starts </button>
-                                                </div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-right"> In Progress </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"><button type="button"
-                                                        class="btn btn-danger btn-sm float-right">B</button></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Starts </button>
-                                                </div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> Done </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-left"> In Progress </button>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> B</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-right"> In Progress </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"><button type="button"
-                                                        class="btn btn-danger btn-sm float-right">B</button></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> Done </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body card-block">
-                                        <form action="#" method="post" class="form-horizontal">
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">A7-CH708-28</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size float-right">15:40:04</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Batch:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Total
-                                                        Weight(Ct):40.00</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Pcs:2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Weight(Ct):5.97</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">Lots:KOHINOOR</label>
-                                                </div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg
-                                                        Height(Micron):7.86</label></div>
-                                            </div>
-                                            <div class="row form-group1">
-                                                <div class="col col-md-6"><label for="hf-password"
-                                                        class=" form-control-label font_size">LOT40-2</label></div>
-                                                <div class="col col-md-6"><label for="hf-email"
-                                                        class=" form-control-label font_size">Avg.L*W:15.75*15.63</label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group1 mt-2">
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-secondary btn-sm float-left"> Growing Done
-                                                    </button></div>
-                                                <div class="col col-md-6"> <button type="button"
-                                                        class="btn btn-info btn-sm float-left"> In Progress </button>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-sm float-right"> B</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

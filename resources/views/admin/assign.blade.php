@@ -51,7 +51,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Assign/Receive</span></a>
+                    <a href="{{ url('centerdepartment') }}"><i class="fa-solid fa-box-tissue "></i></a> &nbsp;
+                    <a class="navbar-brand" href="{{ url('assignreceive') }}"><b><span>Assign</b></span></a>
                 </div>
             </div>
             <div class="top-right">
@@ -74,13 +75,7 @@
                 </div>
             </div>
         </header>
-
-        <div class="card-header">
-            <strong class="card-title"><a href="{{ url('centerdepartment') }}"><i
-                        class="fa-solid fa-table-columns"></i></a> <a
-                    href="{{ url('assignreceive') }}">Assign/Receive</a></strong>
-
-        </div>
+       
         <div class="content mt-5">
             <div class="animated fadeIn">
                 <div class="row mt-5">
@@ -89,50 +84,21 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Scan For Assign</h5>
-                                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button> --}}
+                               
                             </div>
                             <form action="{{ url('assigngrowing') }}" id="assignall" name="assign" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="modal-body">
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-lg-11">
                                             <input id="cc-number" name="cc-number" type="tel"
                                                 class="form-control cc-number identified visa" value=""
                                                 data-val="true" data-val-required="Please enter the card number"
                                                 data-val-cc-number="Please enter a valid card number">
                                         </div>
-                                        <div class="col-lg-1">
-                                            <button type="button" class="btn btn-info" data-toggle="modal"
-                                                data-target="#largeModal">Assign</button>
-                                        </div>
-                                        <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="largeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>
-                                                            Are you sure you want to Return a lot?
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-info"
-                                                            data-dismiss="modal">Ok</button>
-                                                        <button type="button" class="btn btn-light">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    </div> --}}
                                     <div class="row">
                                         <div class="col-lg-3 float-left">
                                             <div class="card-body card-block">
@@ -175,50 +141,6 @@
                                                         </select>
                                                     </div>
                                                 </div>
-
-                                                {{-- <div style="display:none"; id="employee" class="row form-group">
-                                                    <div class="col col-md-3">
-                                                        <label class=" form-control-label">Employee : </label>
-                                                    </div>
-                                                    <div class="col-12 col-md-6">
-                                                      
-                                                                <select class="custom-select d-block w-100"
-                                                                    name="user_id">
-                                                                    <option value="">Please select Employee
-                                                                    </option>
-                                                                    <?php $users = App\Models\userlogin::get(); ?>
-                                                                    @foreach ($users as $user)
-                                                                        <option value="{{ $user->id }}">
-                                                                            {{ $user->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                    </div>
-                                                </div> --}}
-                                               
-                                                
-                                                {{-- <div style="display:none"; id="employee" class="row form-group">
-                                                    <div class="col col-md-3">
-                                                        <label class=" form-control-label">Employee : </label>
-                                                    </div>
-                                                    <div class="col-12 col-md-6">
-                                                                <select class="custom-select d-block w-100"
-                                                                    name="user_id">
-                                                                    <?php $users = App\Models\userlogin::get(); ?>
-                                                                    @foreach ($users as $user)
-                                                                    <option value="{{ $user->id }}">
-                                                                       
-                                                                       @if($user->name !== Auth::user()->name)
-                                                                            {{ $user->name }} 
-                                                                           
-                                                                            @endif
-                                                                           
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                    </div>
-                                                </div> --}}
-
                                                 <div style="display:none"; id="employee" class="row form-group">
                                                     <div class="col col-md-3">
                                                         <label class=" form-control-label">Employee : </label>
@@ -259,8 +181,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -318,10 +239,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         <div class="row">
                                             <div class="col-lg-12">
-
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="tab-content pl-3 p-1" id="myTabContent">
@@ -383,14 +303,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </div>
-
                                     <div class="modal-footer float-left1">
                                         <button type="button" id="close"
-                                            class="btn btn-secondary">Create</button>
-                                        {{-- <button type="reset" class="btn btn-light"
-                                        >Cancel</button> --}}
+                                            class="btn btn-info">Assign</button>
                                     </div>
                             </form>
                         </div>
@@ -431,9 +348,7 @@
         ApplyFilter(this.value);
         var text = $('.assigngrowingall').val(this.value)
         $(this).val('');
-        // console.log(text);
     });
-
     function ApplyFilter(search) {
         if (search != null && search != "") {
             $.ajaxSetup({
@@ -454,7 +369,6 @@
                 processData: false,
                 contentType: false,
                 success: function(res) {
-                    // console.log(res);
                     $('#experienceSection').html('');
                     $.each(res.lot_detail, function(i, val) {
                         var section = $(`<tr>
@@ -635,15 +549,26 @@
             processData: false,
             contentType: false,
             success: function(response) {
-
-                $('#returnModal').modal('hide');
-                location.reload();
+                if(response == 0){
+                    swal('Already Lot Assign For Chocolate');
+                }else if(response == 1){
+                    swal('Already Lot Assign For Laser');
+                }else if(response == 2){
+                    swal('Already Lot Assign For Stock Loss');
+                }else if(response == 3){
+                    swal('Already Lot Assign For Boiling');
+                }else if(response == 4){
+                    swal('Already Lot Assign For Polish');
+                }else if(response == 5){
+                    swal('Already Lot Assign For Stock Final');
+                }else{
+                    swal('Lot Assign Sucessfully..');
+                }
             },
             error: function(response) {
                 $.each(response.responseJSON.errors, function() {
                     swal('Record does not exist or is not accessible.');
                 })
-
             }
         });
     });

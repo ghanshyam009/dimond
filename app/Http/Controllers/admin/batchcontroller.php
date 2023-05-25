@@ -53,7 +53,6 @@ class batchcontroller extends Controller
         return view('admin.createlot')->with(['data' => $data, 'batch' => $batch]);
     }
     public function searchLot(Request $request){
-        //dd($request->all());
         $let=LotMaster::with('lotDetail')->find($request->search);
         if($let != null){
             return response()->json($let);
@@ -206,6 +205,7 @@ class batchcontroller extends Controller
         return view('admin.createlot')->with(['data'=>$data,'id'=>$id]);
     }
     public function savelot(Request $request){
+
         $lot=new LotMaster();
         $lot->name=implode(",",array_filter(array_unique($request->name)));
         $lot->save();
@@ -234,6 +234,7 @@ class batchcontroller extends Controller
             $lot->lotDetail()->saveMany($lotDetail);
             return redirect()->route('batch-module', ['id' => $lot]);
         }
+        return redirect()->route('createlots');
         
         
     }
