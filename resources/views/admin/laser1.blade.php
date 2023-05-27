@@ -44,9 +44,15 @@
 
         <!-- Header-->
         <header id="header" class="header">
-            <div class="top-left">
+            {{-- <div class="top-left">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Laser</span></a>
+                </div>
+            </div> --}}
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a href="{{ url('centerdepartment') }}"><i class="fa fa-pencil fa-lg"></i></a> &nbsp;
+                    <b><a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Laser</span></a></b>
                 </div>
             </div>
             <div class="top-right">
@@ -174,7 +180,7 @@
                                                                     <option value="0">Please select Location
                                                                     </option>
                                                                     <?php $recevies = App\Models\location::get(); ?>
-                                                                
+
                                                                     @foreach ($recevies as $rec)
                                                                         <option value="{{ $rec->id }}">
                                                                             {{ $rec->name }}
@@ -403,10 +409,10 @@
                                 aria-label="Close"></button>
                         </div>
                         <form action="{{ url('laserreturntostock') }}" method="post" enctype="multipart/form-data"
-                                    id="returnlaserstock">
-                                    @csrf
-                        <div class="modal-body">
-                          
+                            id="returnlaserstock">
+                            @csrf
+                            <div class="modal-body">
+
                                 <div class="row">
                                     <div class="col-lg-11">
                                         <input id="cc-number" name="cc-number" type="tel"
@@ -466,99 +472,94 @@
                                                 </div>
                                             </div>
                                         </div> --}}
-                                         <div class="card-body card-block">
-                                                        <div class="row form-group">
-                                                            <div class="col col-md-9"><label
-                                                                    class=" form-control-label"><img
-                                                                        src="{{ URL::asset('admin/assets/img/barcode.webp') }}"
-                                                                        alt=""></label></div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col-12 col-md-9">
-                                                                <p class="form-control-static"><input type="email"
-                                                                        id="email-input" class="form-control returnrec">
-                                                                    <input type="hidden" class="returnstock"
-                                                                        name="returnstock">
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <div class="card-body card-block">
+                                            <div class="row form-group">
+                                                <div class="col col-md-9"><label class=" form-control-label"><img
+                                                            src="{{ URL::asset('admin/assets/img/barcode.webp') }}"
+                                                            alt=""></label></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12 col-md-9">
+                                                    <p class="form-control-static"><input type="email"
+                                                            id="email-input" class="form-control returnrec">
+                                                        <input type="hidden" class="returnstock" name="returnstock">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
 
-                             <div class="row">
-                                                <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-12">
 
-                                                    <div class="card-body">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="home"
+                                                        role="tabpanel" aria-labelledby="home-tab">
                                                         <div class="row">
+                                                            <ul class="nav nav-tabs mt-4" id="myTab"
+                                                                role="tablist">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active" id="home-tab"
+                                                                        data-toggle="tab" href="#home"
+                                                                        role="tab" aria-controls="home"
+                                                                        aria-selected="true">Packets</a>
+                                                                </li>
+                                                            </ul>
                                                             <div class="tab-content pl-3 p-1" id="myTabContent">
                                                                 <div class="tab-pane fade show active" id="home"
                                                                     role="tabpanel" aria-labelledby="home-tab">
-                                                                    <div class="row">
-                                                                        <ul class="nav nav-tabs mt-4" id="myTab"
-                                                                            role="tablist">
-                                                                            <li class="nav-item">
-                                                                                <a class="nav-link active" id="home-tab"
-                                                                                    data-toggle="tab" href="#home"
-                                                                                    role="tab" aria-controls="home"
-                                                                                    aria-selected="true">Packets</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                                            <div class="tab-pane fade show active"
-                                                                                id="home" role="tabpanel"
-                                                                                aria-labelledby="home-tab">
 
-                                                                                <table class="table"
-                                                                                    style="line-height: 5px;">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>Name</th>
-                                                                                            <th>Height(Micron)</th>
-                                                                                            <th>Length(MM)</th>
-                                                                                            <th>Width(MM)</th>
-                                                                                            <th>Pcs</th>
-                                                                                            <th>Weight(Ct)</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody id="returnstocksection">
-                                                                                        <tr>
-                                                                                            <td
-                                                                                                style="vertical-align: middle;text-align:left">
-                                                                                                <input type="hidden"
-                                                                                                    class="name"
-                                                                                                    name="name1">
-                                                                                                Name
-                                                                                            </td>
-                                                                                            <td>0</td>
-                                                                                            <td>0</td>
-                                                                                            <td>0</td>
-                                                                                            <td>0</td>
-                                                                                            <td>0</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
+                                                                    <table class="table" style="line-height: 5px;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Name</th>
+                                                                                <th>Height(Micron)</th>
+                                                                                <th>Length(MM)</th>
+                                                                                <th>Width(MM)</th>
+                                                                                <th>Pcs</th>
+                                                                                <th>Weight(Ct)</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="returnstocksection">
+                                                                            <tr>
+                                                                                <td
+                                                                                    style="vertical-align: middle;text-align:left">
+                                                                                    <input type="hidden"
+                                                                                        class="name" name="name1">
+                                                                                    Name
+                                                                                </td>
+                                                                                <td>0</td>
+                                                                                <td>0</td>
+                                                                                <td>0</td>
+                                                                                <td>0</td>
+                                                                                <td>0</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
 
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
 
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
-                           
-                        </div>
-                        <div class="modal-footer float-left1">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer float-left1">
                                 <button type="button" id="closereturnstock"
                                     class="btn btn-secondary ">Create</button>
                                 <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                             </div>
-                         </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -694,27 +695,26 @@
                                                 </div>
                                             </div> --}}
                                             <div style="display:none"; id="process" class="row form-group">
-                                                    <div class="col col-md-3">
-                                                        <label class=" form-control-label">Employee : </label>
-                                                    </div>
-                                                    <div class="col-12 col-md-6">
-                                                                <select class="custom-select d-block w-100"
-                                                                    name="user_id">
-                                                                    <?php $users = App\Models\userlogin::get(); ?>
-                                                                    {{-- <?php $emdata=Auth::user()->role == 'admin'->get('name')?> --}}
-                                                                    @foreach ($users as $user)
-                                                                 {{-- @if(Auth::user()->role = 'admin' !== $user->name())
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Employee : </label>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <select class="custom-select d-block w-100" name="user_id">
+                                                        <?php $users = App\Models\userlogin::get(); ?>
+                                                        {{-- <?php $emdata = Auth::user()->role == ('admin')->get('name'); ?> --}}
+                                                        @foreach ($users as $user)
+                                                            {{-- @if (Auth::user()->role = 'admin' !== $user->name())
                                                                   {{ $user->name }} 
                                                                  @endif --}}
-                                                                    @if($user->name !== Auth::user()->name)
-                                                                    <option value="{{ $user->id }}">
-                                                                            {{ $user->name }} 
-                                                                        </option>
-                                                                    @endif 
-                                                                    @endforeach
-                                                                </select>
-                                                    </div>
+                                                            @if ($user->name !== Auth::user()->name)
+                                                                <option value="{{ $user->id }}">
+                                                                    {{ $user->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
                                                 </div>
+                                            </div>
                                             <div style="display:none"; id="machine" class="row form-group">
                                                 <div class="col col-md-3"><label for="select"
                                                         class=" form-control-label">Machine : </label></div>
@@ -871,22 +871,22 @@
                 </div>
             </div>
             <div class="modal fade" id="returnModal" aria-labelledby="returnModalLabel" aria-hidden="true"
-                                role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Scan For Return</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
+                role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Scan For Return</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
 
-                                        <form action="{{ url('laserreturn') }}" method="post" enctype="multipart/form-data"
-                                            id="returnall">
-                                            @csrf
+                        <form action="{{ url('laserreturn') }}" method="post" enctype="multipart/form-data"
+                            id="returnall">
+                            @csrf
 
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    {{-- <div class="col-lg-11">
+                            <div class="modal-body">
+                                <div class="row">
+                                    {{-- <div class="col-lg-11">
                                                         <input id="cc-number" name="cc-number" type="tel"
                                                             class="form-control cc-number identified visa" value=""
                                                             data-val="true" data-val-required="Please enter the card number"
@@ -896,137 +896,136 @@
                                                         <button type="button" class="btn btn-info" data-toggle="modal"
                                                             data-target="#largeModal">Assign</button>
                                                     </div> --}}
-                                                    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
-                                                        aria-labelledby="largeModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal"
-                                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <p>
-                                                                        Are you sure you want to Return a lot?
-                                                                    </p>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-info"
-                                                                        data-dismiss="modal">Ok</button>
-                                                                    <button type="button" class="btn btn-light">Cancel</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="largeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document" style="width: 53%;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="largeModalLabel">Confirmation</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Are you sure you want to Return a lot?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-info"
+                                                        data-dismiss="modal">Ok</button>
+                                                    <button type="button" class="btn btn-light">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 float-left">
+                                        <div class="card-body card-block">
+                                            <div class="row form-group">
+                                                <div class="col col-md-9"><label class=" form-control-label"><img
+                                                            src="{{ URL::asset('admin/assets/img/barcode.webp') }}"alt=""></label>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12 col-md-9">
+
+                                                    <p class="form-control-static"><input type="email"
+                                                            id="email-input" class="form-control recl"></p>
+                                                    <input type="hidden" class="returnalllaser"
+                                                        name="returnalllaser">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="card-body card-block">
+
+                                            <div class="row form-group">
+                                                <div class="col col-md-3"><label
+                                                        class=" form-control-label">Process</label></div>
+                                                <div class="col col-md-6">
+                                                    <div class="form-check-inline form-check">
+                                                        <label for="inline-radio1" class="form-check-label ">
+                                                            <input type="radio" id="inline-radio1" name="process"
+                                                                value="shape" class="form-check-input"
+                                                                checked="">Shape
+                                                        </label>
+                                                        <label for="inline-radio2" class="form-check-label ">
+                                                            <input type="radio" id="inline-radio2" name="process"
+                                                                value="dlc" class="form-check-input">DLC
+                                                        </label>
+                                                        <label for="inline-radio3" class="form-check-label ">
+                                                            <input type="radio" id="inline-radio3" name="process"
+                                                                value="final" class="form-check-input">Final
+                                                        </label>
                                                     </div>
                                                 </div>
-
-                                                <div class="row">
-                                                    <div class="col-lg-3 float-left">
-                                                        <div class="card-body card-block">
-                                                            <div class="row form-group">
-                                                                <div class="col col-md-9"><label class=" form-control-label"><img
-                                                                            src="{{ URL::asset('admin/assets/img/barcode.webp') }}"alt=""></label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row form-group">
-                                                                <div class="col-12 col-md-9">
-
-                                                                    <p class="form-control-static"><input type="email"
-                                                                            id="email-input" class="form-control recl"></p>
-                                                                    <input type="hidden" class="returnalllaser" name="returnalllaser">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3"><label class=" form-control-label">Net
+                                                        Process</label></div>
+                                                <div class="col col-md-6">
+                                                    <div class="form-check-inline form-check">
+                                                        <label for="inline-radio1" class="form-check-label ">
+                                                            <input type="radio" id="inline-radio1"
+                                                                name="netprocess" value="shape"
+                                                                class="form-check-input" checked="">Shape
+                                                        </label>
+                                                        <label for="inline-radio2" class="form-check-label ">
+                                                            <input type="radio" id="inline-radio2"
+                                                                name="netprocess" value="dlc"
+                                                                class="form-check-input">DLC
+                                                        </label>
+                                                        <label for="inline-radio3" class="form-check-label ">
+                                                            <input type="radio" id="inline-radio3"
+                                                                name="netprocess" value="final"
+                                                                class="form-check-input">Final
+                                                        </label>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                    </div>
-                                                    
-                                                        <div class="col-lg-6">
-                                                            <div class="card-body card-block">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3"><label for="select"
+                                                        class=" form-control-label">Employee : </label></div>
+                                                <div class="col-12 col-md-6">
 
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-3"><label
-                                                                            class=" form-control-label">Process</label></div>
-                                                                    <div class="col col-md-6">
-                                                                        <div class="form-check-inline form-check">
-                                                                            <label for="inline-radio1" class="form-check-label ">
-                                                                                <input type="radio" id="inline-radio1"
-                                                                                    name="process" value="shape"
-                                                                                    class="form-check-input" checked="">Shape
-                                                                            </label>
-                                                                            <label for="inline-radio2" class="form-check-label ">
-                                                                                <input type="radio" id="inline-radio2"
-                                                                                    name="process" value="dlc"
-                                                                                    class="form-check-input">DLC
-                                                                            </label>
-                                                                            <label for="inline-radio3" class="form-check-label ">
-                                                                                <input type="radio" id="inline-radio3"
-                                                                                    name="process" value="final"
-                                                                                    class="form-check-input">Final
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-3"><label class=" form-control-label">Net
-                                                                            Process</label></div>
-                                                                    <div class="col col-md-6">
-                                                                        <div class="form-check-inline form-check">
-                                                                            <label for="inline-radio1" class="form-check-label ">
-                                                                                <input type="radio" id="inline-radio1"
-                                                                                    name="netprocess" value="shape"
-                                                                                    class="form-check-input" checked="">Shape
-                                                                            </label>
-                                                                            <label for="inline-radio2" class="form-check-label ">
-                                                                                <input type="radio" id="inline-radio2"
-                                                                                    name="netprocess" value="dlc"
-                                                                                    class="form-check-input">DLC
-                                                                            </label>
-                                                                            <label for="inline-radio3" class="form-check-label ">
-                                                                                <input type="radio" id="inline-radio3"
-                                                                                    name="netprocess" value="final"
-                                                                                    class="form-check-input">Final
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-3"><label for="select"
-                                                                            class=" form-control-label">Employee : </label></div>
-                                                                    <div class="col-12 col-md-6">
-
-                                                                        <select class="custom-select d-block w-100" name="user_id">
-                                                                            <?php $employee = App\Models\userlogin::get(); ?>
-                                                                            @foreach ($employee as $eans)
-                                                                                <option value="0">Please select</option>
-                                                                                <option value="{{ $eans->id }}">
-                                                                                    {{ $eans->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-3"><label for="select"
-                                                                            class=" form-control-label">DLC Weight(Ct) : </label></div>
-                                                                    <div class="col-12 col-md-6">
-                                                                        <p class="form-control-static"><input type="text"
-                                                                                id="email-input" name="dlcweight"
-                                                                                class="form-control"></p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col col-md-3"><label for="select"
-                                                                            class=" form-control-label">Loss Weight : </label></div>
-                                                                    <div class="col-12 col-md-6">
-                                                                        <label for="select" class=" form-control-label">0.00</label>
-                                                                    </div>
-                                                                </div>
+                                                    <select class="custom-select d-block w-100" name="user_id">
+                                                        <?php $employee = App\Models\userlogin::get(); ?>
+                                                        @foreach ($employee as $eans)
+                                                            <option value="0">Please select</option>
+                                                            <option value="{{ $eans->id }}">
+                                                                {{ $eans->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3"><label for="select"
+                                                        class=" form-control-label">DLC Weight(Ct) : </label></div>
+                                                <div class="col-12 col-md-6">
+                                                    <p class="form-control-static"><input type="text"
+                                                            id="email-input" name="dlcweight" class="form-control">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3"><label for="select"
+                                                        class=" form-control-label">Loss Weight : </label></div>
+                                                <div class="col-12 col-md-6">
+                                                    <label for="select" class=" form-control-label">0.00</label>
+                                                </div>
+                                            </div>
 
 
-                                                            </div>
-                                                        </div>
-                                                    {{-- <div class="row">
+                                        </div>
+                                    </div>
+                                    {{-- <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="card-body">
                                                                 <div class="row">
@@ -1084,85 +1083,84 @@
                                                             </div>
                                                         </div>
                                                     </div> --}}
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-12">
 
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                                        <div class="tab-pane fade show active" id="home"
-                                                                            role="tabpanel" aria-labelledby="home-tab">
-                                                                            <div class="row">
-                                                                                <ul class="nav nav-tabs mt-4" id="myTab"
-                                                                                    role="tablist">
-                                                                                    <li class="nav-item">
-                                                                                        <a class="nav-link active" id="home-tab"
-                                                                                            data-toggle="tab" href="#home"
-                                                                                            role="tab" aria-controls="home"
-                                                                                            aria-selected="true">Packets</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                                <div class="tab-content pl-3 p-1" id="myTabContent">
-                                                                                    <div class="tab-pane fade show active"
-                                                                                        id="home" role="tabpanel"
-                                                                                        aria-labelledby="home-tab">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                        <div class="tab-pane fade show active" id="home"
+                                                            role="tabpanel" aria-labelledby="home-tab">
+                                                            <div class="row">
+                                                                <ul class="nav nav-tabs mt-4" id="myTab"
+                                                                    role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active" id="home-tab"
+                                                                            data-toggle="tab" href="#home"
+                                                                            role="tab" aria-controls="home"
+                                                                            aria-selected="true">Packets</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                                                    <div class="tab-pane fade show active"
+                                                                        id="home" role="tabpanel"
+                                                                        aria-labelledby="home-tab">
 
-                                                                                        <table class="table"
-                                                                                            style="line-height: 5px;">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th>Name</th>
-                                                                                                    <th>Height(Micron)</th>
-                                                                                                    <th>Length(MM)</th>
-                                                                                                    <th>Width(MM)</th>
-                                                                                                    <th>Pcs</th>
-                                                                                                    <th>Weight(Ct)</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody id="returnsection">
-                                                                                                <tr>
-                                                                                                    <td
-                                                                                                        style="vertical-align: middle;text-align:left">
-                                                                                                        <input type="hidden"
-                                                                                                            class="name"
-                                                                                                            name="name1">
-                                                                                                        Name
-                                                                                                    </td>
-                                                                                                    <td>0</td>
-                                                                                                    <td>0</td>
-                                                                                                    <td>0</td>
-                                                                                                    <td>0</td>
-                                                                                                    <td>0</td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                        <table class="table"
+                                                                            style="line-height: 5px;">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Name</th>
+                                                                                    <th>Height(Micron)</th>
+                                                                                    <th>Length(MM)</th>
+                                                                                    <th>Width(MM)</th>
+                                                                                    <th>Pcs</th>
+                                                                                    <th>Weight(Ct)</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="returnsection">
+                                                                                <tr>
+                                                                                    <td
+                                                                                        style="vertical-align: middle;text-align:left">
+                                                                                        <input type="hidden"
+                                                                                            class="name"
+                                                                                            name="name1">
+                                                                                        Name
+                                                                                    </td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                    <td>0</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
 
                                                                     </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
-
-                                                <div class="modal-footer float-left1">
-                                                    <button type="button" id="closereturn" class="btn btn-secondary">Create</button>
-                                                <button type="reset" class="btn btn-light"
-                                                        >Cancel</button>
-                                                </div>
                                             </div>
-                                        </form> 
+                                        </div>
                                     </div>
                                 </div>
-                    </div>
 
+                                <div class="modal-footer float-left1">
+                                    <button type="button" id="closereturn" class="btn btn-secondary">Create</button>
+                                    <button type="reset" class="btn btn-light">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+
         </div>
+    </div>
     </div>
     <div class="content">
         <div class="animated fadeIn">
@@ -1188,69 +1186,82 @@
                         <div class="row">
                             @if ($data)
                                 @foreach ($data as $value)
-                                <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
+                                    <div class="col-lg-3  col-lg-4 col-xxl-3 col-md-6">
                                         <div class="card">
                                             <div class="card-body card-block">
-                                                    <div class="row form-group1">
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                                                class=" form-control-label font_size">A7-CH708-28</label>
-                                                        </div>
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                                                class=" form-control-label font_size float-right">15:40:04</label>
-                                                        </div>
+                                                <div class="row form-group1">
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size">A7-CH708-28</label>
                                                     </div>
-                                                    <div class="row form-group1">
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                                                class=" form-control-label font_size"><b>Batch :</b>{{ $value->batch_name }}</label>
-                                                        </div>
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                                                class=" form-control-label font_size"><b>Total
-                                                                Weight(Ct) : </b>{{ $value->weights }}</label></div>
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size float-right">15:40:04</label>
                                                     </div>
-                                                    <div class="row form-group1">
-                                                        <div class="col col-md-6"><label for="hf-password"
-                                                                class=" form-control-label font_size"><b>Pcs : </b>{{ $value->pc }}</label></div>
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                                                class=" form-control-label font_size">
-                                                                <b>Avg Weight(Ct) : </b>{{ $value->weights / $value->pc }}</label></div>
+                                                </div>
+                                                <div class="row form-group1">
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size"><b>Batch
+                                                                :</b>{{ $value->batch_name }}</label>
                                                     </div>
-                                                    <div class="row form-group1">
-                                                        <div class="col col-md-6"><label for="hf-password"
-                                                                class=" form-control-label font_size"><b>Lots : </b>{{ $value->lot_name }} Lot-{{ $value->lot_id }}
-                                                            </label>
-                                                        </div>
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                                                class=" form-control-label font_size"><b>Avg
-                                                                Height(Micron) : </b>{{ $value->heights / $value->pc  }}</></label></div>
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size"><b>Total
+                                                                Weight(Ct) :
+                                                            </b><?= round($value->weights, 2) ?></label></div>
+                                                </div>
+                                                <div class="row form-group1">
+                                                    <div class="col col-md-6"><label for="hf-password"
+                                                            class=" form-control-label font_size"><b>Pcs :
+                                                            </b>{{ $value->pc }}</label></div>
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size">
+                                                            {{-- <b>Avg Weight(Ct) : </b>{{ $value->weights / $value->pc }}</label></div> --}}
+                                                            <b>Avg Weight(Ct) :
+                                                            </b><?= round($value->weights / $value->pc, 2) ?></label>
                                                     </div>
-                                                    <div class="row form-group1">
-                                                        <div class="col col-md-6"><label for="hf-email"
-                                            class=" form-control-label font_size"><b>Avg.L*W: </b>{{ $value->lengths / $value->pc  }} * {{ $value->lengths / $value->pc  }}</label>
-                                                        </div>
+                                                </div>
+                                                <div class="row form-group1">
+                                                    <div class="col col-md-6"><label for="hf-password"
+                                                            class=" form-control-label font_size"><b>Lots :
+                                                            </b>{{ $value->lot_name }} Lot-{{ $value->lot_id }}
+                                                        </label>
                                                     </div>
-                                                    <div class="row form-group1 mt-2">
-                                                        <div class="col col-md-6"> 
-                                                                <?php 
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size"><b>Avg
+                                                                Height(Micron) : </b>
+                                                            <?= round($value->heights / $value->pc, 2) ?>
+                                                            </></label></div>
+                                                </div>
+                                                <div class="row form-group1">
+                                                    <div class="col col-md-6"><label for="hf-email"
+                                                            class=" form-control-label font_size"><b>Avg.L*W:
+                                                            </b><?= round($value->lengths / $value->pc, 2) ?> *
+                                                            <?= round($value->weights / $value->pc, 2) ?></label>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group1 mt-2">
+                                                    <div class="col col-md-6">
+                                                        <?php 
                                                                     $checkData = App\Models\Laser::where('lot_id',$value->lot_id)->first(); 
                                                                     if($checkData){ 
                                                                         $laser_cut = DB::table('laser_cut_details')->where('lot_id',$value->lot_id)->first();
                                                                         if($laser_cut){ ?>
-                                                                                <button class="btn btn-success btn-sm float-left">Done</button>
-                                                                        <?php }else{ ?>
-                                                                            <a href="{{ url('clicklaser') }}/{{ $value->lot_id }}" class="btn btn-success btn-sm float-left"/>Cut</a>
-                                                                        <?php }
+                                                        <button class="btn btn-success btn-sm float-left">Done</button>
+                                                        <?php }else{ ?>
+                                                        <a href="{{ url('clicklaser') }}/{{ $value->lot_id }}"
+                                                            class="btn btn-success btn-sm float-left" />Cut</a>
+                                                        <?php }
                                                                         ?>
-                                                                <?php }else{ ?>
-                                                                    <a href="{{ url('clicklaser') }}/{{ $value->lot_id }}" class="btn btn-success btn-sm float-left"/>Start</a>
-                                                                <?php }
+                                                        <?php }else{ ?>
+                                                        <a href="{{ url('clicklaser') }}/{{ $value->lot_id }}"
+                                                            class="btn btn-success btn-sm float-left" />Start</a>
+                                                        <?php }
                                                                 ?>
                                                     </div>
-                                                            <div class="col col-md-6"><button type="button"
-                                                                class="btn btn-danger btn-sm float-right">B</button></div>
-                                                    </div>
+                                                    <div class="col col-md-6"><button type="button"
+                                                            class="btn btn-danger btn-sm float-right">B</button></div>
+                                                </div>
                                             </div>
                                         </div>
-                                </div>
+                                    </div>
                                 @endforeach
                             @endif
                         </div>
@@ -1282,365 +1293,237 @@
     </script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
-<script>
-           
+    <script>
+        $('body').on('change', '.auto', function(e) {
+            e.preventDefault();
+            ApplyFilter(this.value);
+            $('.detailallassign').val(this.value)
+            $(this).val('');
+        });
 
-            $('body').on('change', '.auto', function(e) {
-                e.preventDefault();
-                ApplyFilter(this.value);
-                $('.detailallassign').val(this.value)
-                $(this).val('');
-            });
-
-            function ApplyFilter(search) {
-                if (search != null && search != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    var formData = new FormData();
-                    formData.append("search", search);
-
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ route('searchLot') }}",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $('#experienceSection').html('');
-                            $.each(res.lot_detail, function(i, val) {
-                                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">${res.name}</td>
-                                    <td>${val.height}</td>
-                                    <td>${val.length}</td>
-                                    <td>${val.width}</td>
-                                    <td>${val.pcs}</td>
-                                    <td>${val.weight}</td>
-                                </tr>`);
-                                $('#experienceSection').append(section);
-                            });
-                        }
-                    });
-                }
-            }
-            $('#returnModal').on('hidden.bs.modal', function(e) {
-                $('#experienceSection').html('');
-                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">Name</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>`);
-                $('#experienceSection').append(section);
-            });
-
-
-            $(document).ready(function(){
-                $("#locations").change(function () {
-
-                var dropdownval = $("#locations").val();
-                switch (dropdownval) {
-                    case '1':
-                    $("#employee").show();
-                    $("#process").show();
-                    $("#machine").show();
-                    $("#choco").hide();
-                    break;
-                    case '2':
-                    $("#employee").show();
-                    $("#choco").show();
-                    $("#process").show();
-                    $("#machine").show();
-                    break;
-                    case '3':
-                    $("#employee").show();
-                    $("#choco").hide();
-                    $("#process").show();
-                    $("#machine").show();
-                    break;
-                    case '4':
-                    $("#employee").show();
-                    $("#choco").hide();
-                    $("#process").show();
-                    $("#machine").show();
-                    break;
-                    case '5':
-                    $("#employee").show();
-                    $("#choco").hide();
-                    $("#process").show();
-                    $("#machine").show();
-                    break;
-                    case '6':
-                    $("#employee").show();
-                    $("#choco").hide();
-                    $("#process").show();
-                    $("#machine").show();
-                    break;
-                    default:
-                    $("#location").show();
-                    $("#choco").hide();
-                    $("#process").show();
-                    $("#employee").show();
-                    $("#machine").show();
-                    break;
+        function ApplyFilter(search) {
+            if (search != null && search != "") {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                }
-                );
-            });
-            $(document).ready(function(){
-                $("#recevie").change(function () {
-                var test = $("#recevie").val();
-                switch (test) {
-                    case '1':
-                    $("#chocolate").show();
-                    $("#loste").show();
-                    $("#notes").hide();
-                    $("#notese").hide();
-                    $("#return").show();
-                    $("#print").hide();
-                    $("#weightloss").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").show();
-
-                    break;
-                    case '2':
-                    $("#notes").show();
-                    $("#notese").show();
-                    $("#recevie").show();
-                    $("#return").show();
-                    $("#print").show();
-                    $("#weightloss").show();
-                    $("#chocolate").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").show();
-                    $("#loste").hide();
-                    break;
-                    case '3':
-                    $("#recevie").show();
-                    $("#return").show();
-                    $("#print").hide();
-                    $("#weightloss").hide();
-                    $("#chocolate").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").hide();
-                    $("#loste").show();
-                    $("#notes").hide();
-                    $("#notese").hide();
-
-                    break;
-                    case '4':
-                    $("#recevie").show();
-                    $("#return").show();
-                    $("#print").hide();
-                    $("#weightloss").hide();
-                    $("#chocolate").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").show();
-                    $("#chocolate").hide();
-                    $("#notes").hide();
-                    $("#notese").hide();
-
-                    break;
-                    case '5':
-                    $("#recevie").show();
-                    $("#return").show();
-                    $("#print").hide();
-                    $("#weightloss").hide();
-                    $("#chocolate").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").show();
-                    $("#chocolate").hide();
-                    $("#notes").hide();
-                    $("#notese").hide();
-
-                    break;
-                    case '6':
-                    $("#recevie").show();
-                    $("#return").show();
-                    $("#print").hide();
-                    $("#weightloss").hide();
-                    $("#chocolate").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").hide();
-                    $("#chocolate").hide();
-
-                    break;
-                    default:
-                    $("#recevie").show();
-                    $("#return").show();
-                    $("#print").show();
-                    $("#weightloss").show();
-                    $("#chocolate").hide();
-                    $("#process").hide();
-                    $("#receiveemployee").hide();
-                    $("#chocolate").hide();
-                    break;
-                    }
-                }
-                );
-            });
-
-
-            $('body').on('change', '.rec', function(e) {
-                e.preventDefault();
-                ApplyFilterRecevie(this.value);
-                $('.recivealllaser').val(this.value);
-                $(this).val('');
-            });
-
-            function ApplyFilterRecevie(search) {
-                if (search != null && search != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    var formData = new FormData();
-                    formData.append("search", search);
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ route('recevieLot') }}",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $('#smartSection').html('');
-                            $.each(res.lot_detail, function(i, val) {
-                                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">${res.name}</td>
-                                    <td>${val.height}</td>
-                                    <td>${val.length}</td>
-                                    <td>${val.width}</td>
-                                    <td>${val.pcs}</td>
-                                    <td>${val.weight}</td>
-                                </tr>`);
-                                $('#smartSection').append(section);
-                            });
-                        }
-                    });
-                }
-            }
-            $('#receiveModal').on('hidden.bs.modal', function(e) {
-                $('#smartSection').html('');
-                var section = $(`<tr>
-                                    <td style="vertical-align: middle;text-align:left">Name</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>`);
-                $('#smartSection').append(section);
-            });
-
-            $('#AssignLot').click(function(e){
-                e.preventDefault();
-                var url = $(this).attr('data-url');
-                var id = $(this).attr('id');
-                $.ajax({
-                        type: "POST",
-                        url: "{{ route('recevieLot') }}",
-                        data: {id:id},
-                        cache: false,
-                        success: function(data){
-                        }
-                        });
-                return false;
-            });
-            $('#close').click(function(e){
-                e.preventDefault();
-                var formData = new FormData(document.getElementById("assignchocolateall"));
-                $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        type: "POST",
-                        url: "{{ url('assignlaser') }}",
-                        data: formData,
-                        cache: false,
-                        processData: false,
-                        contentType: false,
-                        success: function(response){
-
-                            $('#assignModal').modal('hide');
-                            location.reload();
-                        },
-                        error:function (response){
-                            $.each(response.responseJSON.errors,function(){
-                                swal('Record does not exist or is not accessible.');
-                            })
-
-                        }
-                    });
-            });
-            $('#closerecivelaser').click(function(e) {
-                e.preventDefault();
-                var formData = new FormData(document.getElementById("recivelaserall"));
+                });
+                var formData = new FormData();
+                formData.append("search", search);
 
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
                     },
                     type: "POST",
-                    url: "{{ url('receivelaser') }}",
+                    url: "{{ route('searchLot') }}",
                     data: formData,
-                    cache: false,
                     processData: false,
                     contentType: false,
-                    success: function(response) {
-                        $('#receiveModal').modal('hide');
-                        location.reload();
-                    },
-                        error:function (response){
-                            $.each(response.responseJSON.errors,function(){
-                                swal('Record does not exist or is not accessible.');
-                            })
-
-                        }
+                    success: function(res) {
+                        $('#experienceSection').html('');
+                        $.each(res.lot_detail, function(i, val) {
+                            var section = $(`<tr>
+                                    <td style="vertical-align: middle;text-align:left">${res.name}</td>
+                                    <td>${val.height}</td>
+                                    <td>${val.length}</td>
+                                    <td>${val.width}</td>
+                                    <td>${val.pcs}</td>
+                                    <td>${val.weight}</td>
+                                </tr>`);
+                            $('#experienceSection').append(section);
+                        });
+                    }
                 });
-            });
-    // *********return**********
-     $('body').on('change', '.recl', function(e) {
-        e.preventDefault();
-        ApplyFilterreturn(this.value);
-        var text= $('.returnalllaser').val(this.value)
-        $(this).val('');
-        // console.log(text);
-    });
-    function ApplyFilterreturn(search) {
-        if (search != null && search != "") {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }
+        $('#returnModal').on('hidden.bs.modal', function(e) {
+            $('#experienceSection').html('');
+            var section = $(`<tr>
+                                    <td style="vertical-align: middle;text-align:left">Name</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>`);
+            $('#experienceSection').append(section);
+        });
+
+
+        $(document).ready(function() {
+            $("#locations").change(function() {
+
+                var dropdownval = $("#locations").val();
+                switch (dropdownval) {
+                    case '1':
+                        $("#employee").show();
+                        $("#process").show();
+                        $("#machine").show();
+                        $("#choco").hide();
+                        break;
+                    case '2':
+                        $("#employee").show();
+                        $("#choco").show();
+                        $("#process").show();
+                        $("#machine").show();
+                        break;
+                    case '3':
+                        $("#employee").show();
+                        $("#choco").hide();
+                        $("#process").show();
+                        $("#machine").show();
+                        break;
+                    case '4':
+                        $("#employee").show();
+                        $("#choco").hide();
+                        $("#process").show();
+                        $("#machine").show();
+                        break;
+                    case '5':
+                        $("#employee").show();
+                        $("#choco").hide();
+                        $("#process").show();
+                        $("#machine").show();
+                        break;
+                    case '6':
+                        $("#employee").show();
+                        $("#choco").hide();
+                        $("#process").show();
+                        $("#machine").show();
+                        break;
+                    default:
+                        $("#location").show();
+                        $("#choco").hide();
+                        $("#process").show();
+                        $("#employee").show();
+                        $("#machine").show();
+                        break;
                 }
             });
-            var formData = new FormData();
-            formData.append("search", search);
+        });
+        $(document).ready(function() {
+            $("#recevie").change(function() {
+                var test = $("#recevie").val();
+                switch (test) {
+                    case '1':
+                        $("#chocolate").show();
+                        $("#loste").show();
+                        $("#notes").hide();
+                        $("#notese").hide();
+                        $("#return").show();
+                        $("#print").hide();
+                        $("#weightloss").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").show();
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                },
-                type: "POST",
-                url: "{{ route('returnlot') }}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(res) {
-                    // console.log(res);
-                    $('#returnsection').html('');
-                    $.each(res.lot_detail, function(i, val) {
-                        var section = $(`<tr>
+                        break;
+                    case '2':
+                        $("#notes").show();
+                        $("#notese").show();
+                        $("#recevie").show();
+                        $("#return").show();
+                        $("#print").show();
+                        $("#weightloss").show();
+                        $("#chocolate").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").show();
+                        $("#loste").hide();
+                        break;
+                    case '3':
+                        $("#recevie").show();
+                        $("#return").show();
+                        $("#print").hide();
+                        $("#weightloss").hide();
+                        $("#chocolate").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").hide();
+                        $("#loste").show();
+                        $("#notes").hide();
+                        $("#notese").hide();
+
+                        break;
+                    case '4':
+                        $("#recevie").show();
+                        $("#return").show();
+                        $("#print").hide();
+                        $("#weightloss").hide();
+                        $("#chocolate").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").show();
+                        $("#chocolate").hide();
+                        $("#notes").hide();
+                        $("#notese").hide();
+
+                        break;
+                    case '5':
+                        $("#recevie").show();
+                        $("#return").show();
+                        $("#print").hide();
+                        $("#weightloss").hide();
+                        $("#chocolate").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").show();
+                        $("#chocolate").hide();
+                        $("#notes").hide();
+                        $("#notese").hide();
+
+                        break;
+                    case '6':
+                        $("#recevie").show();
+                        $("#return").show();
+                        $("#print").hide();
+                        $("#weightloss").hide();
+                        $("#chocolate").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").hide();
+                        $("#chocolate").hide();
+
+                        break;
+                    default:
+                        $("#recevie").show();
+                        $("#return").show();
+                        $("#print").show();
+                        $("#weightloss").show();
+                        $("#chocolate").hide();
+                        $("#process").hide();
+                        $("#receiveemployee").hide();
+                        $("#chocolate").hide();
+                        break;
+                }
+            });
+        });
+
+
+        $('body').on('change', '.rec', function(e) {
+            e.preventDefault();
+            ApplyFilterRecevie(this.value);
+            $('.recivealllaser').val(this.value);
+            $(this).val('');
+        });
+
+        function ApplyFilterRecevie(search) {
+            if (search != null && search != "") {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData();
+                formData.append("search", search);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    type: "POST",
+                    url: "{{ route('recevieLot') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        $('#smartSection').html('');
+                        $.each(res.lot_detail, function(i, val) {
+                            var section = $(`<tr>
                                     <td style="vertical-align: middle;text-align:left">${res.name}</td>
                                     <td>${val.height}</td>
                                     <td>${val.length}</td>
@@ -1648,68 +1531,125 @@
                                     <td>${val.pcs}</td>
                                     <td>${val.weight}</td>
                                 </tr>`);
-                        $('#returnsection').append(section);
-                    });
-                }
-            });
-        }
-    }
-    $('#closereturn').click(function(e) {
-        e.preventDefault();
-        var formData = new FormData(document.getElementById("returnall"));
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}",
-            },
-            type: "POST",
-            url: "{{ url('laserreturn') }}",
-            data: formData,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                $('#returnModal').modal('hide');
-                location.reload();
-            },
-            error: function(response) {
-                $.each(response.responseJSON.errors, function() {
-                    swal('Record does not exist or is not accessible.');
-                })
+                            $('#smartSection').append(section);
+                        });
+                    }
+                });
             }
+        }
+        $('#receiveModal').on('hidden.bs.modal', function(e) {
+            $('#smartSection').html('');
+            var section = $(`<tr>
+                                    <td style="vertical-align: middle;text-align:left">Name</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>`);
+            $('#smartSection').append(section);
         });
-    }); 
-    // *********returntostock**********
-     $('body').on('change', '.returnrec', function(e) {
-        e.preventDefault();
-        ApplyFilterreturnstock(this.value);
-        var restock= $('.returnstock').val(this.value)
-        $(this).val('');
-        // console.log(restock);
-    });
-    function ApplyFilterreturnstock(search) {
-        if (search != null && search != "") {
-            $.ajaxSetup({
+
+        $('#AssignLot').click(function(e) {
+            e.preventDefault();
+            var url = $(this).attr('data-url');
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('recevieLot') }}",
+                data: {
+                    id: id
+                },
+                cache: false,
+                success: function(data) {}
+            });
+            return false;
+        });
+        $('#close').click(function(e) {
+            e.preventDefault();
+            var formData = new FormData(document.getElementById("assignchocolateall"));
+            $.ajax({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "POST",
+                url: "{{ url('assignlaser') }}",
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+
+                    $('#assignModal').modal('hide');
+                    location.reload();
+                },
+                error: function(response) {
+                    $.each(response.responseJSON.errors, function() {
+                        swal('Record does not exist or is not accessible.');
+                    })
+
                 }
             });
-            var formData = new FormData();
-            formData.append("search", search);
+        });
+        $('#closerecivelaser').click(function(e) {
+            e.preventDefault();
+            var formData = new FormData(document.getElementById("recivelaserall"));
 
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                 },
                 type: "POST",
-                url: "{{ route('returnlot') }}",
+                url: "{{ url('receivelaser') }}",
                 data: formData,
+                cache: false,
                 processData: false,
                 contentType: false,
-                success: function(res) {
-                    // console.log(res);
-                    $('#returnstocksection').html('');
-                    $.each(res.lot_detail, function(i, val) {
-                        var section = $(`<tr>
+                success: function(response) {
+                    $('#receiveModal').modal('hide');
+                    location.reload();
+                },
+                error: function(response) {
+                    $.each(response.responseJSON.errors, function() {
+                        swal('Record does not exist or is not accessible.');
+                    })
+
+                }
+            });
+        });
+        // *********return**********
+        $('body').on('change', '.recl', function(e) {
+            e.preventDefault();
+            ApplyFilterreturn(this.value);
+            var text = $('.returnalllaser').val(this.value)
+            $(this).val('');
+            // console.log(text);
+        });
+
+        function ApplyFilterreturn(search) {
+            if (search != null && search != "") {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData();
+                formData.append("search", search);
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    type: "POST",
+                    url: "{{ route('returnlot') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        // console.log(res);
+                        $('#returnsection').html('');
+                        $.each(res.lot_detail, function(i, val) {
+                            var section = $(`<tr>
                                     <td style="vertical-align: middle;text-align:left">${res.name}</td>
                                     <td>${val.height}</td>
                                     <td>${val.length}</td>
@@ -1717,38 +1657,107 @@
                                     <td>${val.pcs}</td>
                                     <td>${val.weight}</td>
                                 </tr>`);
-                        $('#returnstocksection').append(section);
-                    });
+                            $('#returnsection').append(section);
+                        });
+                    }
+                });
+            }
+        }
+        $('#closereturn').click(function(e) {
+            e.preventDefault();
+            var formData = new FormData(document.getElementById("returnall"));
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "POST",
+                url: "{{ url('laserreturn') }}",
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $('#returnModal').modal('hide');
+                    location.reload();
+                },
+                error: function(response) {
+                    $.each(response.responseJSON.errors, function() {
+                        swal('Record does not exist or is not accessible.');
+                    })
                 }
             });
-        }
-    }
-    $('#closereturnstock').click(function(e) {
-        e.preventDefault();
-        var formData = new FormData(document.getElementById("returnlaserstock"));
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}",
-            },
-            type: "POST",
-            url: "{{ url('laserreturntostock') }}",
-            data: formData,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                $('#returnstockModal').modal('hide');
-                location.reload();
-            },
-            error: function(response) {
-                $.each(response.responseJSON.errors, function() {
-                    swal('Record does not exist or is not accessible.');
-                })
-            }
         });
-    }); 
+        // *********returntostock**********
+        $('body').on('change', '.returnrec', function(e) {
+            e.preventDefault();
+            ApplyFilterreturnstock(this.value);
+            var restock = $('.returnstock').val(this.value)
+            $(this).val('');
+            // console.log(restock);
+        });
 
-</script>
+        function ApplyFilterreturnstock(search) {
+            if (search != null && search != "") {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData();
+                formData.append("search", search);
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    type: "POST",
+                    url: "{{ route('returnlot') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        // console.log(res);
+                        $('#returnstocksection').html('');
+                        $.each(res.lot_detail, function(i, val) {
+                            var section = $(`<tr>
+                                    <td style="vertical-align: middle;text-align:left">${res.name}</td>
+                                    <td>${val.height}</td>
+                                    <td>${val.length}</td>
+                                    <td>${val.width}</td>
+                                    <td>${val.pcs}</td>
+                                    <td>${val.weight}</td>
+                                </tr>`);
+                            $('#returnstocksection').append(section);
+                        });
+                    }
+                });
+            }
+        }
+        $('#closereturnstock').click(function(e) {
+            e.preventDefault();
+            var formData = new FormData(document.getElementById("returnlaserstock"));
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                type: "POST",
+                url: "{{ url('laserreturntostock') }}",
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $('#returnstockModal').modal('hide');
+                    location.reload();
+                },
+                error: function(response) {
+                    $.each(response.responseJSON.errors, function() {
+                        swal('Record does not exist or is not accessible.');
+                    })
+                }
+            });
+        });
+    </script>
 
 </body>
 

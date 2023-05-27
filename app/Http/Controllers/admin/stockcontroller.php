@@ -45,6 +45,7 @@ class stockcontroller extends Controller
                 $res[] = $inr;
             }
         }
+        // dd($res);
         return view('admin.stock1')->with(['data' => $res]);
     }
     public function insertstock(Request $request)

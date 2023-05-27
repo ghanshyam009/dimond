@@ -76,7 +76,7 @@
             <ul class="stockul">
                 <li class="stockli mt-2 d-block d-md-inline-block"><a
                         href="{{ url('createchocolatedashboard') }}">CreateChocolate</a></li>
-                <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('lots') }}">EndGrowing</a></li>
+                <li class="stockli mt-2 d-block d-md-inline-block"><a href="{{ url('lots') }}">End Growing</a></li>
                 {{-- <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
                         data-bs-target="#returnModal">AssignLot</a></li>
                 <li class="stockli"><a class="ms-1 mt-1" data-bs-toggle="modal"
@@ -675,12 +675,12 @@
                                                 {{ csrf_field() }}
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><label for="select"
-                                                            class=" form-control-label">Machine no</label></div>
+                                                            class=" form-control-label">Machine No :</label></div>
                                                     <div class="col-12 col-md-9">
                                                         <?php $cdata = App\Models\chocolate::get(); ?>
                                                         <select class="custom-select d-block w-100" name="machinename"
                                                             required>
-                                                            <option value="0">Please select</option>
+                                                            <option value="">Please select</option>
                                                             @foreach ($cdata as $ans)
                                                                 <option value="{{ $ans->machineno }}">
                                                                     {{ $ans->machineno }}</option>

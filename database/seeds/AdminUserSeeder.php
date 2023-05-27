@@ -17,7 +17,7 @@ class AdminUserSeeder extends Seeder
         DB::table('users')->truncate();
         userlogin::create([
             'name' => 'aaa',
-            'email' => 'example@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
     }

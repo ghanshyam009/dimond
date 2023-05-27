@@ -55,6 +55,7 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
+                    <a href="{{ url('centerdepartment') }}"><i class="fa fa-keyboard fa-lg"></i></a> &nbsp;
                     <a class="navbar-brand" href="{{ url('centerdepartment') }}"><span>Chocolate</span></a>
                 </div>
             </div>
