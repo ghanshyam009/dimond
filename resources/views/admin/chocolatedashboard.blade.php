@@ -815,7 +815,7 @@
                                                                 <label for="hf-email"
                                                                     class=" form-control-label font_size">Total
                                                                     Weight(Ct):
-                                                                    {{ $lotmove->weight1 }}
+                                                                    {{ round($lotmove->weight1, 2) }}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -827,7 +827,7 @@
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg
                                                                     Weight(Ct):
-                                                                    {{ $lotmove->weight1 / $lotmove->pcs }}
+                                                                    {{ round($lotmove->weight1 / $lotmove->pcs, 2) }}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -838,7 +838,7 @@
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg
                                                                     Height(Micron):
-                                                                    {{ $lotmove->height1 / $lotmove->pcs }}
+                                                                    {{ round($lotmove->height1 / $lotmove->pcs, 2) }}
                                                                 </label></div>
                                                         </div>
                                                         <div class="row form-group1">
@@ -852,8 +852,8 @@
                                                             </div>
                                                             <div class="col-12 col-md-8"><label for="hf-email"
                                                                     class=" form-control-label font_size">Avg. L x W:
-                                                                    {{ $lotmove->length1 / $lotmove->pcs }} x
-                                                                    {{ $lotmove->width / $lotmove->pcs }}
+                                                                    {{ round($lotmove->length1 / $lotmove->pcs, 2) }} x
+                                                                    {{ round($lotmove->width / $lotmove->pcs, 2) }}
                                                                 </label></div>
                                                         </div>
                                                         @if (Auth::user()->role == 'admin' || Auth::user()->role == 'manager' || Auth::user()->role == 'growing user')
@@ -874,6 +874,9 @@
                                                                                     data-bs-toggle="modal"
                                                                                     data-bs-target="#addpacketsModal1">End
                                                                                 </button>
+                                                                                {{-- <input type="text" name="lotid"
+                                                                                    id="lotid"
+                                                                                    value="{{ $lotmove->lot_id }}"> --}}
                                                                             </div>
                                                                             <div class="col-6 text-right mt-2">
                                                                                 <small>Growing Done</small>
@@ -935,7 +938,7 @@
                                                 <div class="card-body card-block">
                                                     <div class="row form-group">
                                                         <div class="col-12 col-md-2"><label for="select"
-                                                                cclass=" form-control-label">Process & Reason
+                                                                class=" form-control-label">Process & Reason
                                                             </label></div>
                                                         <div class="col-12 col-md-10">
                                                             <?php $batch = App\Models\processreson::get(); ?>
@@ -1041,7 +1044,7 @@
 
                                                     <div class="row form-group">
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class=" form-control-label">Finish
+                                                            <label for="select" class="form-control-label">Finish
                                                                 Type </label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
@@ -1050,7 +1053,7 @@
                                                         </div>
 
                                                         <div class="col-6 col-md-2">
-                                                            <label for="select" class=" form-control-label">Growing
+                                                            <label for="select" class="form-control-label">Growing
                                                                 Done</label>
                                                         </div>
                                                         <div class="col-6 col-md-4">
@@ -1080,8 +1083,10 @@
                                                                 id="growing_time" />
                                                         </div>
                                                     </div>
+
                                                     <input type="hidden" name="lotid" id="lotid"
-                                                        value="{{ $lotmove->lot_id }}">
+                                                        value="<?= isset($lotmove->lot_id) ? $lotmove->lot_id : '' ?>">
+
                                                     <div class="row form-group">
                                                         <div class="col col-md-2"><label for="select"
                                                                 class=" form-control-label">Note</label></div>
@@ -1892,7 +1897,7 @@
                 var hidden_packet_id = $('#hidden_packet_id').val();
                 var processresons_id = $('#processresons_id').val();
                 var user_id = $('#user_id').val();
-                var fileData  = $('#image').prop('files')[0];
+                var fileData = $('#image').prop('files')[0];
                 var growing_time = $('#growing_time').val();
                 // var file = $('#image').val();
                 if (processresons_id == "0" && user_id == "0" && growing_time == "") {
@@ -1957,6 +1962,11 @@
             function chocolateConfirm() {
                 const heightArray = [];
                 const lot_ids = [];
+                var chocolate_start = $('#chocolate_start').prop('files')[0];
+                var growing_done = $('#growing_done').prop('files')[0];
+                var finish_type_1 = $('#finish_type_1').prop('files')[0];
+                var finish_type_2 = $('#finish_type_2').prop('files')[0];
+
                 var final_weight_ct = $('#final_weight_ct').val();
                 var finish_type = $('#finish_type').val();
                 var growing_time = $('#growing_time').val();
@@ -1987,6 +1997,10 @@
                 formData.append("finish_type", finish_type);
                 formData.append("growing_time", growing_time);
                 formData.append("note", note);
+                formData.append("chocolate_start", chocolate_start);
+                formData.append("growing_done", growing_done);
+                formData.append("finish_type_1", finish_type_1);
+                formData.append("finish_type_2", finish_type_2);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
